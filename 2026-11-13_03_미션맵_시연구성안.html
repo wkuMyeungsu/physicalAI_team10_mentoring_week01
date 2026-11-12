@@ -52,6 +52,8 @@ li{margin:3px 0}
 .logbox{border-left:2px solid var(--ink);display:flex;flex-direction:column;min-height:0}
 .loghead{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;padding:4px 10px}
 .loghead label{font-weight:400;font-size:12px}
+.loghead>span{display:flex;gap:10px;align-items:center}
+.loghead input{margin:0 2px 0 0;vertical-align:-2px}
 .loghead select{font:inherit;font-size:12px;margin-left:4px}
 .log{list-style:none;margin:0;padding:4px 8px;font:11px/1.45 ui-monospace,Consolas,"Malgun Gothic",monospace;flex:1 1 0;min-height:0;overflow-y:auto}
 .log li{display:grid;grid-template-columns:12ch 8ch minmax(0,1fr);column-gap:1ch;align-items:start;padding:3px 0;border-bottom:1px dashed var(--thin)}
@@ -193,7 +195,8 @@ body{padding-top:44px}
   </div>
   <div class="logbox">
     <div class="loghead">관제 로그
-      <label>레벨 <select id="log-level"><option value="10">DEBUG</option><option value="20" selected>INFO</option><option value="30">WARNING</option></select></label>
+      <span><label title="디버그: 서버가 추정한 로봇 위치(점선 원) 표시"><input type="checkbox" id="ghost-on"> 추정 위치</label>
+      <label>레벨 <select id="log-level"><option value="10">DEBUG</option><option value="20" selected>INFO</option><option value="30">WARNING</option></select></label></span>
     </div>
     <ol class="log" id="sim-log" aria-live="off"></ol>
   </div>
@@ -207,7 +210,7 @@ body{padding-top:44px}
   <span><svg width="22" height="10"><rect x="1" y="3" width="20" height="4" fill="var(--red)"/></svg> 빨강 띠 · B 꺾기</span>
   <span><svg width="22" height="10"><rect x="1" y="3" width="20" height="4" fill="var(--blue)"/></svg> 파랑 띠 · 통로 끝</span>
   <span><svg width="22" height="10"><rect x="1" y="3" width="9" height="4" fill="#f2c94c"/><rect x="12" y="3" width="9" height="4" fill="#40c057"/></svg> 노랑 · 초록 띠 · 구간 마커</span>
-  <span><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="#868e96" stroke-dasharray="2 2"/></svg> 서버가 추정한 위치</span>
+  <span id="ghost-legend" hidden><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="#868e96" stroke-dasharray="2 2"/></svg> 서버가 추정한 위치</span>
   <span><svg width="14" height="12"><rect x="2" y="1" width="10" height="10" fill="#fab005" fill-opacity=".45" stroke="#e67700"/></svg> 바닥 카메라가 보는 곳 (몸 앞 25cm)</span>
 </div>
 
@@ -1113,6 +1116,9 @@ body{padding-top:44px}
   var LV = {DEBUG:10, INFO:20, WARNING:30, ERROR:40, CRITICAL:50};
   var minLv = 20;
   var logEl = document.getElementById("sim-log"), lvSel = document.getElementById("log-level");
+  // 디버그: 서버 추정 위치(점선 원)는 헷갈려서 기본은 숨김 · 체크하면 표시
+  var ghostOn = document.getElementById("ghost-on");
+  ghostOn.addEventListener("change", function(){ document.getElementById("ghost-legend").hidden = !ghostOn.checked; draw(); });
   function stamp(t){ // 14:30:00 기준 시뮬레이션 시각 (asctime 모양)
     var ms = Math.round(t * 1000), s = 14 * 3600 + 30 * 60 + Math.floor(ms / 1000);
     function p2(v){ return String(v).padStart(2, "0"); }
@@ -1139,7 +1145,7 @@ body{padding-top:44px}
   var ROBOTS, dir, flags, playing;
   var CHAPTERS = ["평상시 순찰", "바닥 물건", "막힘 발견", "릴레이 교대", "과열 감지 · 교차 확인", "화재 · 갈림길 안내"];
   var CHTXT = [
-    "<b>1 평상시 순찰</b> · A는 외곽, B는 간선 · 통로, 3·4호는 도크 충전 대기. 로봇은 지난 마커만 알리고, 서버가 위치를 추정(점선 원)해 출발 · 합류를 허가한다.",
+    "<b>1 평상시 순찰</b> · A는 외곽, B는 간선 · 통로, 3·4호는 도크 충전 대기. 로봇은 지난 마커만 알리고, 서버가 위치를 추정해 출발 · 합류를 허가한다.",
     "<b>2 바닥 물건</b> · 위쪽 외곽 바닥에 공구. 초음파엔 안 잡히고 A의 바닥 카메라가 본다. A는 순찰을 계속하고 서버가 '밟힘 주의'로 관리자 호출 → 치우고 체크하면 해제.",
     "<b>3 막힘 발견</b> · 간선에 박스. B가 초음파로 멈춰 보고 → 근처에 아는 로봇이 없으니 서버가 장애물로 판단해 관리자 호출 → 치우고 B가 다시 지나가면 해소.",
         "<b>4 릴레이 교대</b> · A 배터리 부족. 서버가 A를 세우고 3호를 A 뒤 40cm로 보냄 → 인수인계 → A는 도크로, 3호가 A의 진행 위치부터 이어 돎.",
@@ -1213,7 +1219,7 @@ body{padding-top:44px}
   }
   function draw(){
     ["A", "B", "3", "4"].forEach(function(id){ var r = ROBOTS[id]; placeBot(BOTS[id], r.pose, r.role, r.display); });
-    refresh(); Object.keys(GHOST).forEach(function(id){ var v = SV.view[id]; if (!v){ GHOST[id].setAttribute("display", "none"); return; } GHOST[id].setAttribute("display", "inline"); GHOST[id].setAttribute("cx", v.x.toFixed(1)); GHOST[id].setAttribute("cy", v.y.toFixed(1)); });
+    refresh(); Object.keys(GHOST).forEach(function(id){ var v = SV.view[id]; if (!v || !ghostOn.checked){ GHOST[id].setAttribute("display", "none"); return; } GHOST[id].setAttribute("display", "inline"); GHOST[id].setAttribute("cx", v.x.toFixed(1)); GHOST[id].setAttribute("cy", v.y.toFixed(1)); });
     boxG.setAttribute("display", WORLD.box.on ? "inline" : "none");
     heatG.setAttribute("display", WORLD.heat.on ? "inline" : "none");
     itemG.setAttribute("display", WORLD.item.on ? "inline" : "none"); itemLbl.textContent = SV.ev.item ? "바닥 물건 · 주의" : "바닥 물건";
