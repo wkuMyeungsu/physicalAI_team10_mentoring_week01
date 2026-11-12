@@ -21,13 +21,10 @@ ul{padding-left:22px;margin:6px 0}
 li{margin:3px 0}
 .todo{color:var(--todo);font-weight:700}
 .def{border:2px solid var(--ink);padding:10px 12px;margin:10px 0;font-size:17px;font-weight:700}
-.flow{display:grid;gap:6px;margin:10px 0}
-.lane{border:2px solid var(--ink);padding:8px 10px}
-.lane b{display:block;margin-bottom:4px}
-.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.steps b{margin-right:2px}
 .steps span{border:1px solid var(--rule);background:var(--code);padding:2px 8px;font-size:13px;white-space:nowrap}
 .steps i{font-style:normal;color:var(--muted)}
-.arrow{text-align:center;font-size:13px;color:var(--muted)}
 .ev{display:block;color:var(--muted);font-size:13px}
 .src{margin:10px 0 0;padding-left:22px;color:var(--muted);font-size:12px}
 .src a{color:inherit}
@@ -57,19 +54,27 @@ body{padding-top:44px}
 
 <h1>주제 선택 · 배경</h1>
 <p class="sub">무엇을, 왜 만드는지와 주제가 정해진 과정</p>
-<h2>1. 주제</h2>
+<h2>1. 주제 개요</h2>
 <div class="def">MechDog 4대가 대피 통로를 순찰하며 막힘 · 바닥 물건을 찾아 사람이 치우게 하고, 화재 때는 막힌 길을 피해 비상구로 안내한다.</div>
-<p class="sub">MechDog: 교육용 소형 4족 보행 로봇 키트</p>
-<p>이름: <b>AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</b></p>
+<p>이름: <b>AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</b> <span class="sub">· MechDog = 교육용 소형 4족 보행 로봇 키트</span></p>
 
-<h2>2. 배경 — 왜 통로인가</h2>
-<p><b>공장 · 창고 화재는 하루 약 10건</b>, 건축물 화재 재산피해의 69%를 차지한다 (2021~2025년 1만 7,510건)<sup>1</sup>.</p>
+<h2>2. 주제 선정 경과</h2>
+<div class="tw"><table>
+  <tr><th>날짜</th><th>검토</th><th>채택</th><th>제외</th></tr>
+  <tr><td>11/9</td><td>아이디어 4개: 릴레이 순찰 · 재난 탐색(화재 대피) · MechDog 비서 · 위험지도(환경 감시)</td><td>릴레이 순찰 + 화재 대응</td><td></td></tr>
+  <tr><td>11/10</td><td>배경 4곳: 공동구 · 배터리 보관 · 화학 위험물 · 작업장 대피로</td><td>평시 안전 순찰 + 비상 대피 안내</td><td>자동 충전 릴레이</td></tr>
+  <tr><td>11/11</td><td>방향 구체화</td><td>공장 · 창고, 이벤트(쓰러짐 · 장애물 · 화재)</td><td>실내 혼잡도</td></tr>
+  <tr><td>11/12</td><td>미션맵 구성안</td><td><b>대피 통로 확보</b> · 2대 릴레이 · 화재는 캔들 + 온도 + 카메라</td><td>연기 · 물 · 기름 · 천장 카메라 · 가스</td></tr>
+</table></div>
+
+<h2>3. 추진 배경</h2>
+<p>공장 · 창고에는 넘어짐 · 부딪힘 · 끼임 · 떨어짐 · 화재 위험이 함께 있다.</p>
 <ul>
-  <li><b>통로 = 대피로</b>: 공장 · 창고(물류센터)에서 로봇이 다니는 길목이 곧 비상시 대피로</li>
-  <li><b>막힘 · 바닥 물건</b>: 쌓인 물건은 대피를 막고, 떨어진 물건은 밟거나 걸려 바로 사고
-    <span class="ev">경기 대형 물류창고 473곳 중 236곳 위법, 피난 통로 적치 포함 (2026.9)<sup>2</sup> · 이천 물류창고 화재(2020)는 대피로를 막아 둔 상태에서 38명 사망<sup>3</sup></span></li>
-  <li><b>고정 유도등</b>: 불 위치를 모르고 가까운 비상구만 가리킴 → 불 쪽으로 보낼 수 있음
-    <span class="ev">물류시설 유도등은 쌓인 물품에 가려지기 쉬움<sup>4</sup></span></li>
+  <li><b>화재</b>: 하루 약 10건, 건축물 화재 재산피해의 69% (2021~2025)<sup>1</sup></li>
+  <li><b>막힌 대피로</b>: 작업 동선이자 대피로인 통로를 쌓인 물건이 막는다
+    <span class="ev">경기 대형 물류창고 473곳 중 236곳 위법, 피난 통로 적치 포함 (2026.9)<sup>2</sup> · 이천 물류창고 화재(2020)는 대피로가 막힌 채 38명 사망<sup>3</sup></span></li>
+  <li><b>바닥 위험</b>: 낮게 떨어진 물건은 잘 안 보여 밟거나 걸려 다친다</li>
+  <li><b>고정 유도등</b>: 불 위치를 모르고 가까운 비상구만 가리키며, 쌓인 물품에 가려지기 쉽다<sup>4</sup></li>
 </ul>
 <ol class="src">
   <li>소방청 국가화재정보시스템, 허영 의원실 분석 — <a href="https://www.reporternside.com/news/articleView.html?idxno=433408">엔사이드 2026.10.23</a></li>
@@ -78,52 +83,34 @@ body{padding-top:44px}
   <li>송동우, 물류시설 피난유도 관련 동향 및 개선 방향 — <a href="https://www.kfsi.or.kr/contents/webzine/202212/sub02-02.html">소방안전플러스 웹진</a></li>
 </ol>
 
-<h2>3. 주제가 정해진 과정</h2>
+<h2>4. 제약 사항 및 범위 조정</h2>
+<p>목표는 <b>공장 · 창고의 안전을 두루 책임지는 순찰 로봇</b>이었다. 하지만 MechDog을 직접 켜 보고 따져 보니 제약이 많았다.</p>
 <div class="tw"><table>
-  <tr><th>날짜</th><th>한 것</th><th>남긴 것</th><th>접은 것</th></tr>
-  <tr><td>11/9</td><td>네 사람 아이디어 발표<br>(릴레이 순찰, 재난 탐색·화재 대피, MechDog 비서, 위험지도·환경 감시)</td><td>릴레이 순찰 + 화재 감지·대응</td><td></td></tr>
-  <tr><td>11/10</td><td>배경 조사<br>(공동구, 배터리 보관 시설, 보안·화학 위험물, 작업장 대피로)</td><td>평상시 시설 안전 순찰 + 비상시 대피 안내</td><td>자동 충전 릴레이 (스스로 충전 불가)</td></tr>
-  <tr><td>11/11</td><td>방향 구체화 · 취합</td><td>배경 공장·창고, 순찰 결과 이벤트(쓰러짐·장애물·화재)</td><td>실내 혼잡도 (통제 못 할 변수가 많음)</td></tr>
-  <tr><td>11/12</td><td>미션맵 구성안 취합</td><td><b>대피 통로 확보</b>로 확정 · 2대 릴레이 · 화재 = 캔들 + 온도 + 카메라</td><td>연기 · 물·기름 · 천장 카메라 · 가스</td></tr>
+  <tr><th>목표 기능</th><th>제약 요인</th><th>조정 결과</th></tr>
+  <tr><td>공장 · 창고 사고 전반 예방</td><td>끼임 · 떨어짐 · 지게차 충돌은 로봇이 막을 수 없음</td><td>바닥 위험 · 통로 · 쓰러진 사람 · 화재 전조로 축소</td></tr>
+  <tr><td>위험 직접 해결 · 인명 구조</td><td>작아서 직접 해결 · 구조가 어렵고, 사람 걸음보다 느림</td><td>모니터링 · 알림 (조치는 사람)</td></tr>
+  <tr><td>방범 순찰 (외부인 탐지)</td><td>얼굴을 아래에서 올려다봄 · 찾아도 사후 대처 불가</td><td>제외</td></tr>
+  <tr><td>화재 전문 감시</td><td>낮은 시점 · 연기는 위부터 차서 늦게 닿음 · 배터리 창고는 BMS가 이미 감시</td><td>과열(화재 전조) 감지 + 대피 안내</td></tr>
+  <tr><td>랙 · 고소 영역 점검</td><td>위를 못 봄 (물류창고 랙은 3m부터)</td><td>바닥 · 통로로 한정</td></tr>
+  <tr><td>범용 이상 탐지</td><td>카메라 1대 · 라이다 없음 · AI는 학습한 것만 판별</td><td>막힘 · 바닥 물건 · 쓰러짐 · 과열로 한정</td></tr>
+  <tr><td>24시간 연속 순찰</td><td>배터리가 짧고 스스로 충전 불가</td><td>2대 순찰 · 2대 충전 릴레이 (충전은 사람)</td></tr>
+  <tr><td>실제 현장 투입</td><td>느림 · 턱을 못 넘음 · 열 · 연기에 약함 · 직각 회전 불가</td><td>미션맵 위에서 재현</td></tr>
 </table></div>
+<div class="def">그래서 현장 투입용 뾰족한 기능보다, 미션맵(축소 시연 무대) 위에서 평상시 순찰부터 화재 대피 안내까지 <b>전체 흐름을 시뮬레이션으로 구현</b>해 가능성을 확인하는 데 집중한다.</div>
 
-<h2>4. MechDog 제약과 방향</h2>
-<p>제약 때문에 현장 투입 대신 <b>미션맵(축소 시연 무대) 위에서 협동 순찰로 무엇이 되는지</b> 보여 준다.</p>
+<h2>5. 구현 방향</h2>
+<div class="steps"><b>평상시</b><span>2대 순찰 · 2대 도크 대기</span><i>→</i><span>감지 (MechDog)</span><i>→</i><span>판단 · 알림 (관제)</span><i>→</i><span>조치 (사람 · 로봇)</span></div>
+<div class="steps"><b>비상시</b><span>대기 로봇까지 4대 모두 출동</span></div>
 <div class="tw"><table>
-  <tr><th>실용성을 노린 것</th><th>부딪힌 제약</th><th>그래서</th></tr>
-  <tr><td>실제 현장 투입</td><td>키가 낮고 느림 · 턱을 못 넘음 · 배터리가 짧음</td><td>미션맵 위에서 상황을 재현</td></tr>
-  <tr><td>24시간 순찰</td><td>자동 충전이 안 됨</td><td>사람이 충전하는 2대 릴레이</td></tr>
-  <tr><td>물 · 기름 · 연기 감지</td><td>카메라가 물을 못 봄 · 눈높이 ~30cm라 연기가 늦게 닿음</td><td>뺌</td></tr>
-  <tr><td>마커로 정확한 위치</td><td>걸을 때 흔들려 ArUco가 잘 안 읽힐 수 있음</td><td>마커 사용 확정 · 종류(ArUco / 색 띠)는 실험 후 결정</td></tr>
-  <tr><td>걸으며 초음파로 장애물 감지</td><td>코너에서 옆 랙을 장애물로 잡음 · 걸으며 재지는지 미확인</td><td>걸으며 시험 → 안 되면 마커에서 멈춰 측정</td></tr>
-  <tr><td>천장 카메라로 위치 추적</td><td>여러 카메라 매핑에 시간이 많이 듦</td><td>바닥 라인 + 마커</td></tr>
-  <tr><td>카메라 하나로 여러 일</td><td>키트 카메라는 한 번에 기능 하나</td><td>카메라 2대 (바닥 · 머리)</td></tr>
+  <tr><th>상황</th><th>감지</th><th>판단 · 알림</th><th>조치</th></tr>
+  <tr><td>바닥 물건</td><td>바닥 카메라 (초음파 무반응 = 낮은 물체)</td><td>"밟힘 주의" 표시</td><td>순찰 계속 · 관리자가 치우고 체크</td></tr>
+  <tr><td>통로 막힘</td><td>초음파로 멈춰 보고</td><td>사람 · 다른 로봇이 아니면 장애물로 판단 → 지도에 통로 차단</td><td>관리자가 치우고 체크 → 로봇 재통과로 해제</td></tr>
+  <tr><td>배터리 부족</td><td>20% 미만 보고</td><td>대기 로봇에 진행 위치 인계</td><td>교대 로봇이 이어 순찰 · 지친 로봇은 도크로</td></tr>
+  <tr><td>과열</td><td>45℃ 초과 → 멈춰 측정</td><td>대기 로봇 출동, 교차 확인 → 둘 다 50℃ 초과면 화재 확정</td><td></td></tr>
+  <tr><td>화재</td><td></td><td>4대를 갈림길에 배정 · 불 반대쪽 비상구 계산</td><td>로봇 LED 화살표 · ✕로 대피 안내 (막힌 길 회피)</td></tr>
+  <tr><td>쓰러진 사람</td><td>카메라 (오래 누워 있거나 움직이지 않음)</td><td>알림</td><td class="todo">이번 범위에 넣을지 검토 중</td></tr>
 </table></div>
-
-<h2>5. 생각한 해법</h2>
-<div class="flow">
-  <div class="lane"><b>MechDog — 순찰하며 찾는다</b>
-    <div class="steps"><span>2대 순찰 · 2대 충전</span><i>→</i><span>마커로 구역 확인</span><i>→</i><span>초음파 · 카메라 · 온도</span></div>
-  </div>
-  <div class="arrow">▼ 이상 발견</div>
-  <div class="lane"><b>관제(서버 · 대시보드) — 무엇인지 판단한다</b>
-    <div class="steps"><span>지나가는 사람 거르기</span><i>→</i><span>지도에 표시</span><i>→</i><span>"의심" 알림</span></div>
-  </div>
-  <div class="arrow">▼</div>
-  <div class="lane"><b>사람 — 확인하고 치운다</b>
-    <div class="steps"><span>현장 확인</span><i>→</i><span>조치</span><i>→</i><span>체크로 해제</span></div>
-  </div>
-  <div class="arrow">▼ 재점검</div>
-  <div class="lane"><b>MechDog — 재점검 후 순찰 복귀</b> · 화재면 4대가 갈림길에서 비상구 안내</div>
-</div>
-<p class="sub">기능은 「기능 정의서」, 시연은 「미션맵 · 시연 구성안」</p>
-
-<h2>6. 같이 놓고 본 배경</h2>
-<div class="tw"><table>
-  <tr><th>배경</th><th>좋은 점</th><th>걸리는 점</th></tr>
-  <tr><td>물류센터 · 창고 (지금 안)</td><td>바닥 적치가 많아 막힘 · 바닥 물건 장면이 자연스러움</td><td>장애물 목적(통행 / 작업 / 대피)을 나눠 설명해야 함</td></tr>
-  <tr><td>화학 위험물 센터</td><td>방마다 둘 수 있는 위험물 류가 정해져 "잘못 놓인 것"을 정의하기 쉬움</td><td>위험물은 주로 선반에 둠 · 조사 더 필요</td></tr>
-</table></div>
+<p class="sub">세부 기능은 02 기능 정의서, 시연은 03 미션맵 · 시연 구성안</p>
 
 </div>
 <script>
