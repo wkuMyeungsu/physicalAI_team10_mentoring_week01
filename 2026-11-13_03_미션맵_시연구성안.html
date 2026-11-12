@@ -114,12 +114,12 @@ body{padding-top:44px}
 <div class="tw"><table>
   <tr><th>로봇</th><th>맡은 곳</th><th>움직임</th></tr>
   <tr><td><i class="dot" style="background:var(--blue)"></i>A</td><td>외곽 전체</td><td>갈림길에서 직진 · 꺾기 · 통로 끝 마커 무시 · 후진 없음</td></tr>
-  <tr><td><i class="dot" style="background:var(--green)"></i>B</td><td>간선 + 막다른 통로 세 곳</td><td>꺾기 마커에서 통로로 → 통로 끝 마커에서 멈춰 확인 → 후진 → 간선 끝에서 아래 외곽 합류</td></tr>
+  <tr><td><i class="dot" style="background:var(--green)"></i>B</td><td>간선 + 막다른 통로 세 곳</td><td>꺾기 마커에서 통로로 → 통로 끝 마커가 카메라에 보이면 멈춰 확인 → 후진 → 간선 끝에서 아래 외곽 합류</td></tr>
   <tr><td><i class="dot" style="background:var(--gray)"></i>3 · 4</td><td>도크 옆 대기</td><td>충전 대기 → 교대 · 이상이 생기면 모두 출동</td></tr>
 </table></div>
 
 <h3 style="margin:16px 0 6px;font-size:15px">바닥 마커</h3>
-<p><b>바닥 마커로 위치를 특정한다.</b> 로봇이 지날 때마다 서버에 알린다. 종류(ArUco / 색 띠)는 실험 후 결정 · 시뮬레이션은 역할별 색으로 표시. (CP = 갈림길, S = 막다른 통로 끝)</p>
+<p><b>바닥 마커로 위치를 특정한다.</b> 바닥 카메라(머리의 카메라를 아래로 꺾어 비스듬히 조금 앞 바닥을 봄)에 마커가 들어올 때마다 서버에 알리고, 서버는 보는 거리만큼 뒤를 로봇 위치로 잡는다 (시뮬레이션은 몸 중심에서 25cm로 가정, 실측 후 조정). 종류(ArUco / 색 띠)는 실험 후 결정 · 시뮬레이션은 역할별 색으로 표시. (CP = 갈림길, S = 막다른 통로 끝)</p>
 <div class="tw"><table>
   <tr><th>자리</th><th>마커</th><th>B가 하는 일</th></tr>
   <tr><td>CP5 ~ CP8</td><td><i class="dot" style="background:var(--red)"></i>꺾기</td><td>꺾어 들어감 (CP5 외곽 → 간선, CP6~8 간선 → 랙 · 작업대 사이 통로)</td></tr>
@@ -208,6 +208,7 @@ body{padding-top:44px}
   <span><svg width="22" height="10"><rect x="1" y="3" width="20" height="4" fill="var(--blue)"/></svg> 파랑 띠 · 통로 끝</span>
   <span><svg width="22" height="10"><rect x="1" y="3" width="9" height="4" fill="#f2c94c"/><rect x="12" y="3" width="9" height="4" fill="#40c057"/></svg> 노랑 · 초록 띠 · 구간 마커</span>
   <span><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="#868e96" stroke-dasharray="2 2"/></svg> 서버가 추정한 위치</span>
+  <span><svg width="14" height="12"><rect x="2" y="1" width="10" height="10" fill="#fab005" fill-opacity=".45" stroke="#e67700"/></svg> 바닥 카메라가 보는 곳 (몸 앞 25cm)</span>
 </div>
 
 <h2>5. 재료</h2>
@@ -282,12 +283,17 @@ body{padding-top:44px}
   }
 
   /* ================= 경로 ================= */
+  // ponytail: 바닥 카메라 = 머리의 모듈형 카메라를 아래로 꺾어 비스듬히 앞 바닥을 봄.
+  //   몸 중심에서 보는 곳까지 25cm(머리 끝 13.5 + 약 10cm), 보이는 범위 앞뒤 ±4 · 좌우 ±10cm는 가정 — 실측하면 이 세 값만 바꾼다
+  var CAM_AHEAD = 25, CAM_D = 4, CAM_W = 10;
   var A_LOOP = "M185 225 H55 A30 30 0 0 1 25 195 V55 A30 30 0 0 1 55 25 H355 A30 30 0 0 1 385 55 V195 A30 30 0 0 1 355 225 H285 A25 25 0 0 0 260 250 A25 25 0 0 1 210 250 A25 25 0 0 0 185 225 Z";
   var B_MAIN = "M185 225 H55 A30 30 0 0 1 25 195 V160 A25 25 0 0 1 50 135 H360 A25 25 0 0 1 385 160 V195 A30 30 0 0 1 355 225 H285 A25 25 0 0 0 260 250 A25 25 0 0 1 210 250 A25 25 0 0 0 185 225 Z";
   var B_CORR = "M25 160 A25 25 0 0 1 50 135 H360 A25 25 0 0 1 385 160";
   var SP1 = "M120 135 A25 25 0 0 0 145 110 V50";
   var SP2 = "M180 135 A25 25 0 0 1 205 160 V200";
   var SP3 = "M240 135 A25 25 0 0 0 265 110 V50";
+  // B가 실제로 걷는 막다른 통로: 통로 끝 마커(S1 y57 · S2 y193 · S3 y57)가 카메라(몸 앞 CAM_AHEAD)에 들어오는 자리에서 멈춘다
+  var SP1_B = "M120 135 A25 25 0 0 0 145 110 V" + (57 + CAM_AHEAD), SP2_B = "M180 135 A25 25 0 0 1 205 160 V" + (193 - CAM_AHEAD), SP3_B = "M240 135 A25 25 0 0 0 265 110 V" + (57 + CAM_AHEAD);
   var BOTTOM = "M385 195 A30 30 0 0 1 355 225 H285 A25 25 0 0 0 260 250 A25 25 0 0 1 210 250 A25 25 0 0 0 185 225";
   var OUT = "M185 225 H55";
   var PATROLS = {
@@ -307,11 +313,11 @@ body{padding-top:44px}
     B:{steps:[
       "도크를 나와 아래 외곽을 서쪽으로",
       "왼쪽 외곽을 북쪽으로 · CP5 빨강에서 간선으로",
-      "CP6 빨강 → A1·A2 사이 통로 · S1 파랑에서 멈춰 확인",
+      "CP6 빨강 → A1·A2 사이 통로 · S1 파랑이 보이면 멈춰 확인",
       "선을 따라 후진해 간선 복귀",
-      "CP7 빨강 → B1·B2 사이 통로 · S2에서 확인",
+      "CP7 빨강 → B1·B2 사이 통로 · S2가 보이면 멈춰 확인",
       "선을 따라 후진해 간선 복귀",
-      "CP8 빨강 → A2·A3 사이 통로 · S3에서 확인",
+      "CP8 빨강 → A2·A3 사이 통로 · S3이 보이면 멈춰 확인",
       "선을 따라 후진해 간선 복귀",
       "간선 동쪽 끝 합류점 · 서버 허가를 받고 합류",
       "오른쪽 외곽을 내려가 아래 외곽으로 · 도크 U턴을 지나감"
@@ -319,11 +325,11 @@ body{padding-top:44px}
       {gate:"start", st:0},
       {d:OUT, st:0},
       {d:"M55 225 A30 30 0 0 1 25 195 V160 A25 25 0 0 1 50 135 H120", st:1},
-      {d:SP1, st:2}, {pause:1.2, st:2}, {d:SP1, rev:true, st:3},
+      {d:SP1_B, st:2}, {pause:1.2, st:2}, {d:SP1_B, rev:true, st:3},
       {d:"M120 135 H180", st:4},
-      {d:SP2, st:4}, {pause:1.2, st:4}, {d:SP2, rev:true, st:5},
+      {d:SP2_B, st:4}, {pause:1.2, st:4}, {d:SP2_B, rev:true, st:5},
       {d:"M180 135 H240", st:6},
-      {d:SP3, st:6}, {pause:1.2, st:6}, {d:SP3, rev:true, st:7},
+      {d:SP3_B, st:6}, {pause:1.2, st:6}, {d:SP3_B, rev:true, st:7},
       {d:"M240 135 H340", st:8}, {gate:"merge", st:8},
       {d:"M340 135 H360 A25 25 0 0 1 385 160 V195", st:9},
       {d:BOTTOM, st:9}
@@ -352,11 +358,13 @@ body{padding-top:44px}
   var EDGE_BY_D = {}, NODE_XY = [];
   EDGES.forEach(function(e){ EDGE_BY_D[e.d] = e; NODE_XY.push(pt(e.d, 0), pt(e.d, e.L)); });
   var NODE_POS = {}; EDGES.forEach(function(e){ NODE_POS[e.a] = pt(e.d, 0); NODE_POS[e.b] = pt(e.d, e.L); });
-  // 바닥 마커: 로봇은 좌표를 모르고 이 표식을 지날 때 "무슨 마커를 봤다"만 서버에 알린다
+  // 바닥 마커: 로봇은 좌표를 모르고 이 표식이 카메라에 들어올 때 "무슨 마커를 봤다"만 서버에 알린다
   var MARKERS = [["CP5", 25, 182, "red"], ["CP6", 100, 135, "red"], ["CP7", 160, 135, "red"], ["CP8", 220, 135, "red"], ["S1", 145, 57, "blue"], ["S2", 205, 193, "blue"], ["S3", 265, 57, "blue"]]
     .map(function(m){ return {name:m[0], x:m[1], y:m[2], c:m[3]}; });
   (function(){ var z = 0; EDGES.forEach(function(e){ for (var s = 25; s < e.L - 10; s += 50){
-    var q = pt(e.d, s);
+    var q = pt(e.d, s), qa = pt(e.d, s - CAM_AHEAD), qb = pt(e.d, s + CAM_AHEAD);
+    // 구간 마커는 직선에만: 앞을 비스듬히 보는 카메라는 곡선 위 마커를 화면에 못 담는다 (앞뒤 CAM_AHEAD가 곧아야 둠)
+    if (q.tx * qa.tx + q.ty * qa.ty < 0.999 || q.tx * qb.tx + q.ty * qb.ty < 0.999) continue;
     if (MARKERS.some(function(m){ return Math.hypot(m.x - q.x, m.y - q.y) < 18; }) || NODE_XY.some(function(n){ return Math.hypot(n.x - q.x, n.y - q.y) < 12; })) continue;
     z++; MARKERS.push({name:"Z" + z, x:q.x, y:q.y, c:z % 2 ? "yellow" : "green"});
   } }); })();
@@ -537,10 +545,11 @@ body{padding-top:44px}
     this.lastRep = T; this.lastMv = mv;
     send("server", {type:"STATE", id:this.id, moving:mv, task:this.task, stop:this.stop, hold:!!this.hold, arrived:!!this.arrived, bat:this.bat, seq:this.seq});
   };
-  Robot.prototype.readMarkers = function(){ // 바닥 카메라: 발밑을 지나는 마커를 읽어 서버에 알린다
+  Robot.prototype.readMarkers = function(){ // 바닥 카메라: 머리에서 비스듬히 내려다보는 앞쪽 바닥(CAM_AHEAD)에 들어온 마커를 읽어 서버에 알린다
     var p = this.pose, self = this;
     MARKERS.forEach(function(m, k){
-      if (Math.hypot(m.x - p.x, m.y - p.y) < 3 && self.lastMark !== k){ self.lastMark = k; self.say("DEBUG", "cam", "마커 인식 " + markerName(m)); send("server", {type:"MARK", id:self.id, m:k}); }
+      var dx = m.x - p.x, dy = m.y - p.y, fwd = dx * p.hx + dy * p.hy, side = dx * p.hy - dy * p.hx; // 곡선에선 보는 곳이 선 밖으로 벗어나서 화면 폭이 필요
+      if (Math.abs(fwd - CAM_AHEAD) < CAM_D && Math.abs(side) < CAM_W && self.lastMark !== k){ self.lastMark = k; self.say("DEBUG", "cam", "마커 인식 " + markerName(m)); send("server", {type:"MARK", id:self.id, m:k}); }
     });
   };
   Robot.prototype.tick = function(dt){
@@ -659,14 +668,14 @@ body{padding-top:44px}
     var pc = this.p[k], u = prog - this.cum[k], sign = pc.s1 > pc.s0 ? 1 : -1, q = pt(pc.d, pc.s0 + sign * u), f = pc.rev ? -1 : 1;
     return {x:q.x, y:q.y, mx:q.tx * sign, my:q.ty * sign, hx:q.tx * sign * f, hy:q.ty * sign * f, k:k, u:u};
   };
-  Track.prototype.snap = function(prog, m){ // 이 마커를 지금 추정 위치 근처 어디에서 지났나
+  Track.prototype.snap = function(prog, m){ // 이 마커를 지금 추정 위치 근처 어디에서 봤나 (카메라는 몸 앞 CAM_AHEAD를 봄)
     var best = null;
     for (var p = prog - 60; p <= prog + 150; p += 1){
       if (!this.loop && (p < 0 || p > this.L)) continue;
-      var a = this.at(p), d = Math.hypot(a.x - m.x, a.y - m.y);
-      if (d < 4 && (!best || Math.abs(p - prog) < Math.abs(best - prog))) best = p;
+      var a = this.at(p), d = Math.hypot(a.x + a.hx * CAM_AHEAD - m.x, a.y + a.hy * CAM_AHEAD - m.y);
+      if (d < CAM_W + 2 && (!best || d < best.d - 0.5 || (d < best.d + 0.5 && Math.abs(p - prog) < Math.abs(best.p - prog)))) best = {p:p, d:d};
     }
-    return best;
+    return best && best.p;
   };
   function patrolTrack(name){
     var segs = PATROLS[name].segs, pcs = [], idx = [];
@@ -1054,6 +1063,9 @@ body{padding-top:44px}
   function makeBot(label){
     var g = el("g", {}), body = el("g", {});
     var shell = el("rect", {x:-13.5, y:-6.5, width:27, height:13, rx:2, fill:"#2b3640", "stroke-width":1.4});
+    // 바닥 카메라가 보는 곳 (머리 끝에서 비스듬히 내려다본 앞 바닥)
+    body.appendChild(el("path", {d:"M13.5 0 L" + (CAM_AHEAD - CAM_D) + " 0", stroke:"#e67700", "stroke-width":.6, "stroke-dasharray":"1.5 1"}));
+    body.appendChild(el("rect", {x:CAM_AHEAD - CAM_D, y:-CAM_W, width:CAM_D * 2, height:CAM_W * 2, fill:"#fab005", "fill-opacity":.45, stroke:"#e67700", "stroke-width":.6}));
     body.appendChild(shell); body.appendChild(el("path", {d:"M8 -3 L12 0 L8 3 Z", fill:"#fff"}));
     g.appendChild(body);
     var tx = el("text", {"text-anchor":"middle", "font-size":7, fill:"#fff", "font-family":"Consolas, monospace", "font-weight":700}, label);
