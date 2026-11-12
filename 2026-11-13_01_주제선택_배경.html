@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주제 선택 · 배경</title>
+<style>
+:root{--bg:#eceff1;--paper:#fff;--ink:#111;--muted:#555;--rule:#111;--code:#f3f4f5;--todo:#b26a00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 system-ui,"Malgun Gothic",sans-serif}
+.doc{max-width:1200px;margin:24px auto;background:var(--paper);border:2px solid var(--rule);padding:0 22px 26px}
+@media (max-width:640px){.doc{margin:0;border-width:0 0 2px;padding:0 16px 20px}}
+h1{margin:0;padding:18px 0 4px;font-size:26px}
+.sub{color:var(--muted);margin:0 0 8px}
+h2{margin:26px 0 10px;padding:6px 10px;background:var(--ink);color:var(--paper);font-size:16px}
+.tw{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--rule);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--code);font-weight:600;white-space:nowrap}
+ul{padding-left:22px;margin:6px 0}
+li{margin:3px 0}
+.todo{color:var(--todo);font-weight:700}
+.def{border:2px solid var(--ink);padding:10px 12px;margin:10px 0;font-size:17px;font-weight:700}
+.flow{display:grid;gap:6px;margin:10px 0}
+.lane{border:2px solid var(--ink);padding:8px 10px}
+.lane b{display:block;margin-bottom:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.steps span{border:1px solid var(--rule);background:var(--code);padding:2px 8px;font-size:13px;white-space:nowrap}
+.steps i{font-style:normal;color:var(--muted)}
+.arrow{text-align:center;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<p class="sub" style="margin:12px 0 -12px;font-size:13px"><a href="index.html" style="color:inherit">← 목차</a></p>
+<h1>주제 선택 · 배경</h1>
+<p class="sub">무엇을, 왜 만드는지와 주제가 정해진 과정</p>
+<h2>1. 주제</h2>
+<div class="def">MechDog 4대가 대피 통로를 순찰하며 막힘 · 바닥 물건을 찾아 사람이 치우게 하고, 화재 때는 막힌 길을 피해 비상구로 안내한다.</div>
+<p class="sub">MechDog: 교육용 소형 4족 보행 로봇 키트</p>
+<p>이름: <b>AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</b></p>
+
+<h2>2. 배경 — 왜 통로인가</h2>
+<ul>
+  <li><b>통로 = 대피로</b>: 공장 · 창고(물류센터)에서 로봇이 다니는 길목이 곧 비상시 대피로</li>
+  <li><b>막힘 · 바닥 물건</b>: 쌓인 물건은 대피를 막고, 떨어진 물건은 밟거나 걸려 바로 사고</li>
+  <li><b>고정 유도등</b>: 불 위치를 모르고 가까운 비상구만 가리킴 → 불 쪽으로 보낼 수 있음</li>
+</ul>
+<p class="todo">출처를 확인한 숫자 · 사례 1~2개</p>
+
+<h2>3. 주제가 정해진 과정</h2>
+<div class="tw"><table>
+  <tr><th>날짜</th><th>한 것</th><th>남긴 것</th><th>접은 것</th></tr>
+  <tr><td>11/9</td><td>네 사람 아이디어 발표<br>(릴레이 순찰, 재난 탐색·화재 대피, MechDog 비서, 위험지도·환경 감시)</td><td>릴레이 순찰 + 화재 감지·대응</td><td></td></tr>
+  <tr><td>11/10</td><td>배경 조사<br>(공동구, 배터리 보관 시설, 보안·화학 위험물, 작업장 대피로)</td><td>평상시 시설 안전 순찰 + 비상시 대피 안내</td><td>자동 충전 릴레이 (스스로 충전 불가)</td></tr>
+  <tr><td>11/11</td><td>방향 구체화 · 취합</td><td>배경 공장·창고, 순찰 결과 이벤트(쓰러짐·장애물·화재)</td><td>실내 혼잡도 (통제 못 할 변수가 많음)</td></tr>
+  <tr><td>11/12</td><td>미션맵 구성안 취합</td><td><b>대피 통로 확보</b>로 확정 · 2대 릴레이 · 화재 = 캔들 + 온도 + 카메라</td><td>연기 · 물·기름 · 천장 카메라 · 가스</td></tr>
+</table></div>
+
+<h2>4. MechDog 제약과 방향</h2>
+<p>제약 때문에 현장 투입 대신 <b>미션맵(축소 시연 무대) 위에서 협동 순찰로 무엇이 되는지</b> 보여 준다.</p>
+<div class="tw"><table>
+  <tr><th>실용성을 노린 것</th><th>부딪힌 제약</th><th>그래서</th></tr>
+  <tr><td>실제 현장 투입</td><td>키가 낮고 느림 · 턱을 못 넘음 · 배터리가 짧음</td><td>미션맵 위에서 상황을 재현</td></tr>
+  <tr><td>24시간 순찰</td><td>자동 충전이 안 됨</td><td>사람이 충전하는 2대 릴레이</td></tr>
+  <tr><td>물 · 기름 · 연기 감지</td><td>카메라가 물을 못 봄 · 눈높이 ~30cm라 연기가 늦게 닿음</td><td>뺌</td></tr>
+  <tr><td>마커로 정확한 위치</td><td>걸을 때 흔들려 ArUco가 잘 안 읽힐 수 있음</td><td>마커 사용 확정 · 종류(ArUco / 색 띠)는 실험 후 결정</td></tr>
+  <tr><td>걸으며 초음파로 장애물 감지</td><td>코너에서 옆 랙을 장애물로 잡음 · 걸으며 재지는지 미확인</td><td>걸으며 시험 → 안 되면 마커에서 멈춰 측정</td></tr>
+  <tr><td>천장 카메라로 위치 추적</td><td>여러 카메라 매핑에 시간이 많이 듦</td><td>바닥 라인 + 마커</td></tr>
+  <tr><td>카메라 하나로 여러 일</td><td>키트 카메라는 한 번에 기능 하나</td><td>카메라 2대 (바닥 · 머리)</td></tr>
+</table></div>
+
+<h2>5. 생각한 해법</h2>
+<div class="flow">
+  <div class="lane"><b>MechDog — 순찰하며 찾는다</b>
+    <div class="steps"><span>2대 순찰 · 2대 충전</span><i>→</i><span>마커로 구역 확인</span><i>→</i><span>초음파 · 카메라 · 온도</span></div>
+  </div>
+  <div class="arrow">▼ 이상 발견</div>
+  <div class="lane"><b>관제(서버 · 대시보드) — 무엇인지 판단한다</b>
+    <div class="steps"><span>지나가는 사람 거르기</span><i>→</i><span>지도에 표시</span><i>→</i><span>"의심" 알림</span></div>
+  </div>
+  <div class="arrow">▼</div>
+  <div class="lane"><b>사람 — 확인하고 치운다</b>
+    <div class="steps"><span>현장 확인</span><i>→</i><span>조치</span><i>→</i><span>체크로 해제</span></div>
+  </div>
+  <div class="arrow">▼ 재점검</div>
+  <div class="lane"><b>MechDog — 재점검 후 순찰 복귀</b> · 화재면 4대가 갈림길에서 비상구 안내</div>
+</div>
+<p class="sub">기능은 「기능 정의서」, 시연은 「미션맵 · 시연 구성안」</p>
+
+<h2>6. 같이 놓고 본 배경</h2>
+<div class="tw"><table>
+  <tr><th>배경</th><th>좋은 점</th><th>걸리는 점</th></tr>
+  <tr><td>물류센터 · 창고 (지금 안)</td><td>바닥 적치가 많아 막힘 · 바닥 물건 장면이 자연스러움</td><td>장애물 목적(통행 / 작업 / 대피)을 나눠 설명해야 함</td></tr>
+  <tr><td>화학 위험물 센터</td><td>방마다 둘 수 있는 위험물 류가 정해져 "잘못 놓인 것"을 정의하기 쉬움</td><td>위험물은 주로 선반에 둠 · 조사 더 필요</td></tr>
+</table></div>
+
+</div>
+</body>
+</html>
