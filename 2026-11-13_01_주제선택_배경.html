@@ -28,12 +28,19 @@ li{margin:3px 0}
 .steps span{border:1px solid var(--rule);background:var(--code);padding:2px 8px;font-size:13px;white-space:nowrap}
 .steps i{font-style:normal;color:var(--muted)}
 .arrow{text-align:center;font-size:13px;color:var(--muted)}
+/* 상단 고정 문서 이동 바 */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:7px 16px;background:var(--ink);font-size:13px;line-height:1.5;white-space:nowrap}
+.topnav a{color:#b8bec4;text-decoration:none}
+.topnav a:hover,.topnav a:focus-visible,.topnav a[aria-current]{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.topnav>span{display:flex;gap:14px}
+body{padding-top:38px}
+@media (max-width:640px){.topnav .lbl{display:none}}
 </style>
 </head>
 <body>
+<nav class="topnav" aria-label="문서 이동"><a href="index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html" aria-current="page">01<span class="lbl"> 주제 · 배경</span></a><a href="2026-11-13_02_기능정의서.html">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵 · 시연</span></a></span></nav>
 <div class="doc">
 
-<p class="sub" style="margin:12px 0 -12px;font-size:13px"><a href="index.html" style="color:inherit">← 목차</a></p>
 <h1>주제 선택 · 배경</h1>
 <p class="sub">무엇을, 왜 만드는지와 주제가 정해진 과정</p>
 <h2>1. 주제</h2>
