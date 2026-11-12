@@ -21,10 +21,14 @@ ul{padding-left:22px;margin:6px 0}
 li{margin:3px 0}
 .todo{color:var(--todo);font-weight:700}
 .def{border:2px solid var(--ink);padding:10px 12px;margin:10px 0;font-size:17px;font-weight:700}
-.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
-.steps b{margin-right:2px}
-.steps span{border:1px solid var(--rule);background:var(--code);padding:2px 8px;font-size:13px;white-space:nowrap}
-.steps i{font-style:normal;color:var(--muted)}
+/* 구현 방향 위 운영 흐름: 표와 같은 테두리, 왼쪽 라벨은 소제목처럼 */
+.modes{border:2px solid var(--ink);margin:10px 0;font-size:14px}
+.modes div{display:grid;grid-template-columns:4.6em 1fr}
+.modes div+div{border-top:1px solid var(--rule)}
+.modes b{background:var(--ink);color:var(--paper);padding:6px 0;text-align:center;font-weight:600}
+.modes span{padding:6px 10px}
+.modes i{font-style:normal;color:var(--muted);margin:0 6px}
+td.k{white-space:nowrap}
 .ev{display:block;color:var(--muted);font-size:13px}
 .src{margin:10px 0 0;padding-left:22px;color:var(--muted);font-size:12px}
 .src a{color:inherit}
@@ -55,16 +59,21 @@ body{padding-top:44px}
 <h1>주제 선택 · 배경</h1>
 <p class="sub">무엇을, 왜 만드는지와 주제가 정해진 과정</p>
 <h2>1. 주제 개요</h2>
-<div class="def">MechDog 4대가 대피 통로를 순찰하며 막힘 · 바닥 물건을 찾아 사람이 치우게 하고, 화재 때는 막힌 길을 피해 비상구로 안내한다.</div>
-<p>이름: <b>AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</b> <span class="sub">· MechDog = 교육용 소형 4족 보행 로봇 키트</span></p>
+<div class="def">MechDog 4대가 공장 · 창고의 통로를 교대로 순찰하며 통로를 막은 물건, 바닥에 떨어진 물건, 쓰러진 사람, 과열을 찾아 관리자에게 알리고, 화재가 나면 갈림길에 서서 불을 피해 비상구로 가는 길을 안내한다.</div>
+<ul>
+  <li><b>이름</b>: AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</li>
+  <li><b>운영</b>: 2대가 순찰하는 동안 2대는 충전 자리(도크)에서 쉬며 교대한다</li>
+  <li><b>관제</b>: 로봇이 보낸 위치 · 센서 값을 서버가 모아 판단하고, 대시보드 화면으로 관리자에게 알린다</li>
+</ul>
 
 <h2>2. 주제 선정 경과</h2>
 <div class="tw"><table>
-  <tr><th>날짜</th><th>검토</th><th>채택</th><th>제외</th></tr>
-  <tr><td>11/9</td><td>아이디어 4개: 릴레이 순찰 · 재난 탐색(화재 대피) · MechDog 비서 · 위험지도(환경 감시)</td><td>릴레이 순찰 + 화재 대응</td><td></td></tr>
-  <tr><td>11/10</td><td>배경 4곳: 공동구 · 배터리 보관 · 화학 위험물 · 작업장 대피로</td><td>평시 안전 순찰 + 비상 대피 안내</td><td>자동 충전 릴레이</td></tr>
-  <tr><td>11/11</td><td>방향 구체화</td><td>공장 · 창고, 이벤트(쓰러짐 · 장애물 · 화재)</td><td>실내 혼잡도</td></tr>
-  <tr><td>11/12</td><td>미션맵 구성안</td><td><b>대피 통로 확보</b> · 2대 릴레이 · 화재는 캔들 + 온도 + 카메라</td><td>연기 · 물 · 기름 · 천장 카메라 · 가스</td></tr>
+  <tr><th>단계</th><th>검토</th><th>결정</th><th>이유</th></tr>
+  <tr><td class="k">아이디어</td><td>여러 대가 교대로 쉬지 않고 순찰 · 재난 현장 생존자 탐색 · 대화형 생활 도우미 · 실외 환경 감시</td><td>실내 시설을 여러 대가 교대로 순찰하며 화재 위험을 미리 찾고 대피를 돕는다</td><td>실내 화재는 인명 · 재산 피해가 크고, 실외는 차 · 사람 같은 장애물이 훨씬 많다</td></tr>
+  <tr><td class="k">배경 공간</td><td>지하 공동구 · 배터리 보관 시설 · 화학 위험물 창고 · 공장 작업장</td><td>공장 · 창고</td><td>적용할 곳이 많고, 배터리 · 위험물 보관 구역도 그 안에 넣을 수 있다</td></tr>
+  <tr><td class="k">로봇의 역할</td><td>화재 전문 감시 vs 안전사고 전반 예방</td><td>순찰하며 쓰러진 사람 · 장애물 · 화재 같은 안전사고를 예방</td><td>키가 낮은 로봇은 화재 전문 감시에 약하다</td></tr>
+  <tr><td class="k">화재 시 역할</td><td>소방대원을 구조가 필요한 사람에게 안내 vs 작업자에게 대피 방향 안내</td><td>작업자에게 대피 방향 안내</td><td>로봇이 사람 걸음보다 느려 앞장서 안내하기 어렵다</td></tr>
+  <tr><td class="k">시연 범위</td><td>감지 대상 · 위치 파악 방법</td><td>대피 통로를 중심으로: 막힌 통로 · 바닥 물건 · 과열과 화재 · 배터리 교대</td><td>연기는 위부터 차서 바닥 로봇에 늦게 닿고, 물 · 기름은 카메라로 구분하기 어려워 연기 · 물 · 기름 · 가스 감지는 뺀다. 천장 카메라 대신 바닥 표식으로 위치를 파악한다</td></tr>
 </table></div>
 
 <h2>3. 추진 배경</h2>
@@ -84,33 +93,34 @@ body{padding-top:44px}
 </ol>
 
 <h2>4. 제약 사항 및 범위 조정</h2>
-<p>목표는 <b>공장 · 창고의 안전을 두루 책임지는 순찰 로봇</b>이었다. 하지만 MechDog을 직접 켜 보고 따져 보니 제약이 많았다.</p>
+<p>처음 목표는 <b>공장 · 창고의 안전을 두루 맡는 순찰 로봇</b>이었으나, MechDog의 크기 · 센서 · 배터리 제약 때문에 아래와 같이 범위를 조정했다.</p>
 <div class="tw"><table>
   <tr><th>목표 기능</th><th>제약 요인</th><th>조정 결과</th></tr>
   <tr><td>공장 · 창고 사고 전반 예방</td><td>끼임 · 떨어짐 · 지게차 충돌은 로봇이 막을 수 없음</td><td>바닥 위험 · 통로 · 쓰러진 사람 · 화재 전조로 축소</td></tr>
-  <tr><td>위험 직접 해결 · 인명 구조</td><td>작아서 직접 해결 · 구조가 어렵고, 사람 걸음보다 느림</td><td>모니터링 · 알림 (조치는 사람)</td></tr>
-  <tr><td>방범 순찰 (외부인 탐지)</td><td>얼굴을 아래에서 올려다봄 · 찾아도 사후 대처 불가</td><td>제외</td></tr>
-  <tr><td>화재 전문 감시</td><td>낮은 시점 · 연기는 위부터 차서 늦게 닿음 · 배터리 창고는 BMS가 이미 감시</td><td>과열(화재 전조) 감지 + 대피 안내</td></tr>
-  <tr><td>랙 · 고소 영역 점검</td><td>위를 못 봄 (물류창고 랙은 3m부터)</td><td>바닥 · 통로로 한정</td></tr>
-  <tr><td>범용 이상 탐지</td><td>카메라 1대 · 라이다 없음 · AI는 학습한 것만 판별</td><td>막힘 · 바닥 물건 · 쓰러짐 · 과열로 한정</td></tr>
-  <tr><td>24시간 연속 순찰</td><td>배터리가 짧고 스스로 충전 불가</td><td>2대 순찰 · 2대 충전 릴레이 (충전은 사람)</td></tr>
-  <tr><td>실제 현장 투입</td><td>느림 · 턱을 못 넘음 · 열 · 연기에 약함 · 직각 회전 불가</td><td>미션맵 위에서 재현</td></tr>
+  <tr><td>위험 직접 해결 · 인명 구조</td><td>작아서 직접 해결 · 구조가 어렵고, 사람 걸음보다 느림</td><td>찾아서 알리는 역할만 하고, 조치는 사람이 함</td></tr>
+  <tr><td>방범 순찰 (외부인 탐지)</td><td>얼굴을 아래에서 올려다봄 · 찾아도 대처할 수단이 없음</td><td>제외</td></tr>
+  <tr><td>화재 전문 감시</td><td>시점이 낮음 · 연기는 위부터 차서 늦게 닿음 · 배터리 창고는 배터리 관리 시스템(BMS)이 이미 감시</td><td>과열(불이 나기 전 이상 발열) 감지 + 대피 안내</td></tr>
+  <tr><td>랙 · 높은 곳 점검</td><td>위를 못 봄 (물류창고 선반은 3m 높이부터)</td><td>바닥 · 통로로 한정</td></tr>
+  <tr><td>무엇이든 알아보는 순찰</td><td>카메라 1대 · 라이다 없음 · AI는 학습시킨 대상만 판별</td><td>막힘 · 바닥 물건 · 쓰러진 사람 · 과열로 한정</td></tr>
+  <tr><td>24시간 연속 순찰</td><td>배터리가 짧고, 충전 단자에 스스로 정확히 꽂지 못함</td><td>2대 순찰 · 2대 충전 교대 (시연에서는 도크에 들어가면 충전된다고 가정)</td></tr>
+  <tr><td>실제 현장 투입</td><td>느림 · 턱을 못 넘음 · 열 · 연기에 약함 · 직각으로 돌지 못함</td><td>미션맵 위에서 재현</td></tr>
 </table></div>
-<div class="def">그래서 현장 투입용 뾰족한 기능보다, 미션맵(축소 시연 무대) 위에서 평상시 순찰부터 화재 대피 안내까지 <b>전체 흐름을 시뮬레이션으로 구현</b>해 가능성을 확인하는 데 집중한다.</div>
+<div class="def">따라서 현장에 바로 투입할 제품보다, 미션맵 위에서 평상시 순찰부터 화재 대피 안내까지 <b>전체 흐름을 시뮬레이션으로 구현</b>해 가능성을 확인하는 데 집중한다.</div>
 
 <h2>5. 구현 방향</h2>
-<div class="steps"><b>평상시</b><span>2대 순찰 · 2대 도크 대기</span><i>→</i><span>감지 (MechDog)</span><i>→</i><span>판단 · 알림 (관제)</span><i>→</i><span>조치 (사람 · 로봇)</span></div>
-<div class="steps"><b>비상시</b><span>대기 로봇까지 4대 모두 출동</span></div>
+<div class="modes">
+  <div><b>평상시</b><span>2대 순찰 · 2대 충전 대기<i>→</i>로봇이 감지<i>→</i>서버가 판단해 대시보드로 알림<i>→</i>관리자 조치</span></div>
+  <div><b>비상시</b><span>충전 중인 로봇까지 4대 모두 출동</span></div>
+</div>
 <div class="tw"><table>
   <tr><th>상황</th><th>감지</th><th>판단 · 알림</th><th>조치</th></tr>
-  <tr><td>바닥 물건</td><td>바닥 카메라 (초음파 무반응 = 낮은 물체)</td><td>"밟힘 주의" 표시</td><td>순찰 계속 · 관리자가 치우고 체크</td></tr>
-  <tr><td>통로 막힘</td><td>초음파로 멈춰 보고</td><td>사람 · 다른 로봇이 아니면 장애물로 판단 → 지도에 통로 차단</td><td>관리자가 치우고 체크 → 로봇 재통과로 해제</td></tr>
-  <tr><td>배터리 부족</td><td>20% 미만 보고</td><td>대기 로봇에 진행 위치 인계</td><td>교대 로봇이 이어 순찰 · 지친 로봇은 도크로</td></tr>
-  <tr><td>과열</td><td>45℃ 초과 → 멈춰 측정</td><td>대기 로봇 출동, 교차 확인 → 둘 다 50℃ 초과면 화재 확정</td><td></td></tr>
-  <tr><td>화재</td><td></td><td>4대를 갈림길에 배정 · 불 반대쪽 비상구 계산</td><td>로봇 LED 화살표 · ✕로 대피 안내 (막힌 길 회피)</td></tr>
-  <tr><td>쓰러진 사람</td><td>카메라 (오래 누워 있거나 움직이지 않음)</td><td>알림</td><td class="todo">이번 범위에 넣을지 검토 중</td></tr>
+  <tr><td class="k">바닥 물건</td><td>바닥을 보는 카메라가 초음파에 안 잡히는 낮은 물체를 찾음</td><td>"밟힘 주의" 표시</td><td>로봇은 순찰 계속 · 관리자가 치우고 대시보드에서 확인 처리</td></tr>
+  <tr><td class="k">통로 막힘</td><td>초음파 센서가 앞을 막은 물체를 잡으면 멈추고 보고</td><td>지나가는 사람이나 다른 로봇이 아니면 장애물로 보고 지도에 통로 차단 표시</td><td>관리자가 치우고 확인 처리 → 로봇이 다시 지나가 확인하면 해제</td></tr>
+  <tr><td class="k">배터리 부족</td><td>배터리 20% 미만을 보고</td><td>쉬던 로봇에게 순찰 중이던 위치를 넘김</td><td>쉬던 로봇이 그 자리부터 이어 순찰 · 지친 로봇은 도크에서 충전</td></tr>
+  <tr><td class="k">과열</td><td>표면 온도 45℃ 초과 → 멈춰서 계속 측정</td><td>쉬던 로봇을 보내 다시 재게 하고, 둘 다 50℃ 초과면 화재로 확정</td><td></td></tr>
+  <tr><td class="k">화재</td><td></td><td>4대를 통로 갈림길에 배치하고 불 반대쪽 비상구 방향을 정함</td><td>로봇 LED에 화살표(갈 방향) · ✕(진입 금지)를 띄워 막힌 길을 피해 대피 안내</td></tr>
+  <tr><td class="k">쓰러진 사람</td><td>카메라로 일정 시간 누워 있거나 움직이지 않는 사람을 찾음</td><td>다시 확인하지 않고 바로 긴급 알림 · 지도에 위치 표시</td><td>발견한 로봇은 곁을 지키고 쉬던 로봇이 그 구역 순찰을 이어받음 · 관리자 조치 후 원래 로봇 복귀</td></tr>
 </table></div>
-<p class="sub">세부 기능은 02 기능 정의서, 시연은 03 미션맵 · 시연 구성안</p>
 
 </div>
 <script>
