@@ -23,6 +23,10 @@ li{margin:3px 0}
 .todo{color:var(--todo);font-weight:700}
 .graph{overflow-x:auto;border:1px solid var(--rule);background:var(--code);padding:6px}
 .graph svg{display:block;width:100%;min-width:600px;height:auto}
+/* 모바일은 세로 구성도 (가로판은 옆으로 밀어야 보임) */
+.graph .m{display:none}
+.graph .m .ln{marker-end:url(#arr2)}
+@media (max-width:640px){.graph .w{display:none}.graph .m{display:block;min-width:0;max-width:380px;margin:0 auto}}
 .graph text{font-family:system-ui,"Malgun Gothic",sans-serif;fill:var(--ink)}
 .graph .box{fill:var(--paper);stroke:var(--ink);stroke-width:2}
 .graph .ext{fill:var(--paper);stroke:var(--ink);stroke-width:2;stroke-dasharray:2 3}
@@ -40,6 +44,17 @@ li{margin:3px 0}
 .topnav>span{display:flex;gap:18px}
 body{padding-top:44px}
 @media (max-width:640px){.topnav .lbl{display:none}}
+/* 모바일: 머리줄이 있는 3칸 이상 표는 행마다 카드로 (칸 이름은 아래 스크립트가 붙임) */
+@media (max-width:640px){
+  table.cards,table.cards tbody,table.cards tr,table.cards td{display:block}
+  table.cards tr:first-child{display:none}
+  table.cards tr{border:1px solid var(--rule);margin:0 0 8px;padding:6px 10px}
+  table.cards td{border:0;padding:1px 0 1px 6.6em}
+  table.cards td:first-child{padding-left:0;font-weight:700}
+  table.cards td:empty{display:none}
+  table.cards td+td{display:flow-root}
+  table.cards td+td::before{content:attr(data-l);float:left;width:7.4em;margin-left:-7.4em;color:var(--muted);font-size:12px;font-weight:400;padding-top:2px}
+}
 </style>
 </head>
 <body>
@@ -58,7 +73,7 @@ body{padding-top:44px}
 
 <h2>2. 시스템 구성</h2>
 <div class="graph">
-<svg viewBox="0 0 760 300" role="img" aria-label="MechDog 4대가 서버로 위치와 센서 값을 보내고, 서버가 대시보드에 의심을 띄우면 관리자가 확인해 해제하고 로봇이 재점검하는 구조도">
+<svg class="w" viewBox="0 0 760 300" role="img" aria-label="MechDog 4대가 서버로 위치와 센서 값을 보내고, 서버가 대시보드에 의심을 띄우면 관리자가 확인해 해제하고 로봇이 재점검하는 구조도">
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink)"/></marker>
   </defs>
@@ -94,6 +109,44 @@ body{padding-top:44px}
   <text class="n halo" x="470" y="214" text-anchor="middle">④</text>
   <path class="ln" d="M288 100H182"/>
   <text class="n halo" x="235" y="118" text-anchor="middle">⑤</text>
+</svg>
+<svg class="m" viewBox="0 0 340 400" role="img" aria-label="MechDog 4대가 서버로 위치와 센서 값을 보내고, 서버가 대시보드에 의심을 띄우면 관리자가 확인해 해제하고 로봇이 재점검하는 구조도">
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink)"/></marker>
+  </defs>
+  <rect class="net" x="6" y="110" width="328" height="284" rx="6"/>
+  <text class="t" x="326" y="386" text-anchor="end">관제 (같은 네트워크)</text>
+
+  <rect class="box" x="15" y="8" width="200" height="74" rx="4"/>
+  <text class="n" x="115" y="34" text-anchor="middle">MechDog ×4</text>
+  <text class="t" x="115" y="54" text-anchor="middle">바닥·머리 카메라</text>
+  <text class="t" x="115" y="72" text-anchor="middle">초음파 · 온도 센서</text>
+
+  <rect class="box" x="15" y="138" width="200" height="74" rx="4"/>
+  <text class="n" x="115" y="164" text-anchor="middle">서버</text>
+  <text class="t" x="115" y="184" text-anchor="middle">라즈베리 파이 / PC (미정)</text>
+  <text class="t" x="115" y="202" text-anchor="middle">가상 지도 · 이벤트 · 사람 검출</text>
+
+  <rect class="box" x="15" y="292" width="200" height="74" rx="4"/>
+  <text class="n" x="115" y="318" text-anchor="middle">대시보드</text>
+  <text class="t" x="115" y="338" text-anchor="middle">로봇 위치 · 이상 표시</text>
+  <text class="t" x="115" y="356" text-anchor="middle">의심 → 체크 → 해제</text>
+
+  <rect class="ext" x="250" y="292" width="80" height="74" rx="4"/>
+  <text class="n" x="290" y="318" text-anchor="middle">관리자</text>
+  <text class="t" x="290" y="338" text-anchor="middle">현장 확인</text>
+  <text class="t" x="290" y="356" text-anchor="middle">치우기</text>
+
+  <path class="ln" d="M95 84V136"/>
+  <text class="n halo" x="84" y="115" text-anchor="end">①</text>
+  <path class="ln" d="M115 214V290"/>
+  <text class="n halo" x="126" y="256">②</text>
+  <path class="ln" d="M217 329H248"/>
+  <text class="n halo" x="232" y="320" text-anchor="middle">③</text>
+  <path class="ln" d="M290 290V175H217"/>
+  <text class="n halo" x="300" y="240">④</text>
+  <path class="ln" d="M135 136V84"/>
+  <text class="n halo" x="146" y="115">⑤</text>
 </svg>
 </div>
 <div class="legend">
@@ -172,5 +225,14 @@ body{padding-top:44px}
 <p class="todo">담당과 날짜 붙이기</p>
 
 </div>
+<script>
+// 모바일 카드 표: 머리줄(전부 th) · 3칸 이상인 표에만, 각 칸에 머리 이름을 붙여 둔다
+document.querySelectorAll("table").forEach(function(t){
+  var h = [].map.call(t.rows[0].cells, function(c){ return c.tagName === "TH" ? c.textContent : null; });
+  if (h.length < 3 || h.indexOf(null) >= 0) return;
+  t.classList.add("cards");
+  [].slice.call(t.rows, 1).forEach(function(r){ [].forEach.call(r.cells, function(c, i){ c.setAttribute("data-l", h[i]); }); });
+});
+</script>
 </body>
 </html>

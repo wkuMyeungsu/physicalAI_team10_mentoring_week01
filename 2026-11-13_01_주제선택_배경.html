@@ -38,6 +38,17 @@ li{margin:3px 0}
 .topnav>span{display:flex;gap:18px}
 body{padding-top:44px}
 @media (max-width:640px){.topnav .lbl{display:none}}
+/* 모바일: 머리줄이 있는 3칸 이상 표는 행마다 카드로 (칸 이름은 아래 스크립트가 붙임) */
+@media (max-width:640px){
+  table.cards,table.cards tbody,table.cards tr,table.cards td{display:block}
+  table.cards tr:first-child{display:none}
+  table.cards tr{border:1px solid var(--rule);margin:0 0 8px;padding:6px 10px}
+  table.cards td{border:0;padding:1px 0 1px 6.6em}
+  table.cards td:first-child{padding-left:0;font-weight:700}
+  table.cards td:empty{display:none}
+  table.cards td+td{display:flow-root}
+  table.cards td+td::before{content:attr(data-l);float:left;width:7.4em;margin-left:-7.4em;color:var(--muted);font-size:12px;font-weight:400;padding-top:2px}
+}
 </style>
 </head>
 <body>
@@ -115,5 +126,14 @@ body{padding-top:44px}
 </table></div>
 
 </div>
+<script>
+// 모바일 카드 표: 머리줄(전부 th) · 3칸 이상인 표에만, 각 칸에 머리 이름을 붙여 둔다
+document.querySelectorAll("table").forEach(function(t){
+  var h = [].map.call(t.rows[0].cells, function(c){ return c.tagName === "TH" ? c.textContent : null; });
+  if (h.length < 3 || h.indexOf(null) >= 0) return;
+  t.classList.add("cards");
+  [].slice.call(t.rows, 1).forEach(function(r){ [].forEach.call(r.cells, function(c, i){ c.setAttribute("data-l", h[i]); }); });
+});
+</script>
 </body>
 </html>

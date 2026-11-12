@@ -30,7 +30,7 @@ li{margin:3px 0}
 .player button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
 .player .clock{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:14px;font-weight:700}
 .simwrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;border:2px solid var(--ink)}
-@media (max-width:760px){.simwrap{grid-template-columns:minmax(0,1fr)}.logbox{border-left:0!important;border-top:2px solid var(--ink)}.log{max-height:14em}}
+@media (max-width:760px){.simwrap{grid-template-columns:minmax(0,1fr)}.logbox{border-left:0!important;border-top:2px solid var(--ink)}.logbox .log{flex:none;height:15em}}
 .simmain{min-width:0;display:flex;flex-direction:column}
 /* 장면 설명 · 상태 줄은 글 길이와 상관없이 높이 고정 (영역이 늘었다 줄었다 하지 않게) */
 .chapter{padding:6px 10px;font-size:13.5px;line-height:1.55;border-bottom:1px solid var(--rule);box-sizing:content-box;height:6.2em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
@@ -39,6 +39,16 @@ li{margin:3px 0}
 .status{border-top:1px solid var(--rule);padding:6px 10px;font-size:13px;line-height:1.6;display:grid;grid-template-rows:repeat(4,1.6em);gap:2px;height:calc(4 * 1.6em + 6px);box-sizing:content-box}
 .status span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 #sim-play{min-width:6.5em}
+.player .grp{flex-wrap:wrap}
+.player button{white-space:nowrap}
+/* 모바일: 지도를 화면 폭에 맞추고 글자를 키움 · 설명 5줄 · 상태 줄은 로봇마다 2줄 (높이는 그대로 고정) */
+@media (max-width:640px){
+  .graph svg{min-width:0}
+  #sim .t{font-size:7.5px}
+  .chapter{height:7.75em;-webkit-line-clamp:5}
+  .status{grid-template-rows:repeat(4,3.2em);height:calc(4 * 3.2em + 6px)}
+  .status span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+}
 .logbox{border-left:2px solid var(--ink);display:flex;flex-direction:column;min-height:0}
 .loghead{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;padding:4px 10px}
 .loghead label{font-weight:400;font-size:12px}
@@ -64,6 +74,17 @@ li{margin:3px 0}
 .topnav>span{display:flex;gap:18px}
 body{padding-top:44px}
 @media (max-width:640px){.topnav .lbl{display:none}}
+/* 모바일: 머리줄이 있는 3칸 이상 표는 행마다 카드로 (칸 이름은 아래 스크립트가 붙임) */
+@media (max-width:640px){
+  table.cards,table.cards tbody,table.cards tr,table.cards td{display:block}
+  table.cards tr:first-child{display:none}
+  table.cards tr{border:1px solid var(--rule);margin:0 0 8px;padding:6px 10px}
+  table.cards td{border:0;padding:1px 0 1px 6.6em}
+  table.cards td:first-child{padding-left:0;font-weight:700}
+  table.cards td:empty{display:none}
+  table.cards td+td{display:flow-root}
+  table.cards td+td::before{content:attr(data-l);float:left;width:7.4em;margin-left:-7.4em;color:var(--muted);font-size:12px;font-weight:400;padding-top:2px}
+}
 </style>
 </head>
 <body>
@@ -997,13 +1018,15 @@ body{padding-top:44px}
   var ln = el("g", {fill:"none", stroke:"#111", "stroke-width":2, "stroke-linejoin":"round"});
   [A_LOOP, B_CORR, SP1, SP2, SP3].forEach(function(d){ ln.appendChild(el("path", {d:d})); });
   svg.appendChild(ln);
-  var lb = el("g", {"class":"t", "font-size":5.5});
-  [["CP5", 32, 184], ["CP6", 94, 150], ["CP7", 154, 150], ["CP8", 214, 150], ["S1", 151, 59], ["S2", 211, 197], ["S3", 271, 59]].forEach(function(c){ lb.appendChild(el("text", {x:c[1], y:c[2]}, c[0])); });
+  // 마커 이름은 띠 · 선과 겹치지 않는 빈 자리에 (흰 테두리로 위에 지나가는 것과도 구분)
+  var HALO = {stroke:"#fff", "stroke-width":2, "paint-order":"stroke"};
+  var lb = el("g", Object.assign({"class":"t", "font-size":5.5, "text-anchor":"middle"}, HALO));
+  [["CP5", 30, 176, "start"], ["CP6", 100, 114], ["CP7", 160, 114], ["CP8", 220, 114], ["S1", 145, 46], ["S2", 205, 209], ["S3", 265, 46]].forEach(function(c){ lb.appendChild(el("text", {x:c[1], y:c[2], "text-anchor":c[3] || "middle"}, c[0])); });
   svg.appendChild(lb);
   var spotG = el("g", {display:"none"});
   [["①", 50, 135], ["②", 360, 135], ["③", 180, 135], ["④", 205, 25]].forEach(function(s){
     spotG.appendChild(el("circle", {cx:s[1], cy:s[2], r:9, fill:"none", stroke:"#2f9e44", "stroke-width":1, "stroke-dasharray":"2 2"}));
-    spotG.appendChild(el("text", {"class":"t", x:s[1] + 11, y:s[2] + 11, "font-size":6, "font-weight":700}, s[0]));
+    spotG.appendChild(el("text", Object.assign({"class":"t", x:s[1], y:s[2] + 19, "font-size":6, "font-weight":700, "text-anchor":"middle"}, HALO), s[0]));
   });
   svg.appendChild(spotG);
   var boxG = el("g", {display:"none"});
@@ -1172,13 +1195,14 @@ body{padding-top:44px}
     boxG.setAttribute("display", WORLD.box.on ? "inline" : "none");
     heatG.setAttribute("display", WORLD.heat.on ? "inline" : "none");
     itemG.setAttribute("display", WORLD.item.on ? "inline" : "none"); itemLbl.textContent = SV.ev.item ? "바닥 물건 · 주의" : "바닥 물건";
-    heatHalo.setAttribute("r", WORLD.heat.big ? 11 : 5); heatLbl.textContent = WORLD.heat.big ? "화재" : "과열";
+    heatHalo.setAttribute("r", WORLD.heat.big ? 11 : 5); heatLbl.textContent = WORLD.heat.big ? "화재" : "과열"; heatLbl.setAttribute("y", WORLD.heat.big ? -14 : -9);
     if (dir.ch < 5) spotG.setAttribute("display", "none");
     var fire = dir.ch === 5;
-    [[ex1, 1], [ex2, 2]].forEach(function(e){
-      var t = "비상구 " + e[1], c = "#555";
-      if (fire){ if (e[1] === 2){ t += " · 대피"; c = "#2f9e44"; } else { t += " · 불 쪽"; c = "#e03131"; } }
-      e[0].textContent = t; e[0].style.fill = c;
+    [[ex1, 1], [ex2, 2]].forEach(function(e){ // 화재 때는 두 줄 (한 줄이면 지도 밖으로 잘림)
+      var sub = fire ? (e[1] === 2 ? "대피" : "불 쪽") : "";
+      if (e[0].__sub === sub) return; e[0].__sub = sub;
+      e[0].textContent = "비상구 " + e[1]; e[0].style.fill = !fire ? "#555" : e[1] === 2 ? "#2f9e44" : "#e03131";
+      if (sub) e[0].appendChild(el("tspan", {x:e[0].getAttribute("x"), dy:"1.2em"}, sub));
     });
     mgrG.setAttribute("display", WORLD.mgr.state === "off" ? "none" : "inline");
     var mp = along(WORLD.mgr.P, WORLD.mgr.d); mgrG.setAttribute("transform", "translate(" + mp[0].toFixed(1) + " " + mp[1].toFixed(1) + ")");
@@ -1220,6 +1244,15 @@ body{padding-top:44px}
   }
   requestAnimationFrame(frame);
 })();
+</script>
+<script>
+// 모바일 카드 표: 머리줄(전부 th) · 3칸 이상인 표에만, 각 칸에 머리 이름을 붙여 둔다
+document.querySelectorAll("table").forEach(function(t){
+  var h = [].map.call(t.rows[0].cells, function(c){ return c.tagName === "TH" ? c.textContent : null; });
+  if (h.length < 3 || h.indexOf(null) >= 0) return;
+  t.classList.add("cards");
+  [].slice.call(t.rows, 1).forEach(function(r){ [].forEach.call(r.cells, function(c, i){ c.setAttribute("data-l", h[i]); }); });
+});
 </script>
 </body>
 </html>
