@@ -28,6 +28,9 @@ li{margin:3px 0}
 .steps span{border:1px solid var(--rule);background:var(--code);padding:2px 8px;font-size:13px;white-space:nowrap}
 .steps i{font-style:normal;color:var(--muted)}
 .arrow{text-align:center;font-size:13px;color:var(--muted)}
+.ev{display:block;color:var(--muted);font-size:13px}
+.src{margin:10px 0 0;padding-left:22px;color:var(--muted);font-size:12px}
+.src a{color:inherit}
 /* 상단 고정 문서 이동 바 */
 .topnav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 18px;background:var(--ink);font-size:15px;font-weight:600;line-height:1.5;white-space:nowrap}
 .topnav a{color:#b8bec4;text-decoration:none}
@@ -49,12 +52,20 @@ body{padding-top:44px}
 <p>이름: <b>AI 협동로봇 기반 공장&amp;창고 안전관리 시스템</b></p>
 
 <h2>2. 배경 — 왜 통로인가</h2>
+<p><b>공장 · 창고 화재는 하루 약 10건</b>, 건축물 화재 재산피해의 69%를 차지한다 (2021~2025년 1만 7,510건)<sup>1</sup>.</p>
 <ul>
   <li><b>통로 = 대피로</b>: 공장 · 창고(물류센터)에서 로봇이 다니는 길목이 곧 비상시 대피로</li>
-  <li><b>막힘 · 바닥 물건</b>: 쌓인 물건은 대피를 막고, 떨어진 물건은 밟거나 걸려 바로 사고</li>
-  <li><b>고정 유도등</b>: 불 위치를 모르고 가까운 비상구만 가리킴 → 불 쪽으로 보낼 수 있음</li>
+  <li><b>막힘 · 바닥 물건</b>: 쌓인 물건은 대피를 막고, 떨어진 물건은 밟거나 걸려 바로 사고
+    <span class="ev">경기 대형 물류창고 473곳 중 236곳 위법, 피난 통로 적치 포함 (2026.9)<sup>2</sup> · 이천 물류창고 화재(2020)는 대피로를 막아 둔 상태에서 38명 사망<sup>3</sup></span></li>
+  <li><b>고정 유도등</b>: 불 위치를 모르고 가까운 비상구만 가리킴 → 불 쪽으로 보낼 수 있음
+    <span class="ev">물류시설 유도등은 쌓인 물품에 가려지기 쉬움<sup>4</sup></span></li>
 </ul>
-<p class="todo">출처를 확인한 숫자 · 사례 1~2개</p>
+<ol class="src">
+  <li>소방청 국가화재정보시스템, 허영 의원실 분석 — <a href="https://www.reporternside.com/news/articleView.html?idxno=433408">엔사이드 2026.10.23</a></li>
+  <li>경기도 대형 물류창고 화재안전 긴급점검 — <a href="https://www.segye.com/newsView/20260922516638">세계일보 2026.9.22</a></li>
+  <li>이천 물류센터 화재참사 원인 — <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=165037">매일노동뉴스 2020.6.16</a></li>
+  <li>송동우, 물류시설 피난유도 관련 동향 및 개선 방향 — <a href="https://www.kfsi.or.kr/contents/webzine/202212/sub02-02.html">소방안전플러스 웹진</a></li>
+</ol>
 
 <h2>3. 주제가 정해진 과정</h2>
 <div class="tw"><table>
