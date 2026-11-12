@@ -248,13 +248,23 @@ body{padding-top:44px}
   meas.setAttribute("width", "0"); meas.setAttribute("height", "0"); meas.setAttribute("aria-hidden", "true");
   meas.style.position = "absolute"; meas.style.visibility = "hidden"; meas.style.pointerEvents = "none";
   document.body.appendChild(meas);
-  var cache = {};
-  function path(d){ if (!cache[d]){ var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); meas.appendChild(p); cache[d] = p; } return cache[d]; }
-  function len(d){ return path(d).getTotalLength(); }
+  // 경로마다 STEP cm 간격 점을 한 번만 재 두고 보간한다 (getPointAtLength는 호출마다 느려서 매 걸음 부르면 화면이 멈춤)
+  var STEP = 0.5, cache = {};
+  function path(d){
+    if (cache[d]) return cache[d];
+    var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); meas.appendChild(p);
+    var L = p.getTotalLength(), n = Math.max(1, Math.ceil(L / STEP)), xs = new Float64Array(n + 1), ys = new Float64Array(n + 1);
+    for (var i = 0; i <= n; i++){ var q = p.getPointAtLength(L * i / n); xs[i] = q.x; ys[i] = q.y; }
+    meas.removeChild(p);
+    return cache[d] = {L:L, n:n, xs:xs, ys:ys};
+  }
+  function len(d){ return path(d).L; }
+  function at(t, s){
+    var f = t.L ? Math.max(0, Math.min(t.L, s)) / t.L * t.n : 0, i = Math.min(t.n - 1, Math.floor(f)), r = f - i;
+    return {x:t.xs[i] + (t.xs[i + 1] - t.xs[i]) * r, y:t.ys[i] + (t.ys[i + 1] - t.ys[i]) * r};
+  }
   function pt(d, s){
-    var p = path(d), L = p.getTotalLength();
-    function cl(v){ return Math.max(0, Math.min(L, v)); }
-    var a = p.getPointAtLength(cl(s)), b = p.getPointAtLength(cl(s + 0.6)), c = p.getPointAtLength(cl(s - 0.6));
+    var t = path(d), a = at(t, s), b = at(t, s + 0.6), c = at(t, s - 0.6);
     var tx = b.x - c.x, ty = b.y - c.y, n = Math.hypot(tx, ty) || 1;
     return {x:a.x, y:a.y, tx:tx / n, ty:ty / n};
   }
