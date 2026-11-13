@@ -100,7 +100,7 @@ details{margin:8px 0}
 </style>
 </head>
 <body>
-<nav class="topnav" aria-label="문서 이동"><a href="index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html">01<span class="lbl"> 주제&nbsp;· 배경</span></a><a href="2026-11-13_02_기능정의서.html" aria-current="page">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵&nbsp;· 시연</span></a></span></nav>
+<nav class="topnav" aria-label="문서 이동"><a href="../index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html">01<span class="lbl"> 주제&nbsp;· 배경</span></a><a href="2026-11-13_02_기능정의서.html" aria-current="page">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵&nbsp;· 시연</span></a></span></nav>
 <div class="doc">
 
 <h1>기능 정의서</h1>
@@ -115,90 +115,99 @@ details{margin:8px 0}
 
 <h2>2. 시스템 구성</h2>
 <div class="graph">
-<svg class="w" viewBox="0 0 900 310" role="img" aria-label="MechDog 4대의 제어 보드와 XIAO가 무선으로 서버에 보고하고, 서버의 통신 · 위치 추정 · 이벤트 판단 · 영상 분석 · 로봇 지휘 모듈이 처리해 대시보드에 보여 주는 구성도">
+<svg class="w" viewBox="0 0 900 340" role="img" aria-label="MechDog 4대의 제어 보드와 XIAO · 라즈베리 파이 5가 무선으로 PC 서버에 보고하고, 서버의 통신 · 위치 추정 · 이벤트 판단 · 알림 · 로봇 지휘 모듈이 처리해 대시보드에 보여 주는 구성도">
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink)"/></marker>
   </defs>
-  <rect class="net" x="10" y="10" width="270" height="290" rx="6"/>
+  <rect class="net" x="10" y="10" width="270" height="320" rx="6"/>
   <text class="n" x="24" y="32">로봇 MechDog ×4</text>
-  <rect class="box" x="25" y="50" width="240" height="90" rx="4"/>
-  <text class="n" x="145" y="76" text-anchor="middle">MechDog 제어 보드</text>
-  <text class="t" x="145" y="98" text-anchor="middle">보행 · 라인 추적 · LED</text>
-  <text class="t" x="145" y="118" text-anchor="middle">초음파 · 바닥 카메라</text>
-  <rect class="box" x="25" y="170" width="240" height="90" rx="4"/>
-  <text class="n" x="145" y="205" text-anchor="middle">XIAO ESP32-S3 Sense</text>
-  <text class="t" x="145" y="230" text-anchor="middle">머리 카메라 · 온도 센서</text>
+  <rect class="box" x="25" y="44" width="240" height="78" rx="4"/>
+  <text class="n" x="145" y="68" text-anchor="middle">MechDog 제어 보드</text>
+  <text class="t" x="145" y="88" text-anchor="middle">보행 · 라인 추적 · LED</text>
+  <text class="t" x="145" y="106" text-anchor="middle">초음파 · 바닥 카메라</text>
+  <rect class="box" x="25" y="134" width="240" height="72" rx="4"/>
+  <text class="n" x="145" y="160" text-anchor="middle">XIAO ESP32-S3 Sense</text>
+  <text class="t" x="145" y="182" text-anchor="middle">머리 카메라 · 온도 센서</text>
+  <rect class="box" x="25" y="218" width="240" height="96" rx="4"/>
+  <text class="n" x="145" y="246" text-anchor="middle">라즈베리 파이 5 (1:1 탑재)</text>
+  <text class="t" x="145" y="268" text-anchor="middle">온보드 비전 추론 (불꽃 · 헬멧 · 장애물)</text>
+  <text class="t" x="145" y="288" text-anchor="middle">판단 결과 · 현장 사진 전송</text>
 
-  <rect class="net" x="350" y="10" width="330" height="290" rx="6"/>
-  <text class="n" x="364" y="32">서버 (PC / 라즈베리 파이 · 미정)</text>
-  <rect class="box" x="365" y="45" width="300" height="40" rx="4"/>
-  <text class="n" x="380" y="70">통신</text><text class="t" x="472" y="70">로봇 보고 받기 · 명령 보내기</text>
-  <rect class="box" x="365" y="95" width="300" height="40" rx="4"/>
-  <text class="n" x="380" y="120">위치 추정</text><text class="t" x="472" y="120">지난 마커로 가상 지도 위 위치</text>
-  <rect class="box" x="365" y="145" width="300" height="40" rx="4"/>
-  <text class="n" x="380" y="170">이벤트 판단</text><text class="t" x="472" y="170">막힘 · 바닥 물건 · 과열 · 화재</text>
-  <rect class="box" x="365" y="195" width="300" height="40" rx="4"/>
-  <text class="n" x="380" y="220">영상 분석</text><text class="t" x="472" y="220">YOLO 사람 검출</text>
-  <rect class="box" x="365" y="245" width="300" height="40" rx="4"/>
-  <text class="n" x="380" y="270">로봇 지휘</text><text class="t" x="472" y="270">교대 · 교차 확인 · 대피 · 교통</text>
+  <rect class="net" x="350" y="10" width="330" height="320" rx="6"/>
+  <text class="n" x="364" y="32">관제 서버 (PC · 노트북)</text>
+  <rect class="box" x="365" y="45" width="300" height="44" rx="4"/>
+  <text class="n" x="380" y="72">통신</text><text class="t" x="472" y="72">로봇 보고 · Pi 5 결과 수신 · 명령 송신</text>
+  <rect class="box" x="365" y="99" width="300" height="44" rx="4"/>
+  <text class="n" x="380" y="126">위치 추정</text><text class="t" x="472" y="126">지난 마커로 지도 위 구역 위치</text>
+  <rect class="box" x="365" y="153" width="300" height="44" rx="4"/>
+  <text class="n" x="380" y="180">이벤트 판단</text><text class="t" x="472" y="180">막힘 · 바닥 물건 · 과열 · 화재 교차 확인</text>
+  <rect class="box" x="365" y="207" width="300" height="44" rx="4"/>
+  <text class="n" x="380" y="234">알림 · 팝업</text><text class="t" x="472" y="234">구역 경보 · 장애물 사진 팝업</text>
+  <rect class="box" x="365" y="261" width="300" height="44" rx="4"/>
+  <text class="n" x="380" y="288">로봇 지휘</text><text class="t" x="472" y="288">교대 · 교차 확인 · 대피 · 한 방향 교통</text>
 
-  <rect class="box" x="740" y="95" width="150" height="130" rx="4"/>
-  <text class="n" x="815" y="125" text-anchor="middle">관제 대시보드</text>
-  <text class="t" x="815" y="147" text-anchor="middle">웹 화면</text>
-  <text class="t" x="815" y="173" text-anchor="middle">로봇 위치 · 지도</text>
-  <text class="t" x="815" y="193" text-anchor="middle">알림 · 체크로 해제</text>
+  <rect class="box" x="740" y="100" width="150" height="140" rx="4"/>
+  <text class="n" x="815" y="132" text-anchor="middle">관제 대시보드</text>
+  <text class="t" x="815" y="154" text-anchor="middle">웹 화면</text>
+  <text class="t" x="815" y="180" text-anchor="middle">지도 · 구역 표시</text>
+  <text class="t" x="815" y="200" text-anchor="middle">사진 팝업 · 체크 해제</text>
 
-  <path class="ln bi" d="M267 58H363"/>
-  <text class="n halo" x="315" y="50" text-anchor="middle">①</text>
-  <path class="ln" d="M267 215H315V76H363"/>
-  <text class="n halo" x="327" y="150">②</text>
-  <path class="ln" d="M667 140H738"/>
-  <text class="n halo" x="702" y="132" text-anchor="middle">③</text>
-  <path class="ln" d="M738 180H667"/>
-  <text class="n halo" x="702" y="200" text-anchor="middle">④</text>
+  <path class="ln bi" d="M267 64H363"/>
+  <text class="n halo" x="315" y="56" text-anchor="middle">①</text>
+  <path class="ln" d="M145 206V216"/>
+  <path class="ln" d="M267 266H315V80H363"/>
+  <text class="n halo" x="327" y="176">②</text>
+  <path class="ln" d="M667 146H738"/>
+  <text class="n halo" x="702" y="138" text-anchor="middle">③</text>
+  <path class="ln" d="M738 190H667"/>
+  <text class="n halo" x="702" y="210" text-anchor="middle">④</text>
 </svg>
-<svg class="m" viewBox="0 0 340 590" role="img" aria-label="MechDog 4대의 제어 보드와 XIAO가 무선으로 서버에 보고하고, 서버의 통신 · 위치 추정 · 이벤트 판단 · 영상 분석 · 로봇 지휘 모듈이 처리해 대시보드에 보여 주는 구성도">
+<svg class="m" viewBox="0 0 340 660" role="img" aria-label="MechDog 4대의 제어 보드와 XIAO · 라즈베리 파이 5가 무선으로 PC 서버에 보고하고, 서버의 통신 · 위치 추정 · 이벤트 판단 · 알림 · 로봇 지휘 모듈이 처리해 대시보드에 보여 주는 구성도">
   <defs>
     <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink)"/></marker>
   </defs>
-  <rect class="net" x="6" y="6" width="328" height="130" rx="6"/>
+  <rect class="net" x="6" y="6" width="328" height="200" rx="6"/>
   <text class="n" x="16" y="26">로봇 MechDog ×4</text>
-  <rect class="box" x="16" y="36" width="150" height="88" rx="4"/>
-  <text class="n" x="91" y="58" text-anchor="middle">MechDog 제어 보드</text>
-  <text class="t" x="91" y="78" text-anchor="middle">보행 · 라인 추적</text>
-  <text class="t" x="91" y="96" text-anchor="middle">초음파 · LED</text>
-  <text class="t" x="91" y="114" text-anchor="middle">바닥 카메라</text>
-  <rect class="box" x="174" y="36" width="150" height="88" rx="4"/>
-  <text class="n" x="249" y="64" text-anchor="middle">XIAO ESP32-S3</text>
-  <text class="t" x="249" y="88" text-anchor="middle">머리 카메라</text>
-  <text class="t" x="249" y="106" text-anchor="middle">온도 센서</text>
+  <rect class="box" x="16" y="36" width="150" height="82" rx="4"/>
+  <text class="n" x="91" y="56" text-anchor="middle">MechDog 제어 보드</text>
+  <text class="t" x="91" y="75" text-anchor="middle">보행 · 라인 추적</text>
+  <text class="t" x="91" y="92" text-anchor="middle">초음파 · LED</text>
+  <text class="t" x="91" y="109" text-anchor="middle">바닥 카메라</text>
+  <rect class="box" x="174" y="36" width="150" height="82" rx="4"/>
+  <text class="n" x="249" y="62" text-anchor="middle">XIAO ESP32-S3</text>
+  <text class="t" x="249" y="84" text-anchor="middle">머리 카메라</text>
+  <text class="t" x="249" y="102" text-anchor="middle">온도 센서</text>
+  <rect class="box" x="16" y="132" width="308" height="62" rx="4"/>
+  <text class="n" x="170" y="155" text-anchor="middle">라즈베리 파이 5 (1:1 온보드 탑재)</text>
+  <text class="t" x="170" y="177" text-anchor="middle">AI 추론 (불꽃·헬멧·장애물) · 결과 · 사진 전송</text>
 
-  <rect class="net" x="6" y="190" width="328" height="250" rx="6"/>
-  <text class="n" x="16" y="432">서버 (PC / 라즈베리 파이 · 미정)</text>
-  <rect class="box" x="16" y="200" width="308" height="36" rx="4"/>
-  <text class="n" x="28" y="223">통신</text><text class="t" x="112" y="223">로봇 보고 받기 · 명령 보내기</text>
-  <rect class="box" x="16" y="244" width="308" height="36" rx="4"/>
-  <text class="n" x="28" y="267">위치 추정</text><text class="t" x="112" y="267">지난 마커로 가상 지도 위 위치</text>
-  <rect class="box" x="16" y="288" width="308" height="36" rx="4"/>
-  <text class="n" x="28" y="311">이벤트 판단</text><text class="t" x="112" y="311">막힘 · 바닥 물건 · 과열 · 화재</text>
-  <rect class="box" x="16" y="332" width="308" height="36" rx="4"/>
-  <text class="n" x="28" y="355">영상 분석</text><text class="t" x="112" y="355">YOLO 사람 검출</text>
-  <rect class="box" x="16" y="376" width="308" height="36" rx="4"/>
-  <text class="n" x="28" y="399">로봇 지휘</text><text class="t" x="112" y="399">교대 · 교차 확인 · 대피 · 교통</text>
+  <rect class="net" x="6" y="256" width="328" height="252" rx="6"/>
+  <text class="n" x="16" y="500">관제 서버 (PC · 노트북)</text>
+  <rect class="box" x="16" y="266" width="308" height="36" rx="4"/>
+  <text class="n" x="28" y="289">통신</text><text class="t" x="112" y="289">로봇 보고 · Pi 5 결과 수신 · 명령</text>
+  <rect class="box" x="16" y="310" width="308" height="36" rx="4"/>
+  <text class="n" x="28" y="333">위치 추정</text><text class="t" x="112" y="333">지난 마커로 지도 위 구역 위치</text>
+  <rect class="box" x="16" y="354" width="308" height="36" rx="4"/>
+  <text class="n" x="28" y="377">이벤트 판단</text><text class="t" x="112" y="377">막힘 · 바닥 물건 · 과열 · 화재</text>
+  <rect class="box" x="16" y="398" width="308" height="36" rx="4"/>
+  <text class="n" x="28" y="421">알림 · 팝업</text><text class="t" x="112" y="421">구역 경보 · 장애물 사진 팝업</text>
+  <rect class="box" x="16" y="442" width="308" height="36" rx="4"/>
+  <text class="n" x="28" y="465">로봇 지휘</text><text class="t" x="112" y="465">교대 · 교차 확인 · 대피 · 한 방향</text>
 
-  <rect class="box" x="16" y="500" width="308" height="80" rx="4"/>
-  <text class="n" x="170" y="526" text-anchor="middle">관제 대시보드 (웹)</text>
-  <text class="t" x="170" y="546" text-anchor="middle">로봇 위치 · 지도</text>
-  <text class="t" x="170" y="566" text-anchor="middle">알림 · 체크로 해제</text>
+  <rect class="box" x="16" y="566" width="308" height="84" rx="4"/>
+  <text class="n" x="170" y="592" text-anchor="middle">관제 대시보드 (웹)</text>
+  <text class="t" x="170" y="612" text-anchor="middle">지도 · 구역 표시</text>
+  <text class="t" x="170" y="632" text-anchor="middle">사진 팝업 · 체크로 해제</text>
 
-  <path class="ln bi" d="M91 126V198"/>
-  <text class="n halo" x="80" y="166" text-anchor="end">①</text>
-  <path class="ln" d="M249 126V198"/>
-  <text class="n halo" x="260" y="166">②</text>
-  <path class="ln" d="M270 414V498"/>
-  <text class="n halo" x="258" y="466" text-anchor="end">③</text>
-  <path class="ln" d="M310 498V414"/>
-  <text class="n halo" x="298" y="466" text-anchor="end">④</text>
+  <path class="ln bi" d="M91 118V128M91 194V264"/>
+  <text class="n halo" x="80" y="232" text-anchor="end">①</text>
+  <path class="ln" d="M249 118V130"/>
+  <path class="ln" d="M249 194V264"/>
+  <text class="n halo" x="260" y="232">②</text>
+  <path class="ln" d="M270 480V564"/>
+  <text class="n halo" x="258" y="532" text-anchor="end">③</text>
+  <path class="ln" d="M310 564V480"/>
+  <text class="n halo" x="298" y="532" text-anchor="end">④</text>
 </svg>
 </div>
 <div class="legend">
@@ -208,19 +217,20 @@ details{margin:8px 0}
 
 <div class="tw"><table>
   <tr><th>연결</th><th>방향</th><th>내용</th><th>방식</th></tr>
-  <tr><td>①</td><td>제어 보드 ↔ 서버</td><td>보고: 지난 마커&nbsp;· 상태&nbsp;· 배터리&nbsp;· 초음파 거리<br>명령: 순찰&nbsp;· 교대&nbsp;· 출동&nbsp;· 양보(정지&nbsp;· 재개&nbsp;· 후진)&nbsp;· LED 표시</td><td>무선<br>ESP-NOW 또는 MQTT</td></tr>
-  <tr><td>②</td><td>XIAO&nbsp;→ 서버</td><td>머리 카메라 사진(0.5초마다)&nbsp;· 표면 온도</td><td>Wi-Fi</td></tr>
-  <tr><td>③</td><td>서버&nbsp;→ 대시보드</td><td>로봇 위치&nbsp;· 상태&nbsp;· "의심" 이벤트&nbsp;· 통로 차단&nbsp;· 화재 위치</td><td>웹</td></tr>
+  <tr><td>①</td><td>제어 보드 ↔ 서버</td><td>보고: 지난 마커&nbsp;· 상태&nbsp;· 배터리&nbsp;· 초음파 거리<br>명령: 순찰&nbsp;· 교대&nbsp;· 출동&nbsp;· 합류 대기(한 방향 양보)&nbsp;· LED 표시</td><td>무선<br>ESP-NOW 또는 MQTT</td></tr>
+  <tr><td>②</td><td>XIAO&nbsp;→ Pi 5&nbsp;→ 서버</td><td>머리 카메라 영상&nbsp;· 표면 온도를 Pi 5가 로컬 판단 후<br>이상 결과(불꽃·헬멧·막힘)와 현장 사진을 서버로 전송</td><td>내부 직렬/Wi-Fi&nbsp;→ Wi-Fi</td></tr>
+  <tr><td>③</td><td>서버&nbsp;→ 대시보드</td><td>로봇 구역&nbsp;· 상태&nbsp;· "의심" 이벤트&nbsp;· 사진 팝업&nbsp;· 화재 위치</td><td>웹</td></tr>
   <tr><td>④</td><td>대시보드&nbsp;→ 서버</td><td>관리자의 확인&nbsp;· 해제</td><td>웹</td></tr>
 </table></div>
 
 <div class="tw"><table>
   <tr><th>장비</th><th>하는 일</th><th>구성</th></tr>
+  <tr><td>온보드 AI 컴퓨터</td><td>영상 AI 추론(불꽃·헬멧·장애물)&nbsp;· 판단 결과 전송</td><td>라즈베리 파이 5 (MechDog마다 1:1 탑재)<br>뒤 윗판·등뼈 3D 출력 캐리어에 세로 장착 (아래 3D)</td></tr>
   <tr><td>바닥 카메라</td><td>라인&nbsp;· 마커&nbsp;· 바닥 물건</td><td>MechDog 기본 카메라를 머리 아래에서 35° 꺾어<br>몸 중심 앞 15~33cm 바닥을 읽음 (아래 3D)</td></tr>
-  <tr><td>머리 카메라</td><td>앞쪽 시야&nbsp;· 사람 검출&nbsp;· 불꽃 확인</td><td>XIAO ESP32-S3 Sense 추가</td></tr>
+  <tr><td>머리 카메라</td><td>앞쪽 시야&nbsp;· 장애물 사진&nbsp;· 불꽃&nbsp;· 헬멧</td><td>XIAO ESP32-S3 Sense 추가</td></tr>
   <tr><td>초음파</td><td>장애물 거리</td><td>MechDog 기본</td></tr>
   <tr><td>온도 센서</td><td>과열&nbsp;· 화재 표면 온도</td><td>비접촉 적외선 MLX90614 추가<br>XIAO에 연결</td></tr>
-  <tr><td>LED</td><td>대피 화살표&nbsp;· 진입 금지 ✕</td><td>MechDog 기본 도트 매트릭스 (8×16)<br>등뼈 덮개 위, 화면이 위를 봄</td></tr>
+  <tr><td>LED</td><td>대피 화살표&nbsp;· 진입 금지 ✕</td><td>MechDog 기본 도트 매트릭스 (8×16)<br>등뼈 덮개 앞쪽 위, 화면이 위를 봄</td></tr>
 </table></div>
 
 <h3>로봇 장착 구성 (3D)</h3>
@@ -250,11 +260,13 @@ details{margin:8px 0}
       <tr><td>바닥 각도 어댑터</td><td>약 42 × 30 × 74 mm</td><td>머리 아랫판, 레고 핀 4개, 15° 단위 구멍</td><td>3D 출력 (각도가 안 맞을 때만 · 모델에는 없음)</td></tr>
       <tr><td>XIAO ESP32-S3 Sense (OV3660)</td><td>본체 21 × 17.8 mm + Sense 확장 보드, 렌즈까지 두께 14 mm (Seeed 3D 모델)</td><td>머리 브래킷에 세워 꽂음. 렌즈는 앞, USB-C는 위라 꽂은 채로 펌웨어를 올린다</td><td>보유</td></tr>
       <tr><td>비접촉 온도 센서 GY-906 (MLX90614ESF-BCC)</td><td>보드 17 × 11 mm, 캔 Ø10.2 × 8.1 mm, 측정 시야 35° (Melexis 데이터시트 Figure 42 · Table 19)</td><td>머리 브래킷 오른쪽 홀더에 세워 꽂음. XIAO 렌즈와 같은 쪽을 보고 10° 숙인다. 캔 앞면이 XIAO 렌즈보다 뒤라 머리 카메라 화면에 들어오지 않는다. XIAO에 연결: VIN → 3V3, GND → GND, SDA → D4, SCL → D5. 헤더 없이 양쪽에 납땜하고, 온도 값은 XIAO가 사진과 함께 Wi-Fi로 보낸다</td><td>구매 (2개 · 4개 고민 중)</td></tr>
-      <tr><td>2.4 GHz 플렉스 안테나</td><td>약 40 × 20 mm</td><td>머리 브래킷 뒷벽 뒷면에 붙임, 머리 윗판에서 약 13 mm 띄움</td><td>보유</td></tr>
-      <tr><td>머리 브래킷</td><td>발판 30 × 46 mm, 높이 33 mm</td><td>머리 윗판 슬롯에 M3 볼트 2개(구멍 위치는 윗판 실측 후 맞춤). 보드는 위에서 홈에 밀어 넣고, 뒷벽에 통풍 구멍 · 안테나 선 구멍. 오른쪽에 온도 센서 홀더(10° 숙인 홈)를 붙여 함께 출력하고, 오른쪽 옆벽 가운데는 D4 · D5 납땜 창으로 비운다. 받침 없이 출력</td><td>3D 출력</td></tr>
-      <tr><td>LED 도트 매트릭스 (Hiwonder 8×16, TM1640)</td><td>보드 약 54 × 23 mm, 8×8 매트릭스 2개(각 약 20 × 20 mm, 점 간격 2.5 mm), 구멍 4개 약 46 × 16 mm. 공개 치수가 없어 사진에서 칩(SOP-28, 17.9 mm)과 커넥터(2.5 mm 간격)로 축척을 잡음</td><td>등뼈 덮개(몸통 가운데 솟은 부분) 위, 긴 쪽을 몸 길이 방향으로. 화면이 위를 본다. 뒷면 커넥터 · 칩 높이만큼 M3 스페이서 4개로 띄운다(높이 · 덮개 구멍 위치는 실측). 4핀 케이블은 왼쪽으로 내려 포트 3(IO32 · IO33)</td><td>보유</td></tr>
+      <tr><td>2.4 GHz 플렉스 안테나</td><td>약 40 × 20 mm</td><td>머리 브래킷 뒤쪽 13 mm 상단 선반 포켓에 수납 (금속 윗판에서 13 mm 띄움)</td><td>보유</td></tr>
+      <tr><td>머리 브래킷</td><td>발판 46 × 44 × 3 mm · 앞 고정 레일, 높이 25 mm (벽 두께 2.4 mm)</td><td>브래킷을 머리 윗판 뒤 엣지(X 42, Z ±17)에 밀어 끼워 U자 걸쇠로 잡고 앞 실제 M3 구멍 2곳(X 100, Z ±17)을 M3 × 8 볼트로 고정. XIAO · GY-906 포켓 모두 정면이 트인 수직 레일 + 상단 스냅 턱이라 출력 후 위에서 쏙 끼워 조립 가능</td><td>3D 출력</td></tr>
+      <tr><td>라즈베리 파이 5 + 쿨러</td><td>PCB 85 × 56 × 1.6 mm (고정 구멍 58 × 49 mm), 액티브 쿨러 포함 높이 약 15 mm (공식 규격)</td><td>몸통 폭(60 mm) 안쪽에 맞춰 뒤 윗판~등뼈 위 세로 배치(앞뒤 85 mm × 폭 56 mm, Z ±28). 좌우 다리·어깨 관절(Z ±30 밖)과 간섭 없이 몸 중심 가까이에 올라간다. USB·이더넷은 뒤(-X), USB-C 전원·HDMI는 왼쪽(-Z), GPIO는 오른쪽(+Z)</td><td>개인 보유 (김건주 3 + 박명수 1 · 사용 승인 확인)</td></tr>
+      <tr><td>Pi 5 일체형 캐리어</td><td>외곽 85 × 56 mm, 측면 트러스 레일 · M2.5 스탠드오프 3 mm</td><td>큰 레고 구멍(X -62, Z ±18)에는 나사 대신 일체형 맞춤 돌기만 끼우고, 뒤 모서리(X -78.5, Z ±22) · 등뼈 뒤(X -21, Z ±17) M3 4곳을 캐리어 상부 구멍을 통해 M3 × 8 볼트로 먼저 조인 뒤 위에서 Pi 5를 얹어 조립</td><td>3D 출력</td></tr>
+      <tr><td>LED 도트 매트릭스 (Hiwonder 8×16, TM1640)</td><td>보드 약 54 × 23 mm, 8×8 매트릭스 2개(각 약 20 × 20 mm, 점 간격 2.5 mm), 구멍 4개 약 46 × 16 mm. 공개 치수가 없어 사진에서 칩(SOP-28, 17.9 mm)과 커넥터(2.5 mm 간격)로 축척을 잡음</td><td>등뼈 덮개 앞쪽 위(Pi 5 앞, X +9~+32)에 긴 쪽을 몸 좌우(Z ±27)로 배치해 몸통 폭 안에 맞춘다. 앞 나사 2곳(X 24, Z ±17)에 3D 출력 스페이서 레일을 M3 × 8 교체 볼트로 고정하고 4핀 케이블은 왼쪽 포트 3(IO32 · IO33)으로 내린다</td><td>보유</td></tr>
       <tr><td>I2C 케이블 (4가닥)</td><td>—</td><td>비전 모듈 → I2C 인터페이스 1 (코드에서는 <code>IIC(2)</code>)</td><td>보유 · 짧으면 연장 구매</td></tr>
-      <tr><td>M3 볼트 · 너트 · XIAO 5 V 배선</td><td>M3 × 10 볼트 · 너트 각 2개</td><td>볼트는 머리 윗판 아래에서 너트로 조인다(윗판을 떼고 조립). 배선은 비어 있는 I2C 포트 2의 5 V · GND만 XIAO 5V · GND 핀으로 (SDA · SCL은 잇지 않음). 포트 1은 비전 모듈, 포트 3(IO32 · IO33)은 LED 도트 매트릭스</td><td>구매</td></tr>
+      <tr><td>M3 × 8 교체 볼트 · 배선 · Pi 5 전원</td><td>M3 × 8 볼트 8개 이상(기존 프레임 나사 자리에 3 mm 긴 것으로 교체), Pi 5 M2.5 나사 4개, USB 전원 선</td><td>기존 MechDog 나사는 3D 출력물 두께(2.4~2.5 mm)만큼 짧아 M3 × 8로 바꿔 조인다. XIAO 전원은 포트 2의 5 V · GND 핀 연결, Pi 5 전원(5V 5A)은 로봇 무게·배선 확인 후 최종 배치</td><td>구매 · 확인 필요</td></tr>
     </tbody>
   </table></div>
     <p class="muted">카메라 시야각(가로 60° · 세로 47°)은 가정값이고, 초음파 빔은 매뉴얼의 측정 각 15°를 반각으로 넓게 그렸고, 도면에서 얼굴이 약 11° 숙어 있어 빔도 그만큼 아래를 향한다. 온도 센서의 시야 35°는 데이터시트 값이고 30 cm까지 그렸다.</p>
@@ -320,20 +332,21 @@ details{margin:8px 0}
   <tr><td>스스로 도킹&nbsp;충전</td><td>도크에 들어가면 충전된 것으로 봄</td></tr>
 </table></div>
 <div class="tw split"><table>
-  <tr><th>미정</th><th>후보</th></tr>
-  <tr><td>서버 장비</td><td>PC (성능 여유)<br>라즈베리 파이 (현장에 두는 소형 서버)</td></tr>
+  <tr><th>미정</th><th>후보 · 확인 중</th></tr>
+  <tr><td>AI 추론 가속 (Hailo-8L)</td><td>Pi 5 CPU 단독 추론 vs Hailo-8L 1대 추가 (성능 시험 후 결정)</td></tr>
+  <tr><td>Pi 5 전원 방식</td><td>보조배터리 탑재 vs 본체 전원 분배 (하중·주행 시험 후 결정)</td></tr>
 </table></div>
 
 <h2>6. 기술 검증 항목</h2>
 <div class="tw"><table>
   <tr><th>항목</th><th>검증 내용</th><th>쓰이는 곳</th></tr>
-  <tr><td>마커 인식</td><td>걸으며 ArUco&nbsp;· 색 띠 읽기&nbsp;· 후진 때 재인식</td><td><span class="nw">F-02</span></td></tr>
+  <tr><td>마커 인식</td><td>걸으며 ArUco&nbsp;· 색 띠 읽기</td><td><span class="nw">F-02</span></td></tr>
   <tr><td>바닥 카메라</td><td>꺾는 각도&nbsp;· 몸 앞 몇 cm를 보는지</td><td><span class="nw">F-02</span> 위치 보정</td></tr>
-  <tr><td>주행</td><td>직선 흔들림&nbsp;· 곡선 반지름</td><td>미션맵 크기&nbsp;· 통로 폭</td></tr>
+  <tr><td>주행 · 하중</td><td>직선 흔들림&nbsp;· 곡선 반지름 · Pi 5 탑재 보행</td><td>미션맵 크기&nbsp;· 통로 폭</td></tr>
   <tr><td>초음파</td><td>걸으며 측정되는지&nbsp;· 코너에서 옆 랙 오인식</td><td><span class="nw">F-03</span></td></tr>
-  <tr><td>온도 센서</td><td>캔들 거리별 측정값</td><td><span class="nw">F-05</span>&nbsp;· <span class="nw">F-10</span></td></tr>
-  <tr><td>머리 카메라</td><td>누운 방향별 사람 인식</td><td><span class="nw">F-06</span>&nbsp;· <span class="nw">F-07</span></td></tr>
-  <tr><td>서버</td><td>로봇 4대&nbsp;· 카메라 4대 동시 수신</td><td>연결 ①&nbsp;· ②</td></tr>
+  <tr><td>온도 센서</td><td>가스버너(실외) 거리별 측정값</td><td><span class="nw">F-05</span>&nbsp;· <span class="nw">F-10</span></td></tr>
+  <tr><td>온보드 AI 추론 (Pi 5)</td><td>불꽃 · 헬멧 · 사람 추론 속도 (CPU 단독 vs Hailo)</td><td><span class="nw">F-03</span>&nbsp;· <span class="nw">F-05</span>&nbsp;· <span class="nw">F-07</span></td></tr>
+  <tr><td>서버</td><td>로봇 4대 · Pi 5 4대 동시 수신</td><td>연결 ①&nbsp;· ②</td></tr>
 </table></div>
 
 </div>
@@ -383,9 +396,12 @@ try {
     ghost: new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), lead: new THREE.LineBasicMaterial(),
     w1: std({ color: 0xd97706, roughness: 0.7 }), w2: std({ color: 0xb91c1c, roughness: 0.7 }), w3: std({ color: 0x6b3f1d, roughness: 0.7 }), // 서보 배선 (주황 · 빨강 · 갈색)
     gold: std({ color: 0xc9a227, metalness: 1, roughness: 0.35 }),
+    rpiPcb: std({ color: 0x15803d, roughness: 0.45 }), rpiBlue: std({ color: 0x1d4ed8, roughness: 0.5 }),
+    lens: std({ color: 0x0f2942, metalness: 0.9, roughness: 0.08 }), irPcb: std({ color: 0x5b21b6, roughness: 0.45 }),
+    cooler: std({ color: 0x262a30, metalness: 0.78, roughness: 0.34 }),
     fovF: glass(), fovC: glass(), beam: glass(), ir: glass(),
   };
-  const SOLID = ["body", "dark", "rubber", "metal", "pcb", "white", "pin", "grill", "w1", "w2", "w3", "gold"];
+  const SOLID = ["body", "dark", "rubber", "metal", "pcb", "white", "pin", "grill", "w1", "w2", "w3", "gold", "rpiPcb", "rpiBlue", "lens", "irPcb", "cooler"];
   const theme = () => { for (const k in TOK) M[k].color.set(css(TOK[k])); };
 
   // ---- 도형 도우미 ----
@@ -399,7 +415,7 @@ try {
   const turn = (o, axis) => { if (axis === "x") o.rotation.z = PI / 2; if (axis === "z") o.rotation.x = PI / 2; return o; };
   const cyl = (r, len, m, x, y, z, axis = "y") => turn(add(mesh(new THREE.CylinderGeometry(r, r, len, 28), m), x, y, z), axis);
   const ball = (r, m, x, y, z) => add(mesh(new THREE.SphereGeometry(r, 16, 12), m), x, y, z);
-  const ring = (r, tube, m, x, y, z, axis = "z") => { const o = add(mesh(new THREE.TorusGeometry(r, tube, 8, 32), m), x, y, z); if (axis === "x") o.rotation.y = PI / 2; return o; };
+  const ring = (r, tube, m, x, y, z, axis = "z") => { const o = add(mesh(new THREE.TorusGeometry(r, tube, 10, 36), m), x, y, z); if (axis === "x") o.rotation.y = PI / 2; if (axis === "y") o.rotation.x = PI / 2; return o; };
   const rod = (a, b, r, m, z) => { const dx = b[0] - a[0], dy = b[1] - a[1], o = cyl(r, Math.hypot(dx, dy), m, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, z); o.rotation.z = Math.atan2(dy, dx) - PI / 2; return o; };
   const screw = (x, y, z) => cyl(1.8, 1.4, "dark", x, y, z, "z");
 
@@ -435,9 +451,11 @@ try {
     leads.push(add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([V(...at), V(...from)]), M.lead)));
   };
 
-  // ===== 몸통 (X -81.5 ~ 42, 바닥에서 80.5 ~ 124): 옆판 삼각 트러스, 뒤 윗판, 등뼈 덮개, 전원 패널, I2C 포트 =====
+  // ===== 몸통 (X -81.5 ~ 42, 바닥에서 80.5 ~ 124): 속이 빈 뒤 프레임, ESP32 메인보드 · 서보 커넥터, 등뼈 덮개, 뒤 윗판 =====
   const truss = (x0, n, y0, y1) => [...Array(n)].map((_, i) => { const x = x0 + i * 8; return H.p(i % 2 ? [[x - 5.5, y0], [x + 5.5, y0], [x, y1]] : [[x - 5.5, y1], [x + 5.5, y1], [x, y0]]); });
-  box(120, 27, 54, "dark", -20, 95.5, 0); box(64, 16, 42, "dark", 6, 113, 0);                                        // 속 (배터리 · 보드)
+  box(64, 26, 52, "dark", -2, 95, 0);                                                                                 // 배터리 · 하부 프레임 (뒤 윗판 아래 X -80~-34는 비어 너트가 들어감)
+  box(52, 1.8, 42, "pcb", 0, 117.5, 0); box(5, 3.2, 30, "white", 23, 119.5, 0);                                      // 등뼈 아래 ESP32 메인보드 · 앞쪽 서보/I2C 커넥터
+  for (let i = 0; i < 6; i++) { box(3.2, 1.4, 3.4, "dark", 23.2, 120.6, -10 + i * 4); box(0.6, 1.8, 2.4, "gold", 23.2, 120.4, -10 + i * 4); }
   const PORTS = [22, 8, -6];
   for (const s of [1, -1]) {
     side(poly([[-81.5, 80.5], [42, 80.5], [42, 111.4], [-81.5, 111.4]]), truss(-12, 5, 87, 95.5), s * 29);
@@ -449,30 +467,40 @@ try {
   }
   box(11, 4.4, 1.4, "metal", -3, 108.5, 31); box(4, 3.6, 2.4, "dark", -6, 108.5, 31.6);                              // ON / OFF 스위치
   cyl(1.1, 1.2, "red", 7, 109, 31, "z");                                                                             // 빨간 LED
-  box(9, 8, 3, "dark", 19, 108.5, 31.4); cyl(2.6, 3.4, "metal", 19, 108.5, 31.5, "z");                               // DC 잭 (CHARGE)
-  PORTS.forEach((x) => box(10, 5, 3, "white", x, 108.5, -31.5));                                                     // 왼쪽 I2C 포트 1 · 2 · 3
+  box(9, 8, 3, "dark", 19, 108.5, 31.4); cyl(2.6, 3.2, "metal", 19, 108.5, 31.5, "z");                               // DC 잭 (CHARGE) 외곽 + 배럴 구멍 + 중앙 핀
+  cyl(1.75, 3.4, "dark", 19, 108.5, 31.6, "z"); cyl(0.55, 3.6, "gold", 19, 108.5, 31.7, "z");
+  PORTS.forEach((x) => {                                                                                             // 왼쪽 I2C 포트 1 · 2 · 3: 소켓 벽 · 키잉 홈 · 어두운 공동 · 4핀 접점
+    box(10.6, 5.2, 2.8, "white", x, 108.5, -31.5);
+    box(8.8, 3.4, 1.8, "dark", x, 108.5, -32.2);
+    for (const dx of [-2.4, 2.4]) box(1.4, 0.8, 1.2, "dark", x + dx, 110.5, -32.3);
+    for (let i = 0; i < 4; i++) cyl(0.32, 2.4, "gold", x - 3 + i * 2, 108.5, -32.1, "z");
+  });
   const cham = (x0, x1, y0, y1, z0, z1) => [1, -1].forEach((s) => (box(x1 - x0, 2, Math.hypot(y1 - y0, z1 - z0) + 1, "body", (x0 + x1) / 2, (y0 + y1) / 2, s * (z0 + z1) / 2).rotation.x = s * Math.atan2(y0 - y1, z1 - z0))); // 윗판에서 옆판으로 꺾이는 모서리
   flat(rr(1.5, 0, 57, 46, 2), [...[-2, -1, 0, 1, 2].map((i) => H.r(-2 + i * 4.5, 0, 2.2, 28 - Math.abs(i) * 5)),
-    ...[[24, -17], [24, 17], [-21, -17], [-21, 17]].map(([x, z]) => H.c(x, z, 1.6))], 124);                          // 등뼈 덮개 (환기 슬릿), 앞쪽은 열려 배선이 보인다
+    ...[[24, -17], [24, 17], [-21, -17], [-21, 17]].map(([x, z]) => H.c(x, z, 1.6))], 124);                          // 등뼈 덮개 (뒤 ±17: Pi 5 캐리어, 앞 ±17: LED 레일)
   cham(-27, 30, 124, 117, 22, 29.6);
   face(poly([[-22, 124], [22, 124], [29.6, 117], [29.6, 111.4], [-29.6, 111.4], [-29.6, 117]]), [], -27);
-  [M.w1, M.w2, M.w3, M.w1, M.w2, M.w3].forEach((m, i) => rod([28, 120 - (i % 2)], [47, 113], 1, m, -10 + i * 4));    // 서보 배선
+  [M.w1, M.w2, M.w3, M.w1, M.w2, M.w3].forEach((m, i) => {
+    const z = -10 + i * 4;
+    add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([V(24, 120, z), V(35, 118 - (i % 2), z * 0.9), V(46, 110, z * 0.7), V(60, 101, z < 0 ? -15 : 15)]), 20, 0.7, 6), m)); // 메인보드 → 앞 엉덩이 서보 곡선 배선
+  });
   const rearHoles = [];
   [-74, -62, -50].forEach((x, i) => [-18, -6, 6, 18].forEach((z, j) => rearHoles.push((i + j) % 2 ? H.c(x, z, 2) : H.r(x, z, 4, 8))));
-  flat(rr(-58, 0, 47.5, 60, 2), rearHoles, 111.4);                                                                   // 뒤 윗판
+  [[-78.5, -22], [-78.5, 22]].forEach(([x, z]) => rearHoles.push(H.c(x, z, 1.6)));                                    // 뒤 모서리 M3 구멍
+  flat(rr(-58, 0, 47.5, 60, 2), rearHoles, 111.4);                                                                   // 뒤 윗판 (실물 레고 슬롯·모서리 M3 구멍)
   flat(rr(-19.75, 0, 123.5, 58, 2), [], 80.5);                                                                       // 아랫판
   flat(rr(-1, 0, 78, 46, 3), [-28, -20, 12, 20, 28].map((x) => H.r(x, 0, 2.6, 30)), 78.3);                           // 배터리 덮개
   box(14, 0.3, 24, "white", -4, 77.2, 0);
   face(rr(0, 96, 58, 31, 3), [H.r(0, 96, 26, 5)], -81.5);                                                            // 뒤판
 
-  // ===== 머리 (X 42 ~ 107, 80.5 ~ 117.5): 윗판 슬롯, 위쪽이 앞으로 11° 숙은 얼굴에 초음파 모듈 =====
-  box(52, 28, 50, "dark", 72, 97.5, 0);
+  // ===== 머리 (X 42 ~ 107, 80.5 ~ 117.5): 윗판 아래 빈 공간 + 좌우 앞다리 서보, 실물 레고 슬롯 · 앞 M3 나사, 11° 숙은 얼굴 =====
   for (const s of [1, -1]) {
+    box(26, 21, 15, "dark", 74.2, 91, s * 19.5);                                                                     // 좌우 앞 엉덩이 서보
     side(poly([[42, 80.5], [99.7, 80.5], [105.7, 111], [42, 111]]), [H.p([[96, 108.5], [101.5, 108.5], [99, 101.5]])], s * 29);
     [[46, 86], [46, 95]].forEach(([x, y]) => screw(x, y, s * 30.2));
   }
   flat(rr(74.5, 0, 65, 46, 2), [...[50, 62, 74, 86].flatMap((x) => [-9, 9].map((z) => H.r(x, z, 4.5, 10))),
-    ...[[46, -17], [46, 17], [100, -17], [100, 17]].map(([x, z]) => H.c(x, z, 1.6))], 117.5);                        // 머리 윗판
+    ...[56, 80].map((x) => H.c(x, 0, 1.8)), ...[[100, -17], [100, 17]].map(([x, z]) => H.c(x, z, 1.6))], 117.5);     // 머리 윗판 실물 구멍 (큰 슬롯 + 앞 모서리 M3)
   cham(42, 106, 117.5, 111, 22, 29.6);
   flat(rr(71, 0, 58, 58, 2), [], 80.5);                                                                              // 머리 아랫판
   let uEye;
@@ -481,7 +509,8 @@ try {
     face(poly([[-29, -13], [-24, -18.5], [24, -18.5], [29, -13], [29, 13], [24, 18.5], [-24, 18.5], [-29, 13]]), [H.r(0, -3.5, 49, 23)], 1); // 노랑 틀
     [[-25, -14], [25, -14], [-25, 14], [25, 14]].forEach(([z, y]) => cyl(1.6, 1.2, "dark", 2.4, y, z, "x"));
     face(rr(0, -3.5, 54, 28, 5), [], -1.5, "dark", 3);                                                               // 초음파 모듈 판
-    box(4, 12, 20, "dark", 1.5, -3.5, 0);
+    box(4, 12, 20, "dark", 1.5, -3.5, 0); box(1.6, 5, 10.5, "metal", 2.2, 2.5, 0);                                    // IC 보강 · 수정 발진자(HC-49S)
+    box(3, 5, 11, "white", -2.5, 6, 0);                                                                               // 뒷면 4핀 I2C 소켓
     for (const z of [-13.3, 13.3]) {                                                                                 // 발신부: 은색 테두리 + 메쉬 + 파란 LED 링
       cyl(9.2, 5, "dark", 2.5, -3.5, z, "x");
       cyl(8.4, 5, "metal", 3.6, -3.5, z, "x");
@@ -518,75 +547,178 @@ try {
 
   // shortcut: 온도 센서 10° 숙임은 가정값, 캔들 · 랙 아래 높이를 재 보고 IR_TILT만 바꾼다
   const IR_TILT = rad(10), IR_FOV = rad(35), IR_PINS = [3.81, 1.27, -1.27, -3.81]; // 시야 35°는 BCC형 (데이터시트 Table 19)
-  // ===== 머리 위: XIAO ESP32S3 Sense를 3D 출력 브래킷에 세워 꽂는다. XIAO 치수는 Seeed 공식 3D 모델 (01_docs/xiao_esp32s3) =====
-  // 브래킷: 발판을 머리 윗판 슬롯에 M3 볼트 2개로 고정하고, 보드는 위에서 홈에 밀어 넣는다. 받침(서포트) 없이 출력되는 모양
-  part(grp(74, 0, 0, () => [-9, 9].forEach((z) => { cyl(2.75, 3, "dark", 0, 123.5, z); cyl(1.5, 10, "metal", 0, 117, z); })), [0, 44, 0]); // M3 × 10 볼트 2개
-  part(grp(74, 0, 0, () => [-9, 9].forEach((z) => add(mesh(new THREE.CylinderGeometry(3.2, 3.2, 2.4, 6), "metal"), 0, 114.9, z))), [0, -12, 0]); // 너트 (머리 윗판 아래)
+  // ===== 머리 위: XIAO ESP32S3 Sense + GY-906 + 안테나를 바깥에서 위→아래로 끼우는 3D 출력 브래킷 =====
+  // 1) 브래킷을 머리 윗판 뒤 엣지(X 42, Z ±17)에 뒤→앞으로 밀어 끼운 뒤(하부 걸림 돌기 없음), 앞 M3 × 8 볼트 2개(X 100, Z ±17)로 체결
+  // 2) XIAO · GY-906 포켓은 앞면이 트인 U자 수직 가이드 레일 + 상단 스냅 턱이라 출력 후 위에서 손으로 쏙 밀어 넣을 수 있고, 뒤가 트여 배선이 벽을 뚫지 않는다
+  part(grp(0, 0, 0, () => { for (const z of [-17, 17]) { cyl(2.75, 2, "dark", 100, 122.4, z); cyl(1.5, 8, "metal", 100, 117.5, z); } }), [0, 44, 0]);
   let ant;
   const brk = part(grp(0, 0, 0, () => {
-    flat(rr(85, 2, 30, 46, 2), [-9, 9].map((z) => H.c(74, z, 1.7)), 120.5, "print", 3);                          // 발판 30 × 46 × 3, M3 구멍. 오른쪽 4 mm는 온도 센서 홀더 자리
-    face(rr(0, 137, 42, 30, 2), [...[-6, 0, 6].map((z) => H.r(z, 128.75, 2.5, 5.5)), H.r(5, 124, 6, 2.6)], 86.8, "print"); // 뒷벽: 통풍 구멍 3개, 아래는 안테나 선 구멍
+    flat(rr(69, 0, 46, 48, 2.5), [], 120.4, "print", 3);                                                             // 발판 46 × 48 × 3 (하부 돌기 없이 뒤→앞 슬라이드)
     for (const s of [1, -1]) {
-      box(7.2, 2.5, 2.3, "print", 91.4, 123.25, s * 8.15);                                                       // 받침턱: 보드 밑으로 안테나 선이 지나간다
-      side(poly([[85.8, 122], [85.8, 131], [74, 122]]), [], s * 19, "print");                                     // 뒷벽 지지대
+      box(7.5, 2.4, 8, "print", 45, 120.1, s * 17); box(2.8, 7, 8, "print", 40.3, 117.8, s * 17); box(6.5, 2.4, 8, "print", 43.2, 115.2, s * 17); // 뒤 엣지(X 42) U자 걸쇠
+      box(15, 2.4, 8, "print", 96, 120.1, s * 17);                                                                   // 앞 실제 M3 나사(X 100, Z ±17) 연장 레일
     }
-    box(11.2, 5.5, 1.7, "print", 91.4, 124.75, 10.15); box(11.2, 11, 1.7, "print", 91.4, 140.5, 10.15);          // 오른쪽 옆벽: 가운데 창으로 D4 · D5 핀에 온도 센서 선을 납땜
-    box(1.55, 10.8, 1.1, "print", 90.2, 140.4, 8.75);                                                             // 보드 앞을 잡는 턱 (창 위쪽)
-    box(11.2, 14, 1.7, "print", 91.4, 129, -10.15); box(1.55, 11.2, 1.1, "print", 90.2, 130.4, -8.75);          // 왼쪽은 아래만: 위쪽 5 V · GND 핀에 선을 납땜
-    ant = box(0.6, 20, 40, "dark", 85.5, 142, 0);                                                                // 2.4 GHz FPC 안테나, 뒷벽 뒷면에 붙임
-    grp(91, 122, 17, (g) => {                                                                                    // 온도 센서 홀더: 원점 = 홈 바닥 · 보드 뒷면, 앞으로 IR_TILT 숙임
-      g.rotation.z = -IR_TILT;
-      box(2, 13, 9.5, "print", -1, 6.5, 1.75);                                                                   // 뒷판: 위쪽은 납땜 자리, 안쪽은 D4 · D5 선이 지나가게 비운다
-      box(4, 1.5, 13, "print", 0.5, 0.75, 0);                                                                    // 받침턱
-      box(5, 19, 1.2, "print", 1.5, 9.5, 6.1);                                                                   // 바깥 옆벽 (안쪽은 브래킷 오른쪽 벽이 막는다)
-      box(1, 6, 1, "print", 2.1, 15.5, 5); box(1, 6, 2.5, "print", 2.1, 15.5, -5.75);                            // 보드 앞을 잡는 턱 (캔 위쪽)
+    face(rr(0, 134, 24, 24, 2), [H.r(0, 128, 4, 5), H.r(4.5, 124, 5, 2.8)], 72.1, "print", 2.4);                    // XIAO 뒷벽 (폭 24 mm: U.FL 선 구멍 +4.5, 오른쪽 GY-906 뒤 배선 개방)
+    for (const s of [1, -1]) {
+      box(5.5, 2.4, 2.4, "print", 74.8, 123.1, s * 7.8);                                                             // XIAO 하부 받침 (가운데 U.FL 선 자리 개방)
+      side(poly([[72.1, 121.9], [72.1, 134], [56, 121.9]]), [H.r(67.8, 123.6, 4.2, 3.2)], s * 10, "print", 2.4); // 45° 거셋 + 하부 배선 통과 구멍
+      box(5.8, 6.2, 2.4, "print", 74.0, 125.0, s * 10.2);                                                            // XIAO 하부 가이드 벽
+      box(5.8, 6.0, 2.4, "print", 74.0, 141.5, s * 10.2);                                                            // XIAO 상부 가이드 벽 (중간 128~138.5 비워 배선·손 진입)
+      box(1.6, 15.0, 1.8, "print", 75.8, 132.0, s * 8.9);                                                            // 앞 유지 턱 (본체 PCB·Sense 보드 사이만 잡음)
+    }
+    box(1.8, 1.4, 1.8, "print", 74.5, 145.6, -8.8);                                                                  // XIAO 상단 스냅 턱
+    box(4.0, 1.4, 6.5, "print", 69.2, 122.6, 14.5);                                                                  // 뒤쪽 오픈 하부 배선 안내 턱
+    grp(63, 138.8, 0, (g) => {                                                                                       // 뒤쪽 경사 안테나 선반
+      g.rotation.z = rad(42);
+      box(22, 2.4, 44, "print", 0, 0, 0);
+      box(22, 3.6, 2.4, "print", 0, 1.8, -20.8); box(22, 3.6, 2.4, "print", 0, 1.8, 20.8);
+      ant = box(20, 0.8, 40, "dark", 0, 1.7, 0);
     });
-    tag("머리 브래킷 · M3 볼트 2개", [82, 176, -40], [91, 140, -11], true);
-    tag("안테나 · 금속에서 13 mm 띄움", [28, 162, -24], [85.5, 148, -12]);
+    grp(74.5, 122, 18.5, (g) => {                                                                                    // GY-906 포켓 (Z +18.5: XIAO와 겹치지 않게 분리)
+      g.rotation.z = -IR_TILT;
+      box(2.4, 15, 11.6, "print", -1.2, 7.5, 0);                                                                     // 뒷판 (위 핀 Y 16~18.5 배선 자리 개방)
+      box(4.6, 2, 13.4, "print", 0.5, 1, 0);                                                                         // 바닥 받침
+      box(4.6, 17, 2.2, "print", 0.5, 8.5, 6.7); box(4.6, 17, 2.2, "print", 0.5, 8.5, -6.7);                         // 양쪽 U자 PCB 레일
+      box(1.6, 4.5, 1.8, "print", 2.6, 14.8, 5.4); box(1.6, 4.5, 1.8, "print", 2.6, 14.8, -5.4);                     // 캔 위 PCB 앞 +0.2 mm 유지 턱
+      box(2.2, 1.4, 2.0, "print", 1.1, 17.6, 5.4);                                                                   // 바깥 상단 탄성 스냅 후크
+    });
+    tag("머리 브래킷 (뒤 걸쇠 + 앞 M3×8 · 3D 출력)", [52, 174, -44], [75, 142, -11], true);
+    tag("안테나 선반 (+13 mm)", [16, 162, -26], [63, 140, -12]);
   }), [-12, 24, 0]);
   let xBoard, xCam, xLens, fEye, irBoard, irEye;
-  const xiao = part(grp(88, 135.28, 0, () => { // 원점 = 본체 PCB 뒷면 가운데. x = 보드 법선(렌즈 쪽), y = 길이(USB-C가 위), z = 폭
-    const pb = (n0, n1, u0, u1, v0, v1, m) => box(n1 - n0, u1 - u0, v1 - v0, m, (n0 + n1) / 2, (u0 + u1) / 2, -(v0 + v1) / 2); // 공식 모델 좌표 (법선 n, 길이 u, 폭 v)
-    xBoard = pb(0, 1.25, -10.48, 10.48, -8.89, 8.89, "dark");                                                    // XIAO ESP32S3 본체 21 × 17.8
-    for (let i = -3; i <= 3; i++) for (const v of [-8.6, 8.6]) pb(-0.05, 1.3, i * 2.54 - 0.7, i * 2.54 + 0.7, v - 0.35, v + 0.35, "gold"); // 핀 패드 7개씩
+  const xiao = part(grp(73.5, 134.8, 0, () => { // 원점 = 본체 PCB 뒷면 가운데 (세부 소자 · 버튼 · 렌즈 경통 묘사)
+    const pb = (n0, n1, u0, u1, v0, v1, m) => box(n1 - n0, u1 - u0, v1 - v0, m, (n0 + n1) / 2, (u0 + u1) / 2, -(v0 + v1) / 2);
+    xBoard = pb(0, 1.25, -10.48, 10.48, -8.89, 8.89, "dark");                                                    // 본체 PCB 21 × 17.8
+    for (let i = -3; i <= 3; i++) for (const v of [-8.6, 8.6]) pb(-0.05, 1.32, i * 2.54 - 0.7, i * 2.54 + 0.7, v - 0.45, v + 0.45, "gold"); // 양쪽 7핀 패드
     pb(1.25, 3.25, -6.84, 3.77, -6.3, 6.3, "metal");                                                             // ESP32-S3 실드 캔
-    pb(1.25, 4.45, 4.1, 12, -4.47, 4.47, "metal");                                                               // USB-C
-    pb(1.25, 2.5, -10.25, -7.25, -6.28, -3.18, "gold");                                                          // 안테나 단자 U.FL
-    pb(1.25, 4.18, -10.2, -6.8, -2.1, 6.4, "dark");                                                              // 보드 사이 커넥터
+    pb(1.25, 4.45, 4.1, 12, -4.47, 4.47, "metal"); pb(2.6, 4.55, 6.2, 12.06, -3.5, 3.5, "dark");                  // USB-C 외피 + 깊은 슬롯 구멍
+    pb(3.2, 4.2, 7.6, 12.08, -2.4, 2.4, "gold");                                                                   // USB-C 내부 혀(접점)
+    pb(1.25, 2.3, 6.5, 9.2, 5.2, 7.6, "white"); pb(2.3, 2.9, 7.2, 8.5, 5.8, 7.0, "metal");                       // BOOT 버튼
+    pb(1.25, 2.3, 6.5, 9.2, -7.6, -5.2, "white"); pb(2.3, 2.9, 7.2, 8.5, -7.0, -5.8, "metal");                   // RESET 버튼
+    pb(1.25, 1.9, 4.6, 5.8, -6.8, -5.6, "w1"); pb(1.25, 1.9, 4.6, 5.8, 5.6, 6.8, "led");                         // 충전(주황) · 유저 LED
+    pb(1.25, 2.5, -10.25, -7.25, -6.28, -3.18, "gold");                                                          // U.FL 안테나 단자
+    pb(1.25, 4.18, -10.2, -6.8, -2.1, 6.4, "dark");                                                              // B2B 커넥터
     xCam = pb(4.18, 5.43, -10.78, 3.9, -8.39, 8.39, "dark");                                                     // Sense 확장 보드
-    pb(5.43, 7.43, -10.6, -4.6, -8.07, 8.13, "white");                                                           // 카메라 FPC 커넥터
-    pb(5.43, 8.03, -1.7, 3.8, -5.97, 5.43, "metal");                                                             // microSD 슬롯
-    pb(8.03, 8.33, -4.6, 2.95, -3.64, 2.36, "w3");                                                               // 카메라 FPC
-    xLens = pb(8.03, 10.5, 2.95, 10.95, -4.64, 3.36, "dark");                                                    // OV3660 카메라 모듈
-    cyl(3.4, 1.8, "dark", 11.4, 6.95, 0.64, "x"); cyl(2.8, 1.66, "dark", 13.13, 6.95, 0.64, "x"); cyl(0.9, 0.2, "metal", 13.9, 6.95, 0.64, "x"); // 렌즈
+    pb(5.43, 7.43, -10.6, -4.6, -8.07, 8.13, "white"); pb(6.6, 7.6, -9.8, -5.6, -8.2, 8.2, "dark");              // ZIF 카메라 커넥터 + 잠금 랫치
+    pb(5.43, 8.03, -1.7, 3.8, -5.97, 5.43, "metal"); pb(5.9, 7.6, 3.4, 4.0, -5.4, 4.8, "dark");                  // microSD 슬롯 + 카드 투입구
+    pb(6.1, 7.4, 3.2, 3.85, -4.8, 4.2, "gold");                                                                  // microSD 내부 접점
+    pb(8.03, 8.38, -4.6, 2.95, -3.64, 2.36, "w1");                                                               // 캡톤 카메라 FPC
+    xLens = pb(8.03, 10.6, 2.95, 10.95, -4.64, 3.36, "dark");                                                    // OV3660 센서 몸체
+    cyl(3.5, 0.8, "gold", 10.8, 6.95, 0.64, "x");                                                                // 금색 나사 링
+    cyl(3.4, 1.8, "dark", 11.7, 6.95, 0.64, "x"); cyl(2.8, 1.66, "dark", 13.13, 6.95, 0.64, "x");
+    cyl(1.6, 0.25, "lens", 13.92, 6.95, 0.64, "x");                                                              // 코팅 유리 렌즈
     fEye = add(new THREE.Object3D(), 14, 6.95, 0.64);
-    tag("머리 카메라 (XIAO)", [42, 30, 10], [14, 7, 0]);
+    tag("머리 카메라 (XIAO)", [44, 30, 12], [14, 7, 0]);
   }), [26, 40, 0]);
 
-  // ===== XIAO 오른쪽: 비접촉 온도 센서 GY-906 (MLX90614ESF-BCC). 캔은 Melexis 데이터시트 Figure 42, 보드 17 × 11 mm (01_docs/mlx90614) =====
-  const irMod = part(grp(91, 122, 17, (g) => { // 홀더와 같은 원점. x = 센서가 보는 쪽, y = 보드 길이(헤더가 위), z = 폭
+  // ===== XIAO 오른쪽: 비접촉 온도 센서 GY-906 (MLX90614ESF-BCC) =====
+  const irMod = part(grp(74.5, 122, 18.5, (g) => {
     g.rotation.z = -IR_TILT;
-    irBoard = box(1.6, 17, 11, "pcb", 0.8, 10, 0);                                                               // GY-906 보드
-    cyl(4.56, 1.03, "metal", 2.12, 7, 0, "x"); cyl(5.1, 7.07, "metal", 6.17, 7, 0, "x");                          // TO-39 캔: 아랫단 Ø9.12 + 몸통 Ø10.2, 높이 8.1
-    cyl(1.75, 0.2, "dark", 9.8, 7, 0, "x");                                                                      // 창 Ø3.5
-    box(1, 1.6, 2.9, "dark", 2.1, 13.4, 2.6);                                                                    // 3.3 V 레귤레이터 (662K)
-    IR_PINS.forEach((z) => cyl(0.8, 1.7, "gold", 0.8, 17, z, "x"));                                             // 헤더 구멍 VIN · GND · SCL · SDA
+    irBoard = box(1.6, 17, 11, "irPcb", 0.8, 10, 0);                                                               // 보라색 GY-906 PCB
+    cyl(4.65, 1.1, "metal", 2.15, 7, 0, "x"); box(1.1, 1.2, 1.2, "metal", 2.15, 11.8, 0);                        // TO-39 바닥 플랜지 + 기준 노치 탭
+    cyl(5.1, 7.07, "metal", 6.17, 7, 0, "x"); ring(4.4, 0.45, "dark", 9.65, 7, 0, "x");                          // TO-39 금속 캔 · 베젤
+    cyl(2.2, 0.3, "lens", 9.8, 7, 0, "x");                                                                       // 실리콘/게르마늄 적외선 필터 창
+    box(1.1, 1.6, 2.9, "dark", 2.1, 13.4, 2.6);                                                                  // 3.3 V 레귤레이터 (662K SOT-23)
+    for (const dz of [-0.95, 0, 0.95]) box(0.6, 0.4, 0.35, "metal", 2.0, 14.3, 2.6 + dz);                        // IC 다리
+    for (const z of [-2.4, -0.4]) box(0.8, 1.6, 0.9, "dark", 2.0, 13.8, z);                                      // 0603 풀업 저항 2개
+    box(0.9, 1.6, 0.9, "w1", 2.0, 13.8, -4.1);                                                                   // 디커플링 커패시터
+    IR_PINS.forEach((z) => { cyl(1.05, 1.72, "gold", 0.8, 17, z, "x"); cyl(0.55, 1.85, "dark", 0.8, 17, z, "x"); }); // 금도금 4핀 스루홀 패드
     irEye = add(new THREE.Object3D(), 9.9, 7, 0);
-    tag("온도 센서 (GY-906)", [34, 26, 46], [8, 9, 5]);
+    tag("온도 센서 (GY-906)", [36, 24, 48], [8, 9, 5]);
   }), [26, 40, 30]);
 
-  // ===== 등뼈 덮개 위: LED 도트 매트릭스 (Hiwonder 8×16, TM1640). 긴 쪽이 몸 길이 방향, 화면이 위를 봐 화살표가 실제 바닥 방향과 같다 (11/13 기능 정의서 F-12, 실물 사진) =====
-  // shortcut: 보드 54 × 23 · 구멍 46 × 16 · 매트릭스 20 mm는 사진에서 칩(SOP-28 17.9 mm)과 커넥터(2.5 mm 간격)로 축척을 잡은 값, 스페이서 6 mm는 가정. 실측하면 이 값만 바꾼다
-  const ARROW = ["        ", "   ##   ", "  ####  ", " ###### ", "########", ...Array(10).fill("   ##   "), "        "]; // 앞쪽 줄부터 16줄, 앞을 가리키는 화살표
-  const led = part(grp(1.5, 125, 0, (g) => { // 원점 = 등뼈 덮개 윗면 가운데. 아래 좌표의 z(긴 쪽, + 가 앞)를 몸 길이 방향 x로 돌린다
-    g.rotation.y = PI / 2;
-    for (const x of [-8, 8]) for (const z of [-23, 23]) { cyl(2.5, 6, "metal", x, 3, z); cyl(2.75, 1.4, "metal", x, 8.3, z); } // M3 스페이서 + 볼트 머리
-    box(23, 1.6, 54, "white", 0, 6.8, 0);                                                                        // 보드
-    box(6, 5.5, 12.4, "white", 0, 3.25, -5); box(7.5, 1.6, 17.9, "dark", 0, 5.2, 11);                             // 뒷면: 4핀 커넥터 (5V · GND · DIN · CLK) · TM1640
-    for (const z of [-10.2, 10.2]) box(20, 6, 20, "dark", 0, 10.6, z);                                           // 8×8 매트릭스 2개
-    ARROW.forEach((row, r) => [...row].forEach((ch, c) => cyl(0.95, 0.3, ch === "#" ? "red" : "pin", -8.75 + c * 2.5, 13.7, 19.95 - r * 2.5 - (r > 7 ? 0.4 : 0))));
-    tag("LED 도트 매트릭스 (포트 3)", [-48, 42, 26], [0, 14, 12]);
-  }), [0, 30, 0]);
+  // ===== 등뼈 덮개 앞쪽 위: LED 도트 매트릭스 (Hiwonder 8×16, TM1640) =====
+  const ARROW = ["       ##       ", "      ####      ", "     ######     ", "    ########    ", "   ### ## ###   ", "  ##   ##   ##  ", "       ##       ", "       ##       "];
+  const ledMount = part(grp(20.5, 125, 0, () => {
+    for (const s of [1, -1]) {
+      for (const x of [-8, 8]) box(5.6, 6, 5.6, "print", x, 3, s * 23);
+      box(7, 2.4, 8, "print", 5.5, 1.2, s * 19.5);
+      cyl(2.6, 1.8, "dark", 3.5, 3.2, s * 17); cyl(1.5, 8, "metal", 3.5, -1.6, s * 17);
+    }
+    box(3, 2.4, 46, "print", -8, 1.2, 0); box(3, 2.4, 46, "print", 8, 1.2, 0);
+  }), [0, 26, 0]);
+  const led = part(grp(20.5, 125, 0, () => { // 원점 = 등뼈 덮개 앞쪽 윗면 (X 20.5, Y 125)
+    for (const x of [-8, 8]) for (const z of [-23, 23]) { cyl(2.6, 1.7, "gold", x, 6.8, z); cyl(2.6, 1.4, "metal", x, 8.3, z); } // 금패드 + M3 나사
+    box(23, 1.6, 54, "white", 0, 6.8, 0);
+    box(6, 5.5, 12.4, "white", 0, 3.25, -12); box(4.2, 3.8, 10.4, "dark", -1.1, 3.0, -12);                          // 4핀 JST 소켓 외피 · 내부 구멍
+    for (let i = 0; i < 4; i++) cyl(0.35, 4.5, "gold", -0.6, 3.0, -15.8 + i * 2.54);                                 // 4핀 금도금 핀
+    box(7.5, 1.6, 17.9, "dark", 0, 5.2, 10);                                                                         // TM1640 SOP-28 드라이버 칩
+    for (let i = 0; i < 14; i++) for (const s of [-1, 1]) box(1.2, 0.35, 0.55, "metal", s * 4.2, 5.1, 1.8 + i * 1.27); // SOP-28 28핀 다리
+    box(1.6, 1.2, 2.4, "w1", -4, 5.4, -2);                                                                           // SMD 커패시터
+    for (const z of [-10.2, 10.2]) box(20, 6, 20, "dark", 0, 10.6, z);
+    ARROW.forEach((row, r) => [...row].forEach((ch, c) => cyl(0.95, 0.3, ch === "#" ? "red" : "pin", 8.75 - r * 2.5, 13.7, -19.95 + c * 2.5 + (c > 7 ? 0.4 : 0))));
+    tag("LED 도트 매트릭스 (포트 3)", [26, 46, -42], [0, 14, -14]);
+  }), [0, 34, 0]);
+
+  // ===== 뒤 윗판~등뼈 위: 라즈베리 파이 5 + 액티브 쿨러 + M3×8 4점 교체 고정 캐리어 =====
+  const piMount = part(grp(-35, 0, 0, () => {
+    flat(rr(0, 0, 85, 56, 3), [H.r(-22, 0, 30, 38, 3), H.r(16, 0, 28, 42, 3)], 129, "print", 3);
+    for (const s of [1, -1]) {
+      side(poly([[-45, 112.4], [-45, 128], [-6, 128], [-6, 124], [-14, 112.4]]), [H.p([[-34, 116], [-18, 116], [-22, 124], [-34, 124]])], s * 18, "print", 3);
+      box(7, 2, 4, "print", -27, 111.5, s * 18);
+      box(9, 2.5, 9, "print", -43.5, 113.65, s * 20.5);
+      cyl(2.75, 2, "dark", -43.5, 115.8, s * 22); cyl(1.5, 8, "metal", -43.5, 111.5, s * 22);
+      box(12, 2.5, 6, "print", 14, 126.25, s * 17);
+      cyl(2.75, 2, "dark", 14, 128.4, s * 17); cyl(1.5, 8, "metal", 14, 124.2, s * 17);
+    }
+    for (const x of [-19, 39]) for (const z of [-24.5, 24.5]) { cyl(3, 3, "print", x, 132, z); cyl(1.4, 2, "metal", x, 136, z); }
+    tag("Pi 5 일체형 캐리어 (M3×8 4점 + 맞춤 돌기)", [-48, 126, 48], [-18, 128, 28], true);
+  }), [0, 18, 0]);
+  const rpi = part(grp(-35, 133.5, 0, () => { // 원점 = Pi 5 PCB 아랫면 중심 (공식 보드 + 공식 액티브 쿨러 실물 비율 묘사)
+    box(85, 1.6, 56, "rpiPcb", 0, 0.8, 0);                                                                            // PCB 85 × 56 × 1.6 (모서리 R3)
+    for (const x of [-19, 39]) for (const z of [-24.5, 24.5]) { cyl(2.7, 1.72, "gold", x, 0.8, z); cyl(1.3, 1.8, "dark", x, 0.8, z); } // M2.5 금패드
+    // 40핀 GPIO (+Z) + 핀 1 흰색 기준 표시
+    box(51, 2.5, 5.2, "dark", 13.5, 2.85, 24.5); box(1.2, 2.6, 1.2, "white", -10.6, 2.86, 23.2);
+    for (let i = 0; i < 20; i++) for (const z of [23.2, 25.8]) box(0.65, 8.8, 0.65, "gold", -10.6 + i * 2.54, 6.2, z);
+    // 기가비트 이더넷 RJ45 (-X -33, Z -18) + T자 포트 구멍 + 8핀 접점 + 링크 LED
+    box(21, 13.6, 16, "metal", -33, 8.4, -18); box(1.8, 9.8, 12.6, "dark", -42.8, 7.8, -18); box(1.4, 2.4, 5.2, "dark", -42.9, 13.2, -18);
+    for (let i = 0; i < 8; i++) box(1.2, 1.4, 0.45, "gold", -42.6, 11.8, -22 + i * 1.15);
+    box(0.8, 1.4, 2.2, "led", -43.3, 13.8, -23.5); box(0.8, 1.4, 2.2, "w1", -43.3, 13.8, -12.5);
+    // USB 3.0 ×2 (Z -1) · USB 2.0 ×2 (Z +15.5) + 내부 공동 · 혀 · 금접점
+    for (const [z, m] of [[-1, "rpiBlue"], [15.5, "dark"]]) {
+      box(17, 15.6, 13.5, "metal", -34.5, 9.4, z);
+      for (const y of [6.0, 13.0]) {
+        box(1.8, 5.2, 11.4, "dark", -42.3, y, z); box(2.2, 1.3, 10.2, m, -42.1, y - 1.1, z);
+        for (let i = 0; i < 4; i++) box(1.8, 0.4, 0.7, "gold", -42.2, y - 0.3, z - 3 + i * 2);
+      }
+    }
+    // USB-C 전원(X +31.3, Z -24) · micro-HDMI ×2(X +16.7, +3.2, Z -25) · UART 3핀
+    box(7.5, 3.4, 9, "metal", 31.3, 3.3, -24); box(7.2, 2.2, 1.8, "dark", 31.3, 3.3, -27.8); box(5.4, 0.8, 2.0, "gold", 31.3, 3.3, -27.7);
+    for (const x of [16.7, 3.2]) { box(7.6, 3.2, 6.5, "metal", x, 3.2, -25); box(5.6, 1.8, 1.6, "dark", x, 3.2, -27.6); box(4.2, 0.7, 1.8, "gold", x, 3.2, -27.5); }
+    box(2.8, 3.2, 6.2, "white", 10, 3.2, -21); box(1.8, 1.8, 4.8, "dark", 10, 4.1, -21);                             // UART 3핀 커넥터
+    // 앞쪽 엣지(+X +40): 전원 버튼 + ACT/PWR LED + 아랫면 microSD 카드 슬롯
+    box(3.5, 3.4, 5.5, "white", 40.5, 3.3, -21); cyl(1.1, 2.4, "pin", 41.8, 3.3, -21, "x");                         // 전면 전원 버튼
+    box(1.6, 1.2, 1.6, "led", 39.2, 2.2, -24.5);                                                                      // 전원/상태 LED
+    box(12, 2.0, 13, "metal", 36.8, -0.4, 0); box(1.8, 1.2, 11.2, "dark", 42.1, -0.4, 0); box(2.4, 0.8, 10.6, "dark", 43.2, -0.4, 0); // microSD + 삽입 카드
+    // 상면 칩셋 · 커넥터 (Wi-Fi 실드 · RP1 · PMIC · MIPI ×2 · PCIe FFC · RTC · PoE · FAN)
+    box(11, 2.2, 13, "metal", -15, 2.7, -18);                                                                         // Wi-Fi/BT RF 실드 캔
+    box(13, 1.4, 13, "dark", -14, 2.3, 7);                                                                            // RP1 I/O 컨트롤러
+    box(6, 1.4, 6, "dark", 24, 2.3, -15); for (const z of [-19, -11]) box(3.6, 1.8, 3.6, "dark", 24, 2.5, z);         // PMIC + 전원 인덕터
+    for (const z of [-13.5, -5.5]) { box(22, 4.2, 3.2, "white", 16, 3.6, z); box(19.5, 1.2, 0.8, "dark", 16, 5.7, z); } // MIPI CSI/DSI ×2
+    box(3.5, 4.2, 17, "white", 37, 3.6, 0); box(0.8, 1.2, 14.5, "dark", 37.8, 5.7, 0);                                // PCIe FFC
+    box(4.8, 3.8, 6.2, "white", 27, 3.5, -18); box(3.2, 2.2, 4.6, "dark", 27, 4.5, -18);                              // RTC 2핀 소켓
+    box(5.2, 2.4, 5.2, "dark", -14, 2.8, 19); for (const dx of [-1.2, 1.2]) for (const dz of [-1.2, 1.2]) box(0.6, 6.5, 0.6, "gold", -14 + dx, 5.2, 19 + dz); // PoE 4핀
+    box(4.5, 4.8, 5.2, "white", -18, 4, 15.5); box(3.2, 2.0, 3.8, "dark", -18, 5.5, 15.5);                           // FAN 4핀 소켓
+    // 공식 Pi 5 액티브 쿨러 (검정 아노다이징 일체형 방열판 + 평평한 수평 블로워 슈라우드 + 11엽 팬 + 스프링 푸시핀 2개 + PWM 케이블)
+    box(56, 2.2, 38, "metal", 4, 3.1, -1);                                                                            // 하부 알루미늄 베이스 플레이트
+    box(30, 8.2, 38, "cooler", -7, 8.3, -1);                                                                          // 뒤쪽 방열 블록 (Y 4.2 ~ 12.4)
+    for (let i = 0; i < 8; i++) box(28, 1.4, 2.4, "dark", -7, 12.2, -16.5 + i * 4.7);                                 // 상면 냉각 핀 슬롯 (요철)
+    box(28, 8.2, 38, "cooler", 18, 8.3, -1);                                                                          // 앞쪽 팬 하우징 블록 (일체형 사각 + 라운드 슈라우드)
+    cyl(15.2, 8.4, "cooler", 15, 8.4, -1);                                                                            // 팬 외곽 원통 턱
+    cyl(13.2, 7.6, "dark", 15, 9.0, -1);                                                                              // 오목한 팬 흡입구 공동
+    ring(13.6, 0.9, "cooler", 15, 12.6, -1, "y");                                                                     // 수평 원형 팬 베젤 (axis="y" -> 평평하게 눕힘!)
+    grp(15, 10.6, -1, () => {                                                                                         // 11엽 곡선 블로워 임펠러 + 3점 가드 스포크
+      cyl(4.6, 3.6, "dark", 0, 0, 0); cyl(1.6, 3.8, "metal", 0, 0, 0);
+      for (let i = 0; i < 11; i++) { const b = box(8.8, 2.8, 0.85, "cooler", Math.cos(i * PI * 2 / 11) * 7.8, -0.2, Math.sin(i * PI * 2 / 11) * 7.8); b.rotation.y = -i * PI * 2 / 11 + 0.52; }
+    });
+    for (const [px, pz] of [[-12, -20.5], [29, 17]]) {                                                                // 쿨러 전용 스프링 푸시핀 2개
+      cyl(2.2, 3.6, "dark", px, 4.6, pz); cyl(2.6, 2.4, "metal", px, 6.2, pz); cyl(1.8, 4.8, "white", px, 3.6, pz);
+    }
+    [M.dark, M.red, M.w1, M.rpiBlue].forEach((m, i) => add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+      V(2, 6.2, 16 + i * 0.6), V(-8, 6.8, 17 + i * 0.6), V(-18, 6.6, 15.5)
+    ]), 12, 0.32, 6), m)));                                                                                           // 쿨러 → FAN 소켓 4선 PWM 케이블
+    tag("라즈베리 파이 5", [-38, 44, -26], [8, 15, -10]);
+  }), [0, 42, 0]);
 
   // ===== 머리 아래: 비전 모듈을 기존 트러스 브래킷째 뒤집어 달았다. 3D 출력물 없음 (장착 사진 ③ ~ ⑥) =====
   const SLOPE = rad(25), FOLD = 65, DOWN = 35; // 브래킷 판 기울기, 판에 접어 붙였을 때 렌즈가 내려다보는 각 (90 - 25), 기본 각: 라인 처리 영역(화면 위 2/3)이 몸 중심 15~33 cm
@@ -600,12 +732,19 @@ try {
     }
     cyl(2.4, 46, k("dark"), 1.6, -1.6, 0, "z");                                                                    // 모듈 경첩
   };
-  const camModule = (m) => { // 원점 = 경첩 축, +x = 렌즈가 보는 쪽, 몸체는 -y로 뻗는다
+  const camModule = (m) => { // 원점 = 경첩 축, +x = 렌즈가 보는 쪽, 몸체는 -y로 뻗는다 (실물 사진 기준 세부 묘사)
     const k = (name) => m ?? name;
-    const mod = box(17.5, 43, 59, k("dark"), 11.75, -24, 0);                                                       // 59 × 43 × 17.5
-    cyl(5.2, 5, k("dark"), 22.5, -24, 0, "x"); cyl(3, 0.6, k("metal"), 25.2, -24, 0, "x");                         // 렌즈
-    for (const y of [-6, -42]) for (const z of [-26, 26]) cyl(1.3, 0.8, k("metal"), 20.7, y, z, "x");
-    box(6, 5, 2.4, k("white"), 12, -9, 30.4);                                                                      // I2C 커넥터 (오른쪽)
+    const mod = box(17.5, 43, 59, k("dark"), 11.75, -24, 0);                                                       // 본체 케이스 59 × 43 × 17.5
+    box(0.8, 36, 51, k("pin"), 20.4, -24, 0); box(1.1, 33, 48, k("dark"), 20.5, -24, 0);                             // 앞면 단차 테두리
+    cyl(7.2, 1.2, k("pin"), 20.8, -24, 0, "x"); cyl(5.6, 4.8, k("dark"), 22.8, -24, 0, "x");                         // 다단 카메라 경통
+    cyl(3.8, 0.8, k("gold"), 25.0, -24, 0, "x"); cyl(2.6, 0.4, k("lens"), 25.3, -24, 0, "x");                        // 금색 테두리 · 광학 유리 렌즈
+    box(1.2, 7, 7, k("white"), 20.8, -11, -18); cyl(1.6, 0.4, k("led"), 21.3, -38, -20, "x");                        // 보조 조명 LED · 상태 표시등
+    for (const y of [-6, -42]) for (const z of [-26, 26]) cyl(1.3, 0.8, k("metal"), 20.7, y, z, "x");                // 모서리 나사 4개
+    box(6, 5, 2.8, k("white"), 12, -9, 30.4); box(4.4, 3.6, 1.8, k("dark"), 12, -9, 31.1);                           // I2C 소켓 외피 · 내부 공동
+    for (let i = 0; i < 4; i++) cyl(0.35, 3, k("gold"), 12, -11.5 + i * 1.65, 31.0, "z");                            // 4핀 금도금 핀
+    box(7, 2.4, 9.2, k("metal"), 11, -45.5, -10); box(5.4, 1.6, 7.6, k("dark"), 11, -46.0, -10);                     // 아래 USB-C 포트 구멍 + 혀
+    box(3.2, 0.8, 5.4, k("gold"), 11, -46.1, -10);
+    box(4.8, 2.0, 13.5, k("metal"), 11, -45.5, 8); box(1.4, 1.2, 11.4, k("dark"), 11, -46.1, 8);                     // microSD 슬롯 투입구
     return mod;
   };
   const PV = [100, 77.5]; // 경첩 축: 얼굴 바로 아래
@@ -627,26 +766,28 @@ try {
   const cables = [0, 1, 2, 3].map(() => tubeMesh("dark")), coax = tubeMesh("dark"), power = [tubeMesh("w2"), tubeMesh("dark")];
   const irWires = ["w2", "dark", "w1", "w3"].map((m) => tubeMesh(m)); // 온도 센서 VIN · GND · SCL · SDA
   const ledWires = [0, 1, 2, 3].map(() => tubeMesh("dark")); // LED 매트릭스 → 포트 3
+  const piWire = tubeMesh("dark"); // Pi 5 USB-C 전원 선
   const tube = (o, pts, r = 0.7) => { o.geometry.dispose(); o.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, r, 6); };
   tag("I2C 포트 1 (비전) · 2 (XIAO 전원) · 3 (LED)", [-30, 60, -84], [8, 106, -33], false, () => camera.position.z < 40); // 왼쪽에서 볼 때만
   const wire = () => {
     robot.updateMatrixWorld(true);
     const on = (g) => (x, y, z) => robot.worldToLocal(g.localToWorld(V(x, y, z)));
-    const cam = on(bCam), xi = on(xiao), bk = on(brk), ir = on(irMod), le = on(led);
-    ledWires.forEach((c, i) => { const dz = (i - 1.5) * 1.3; tube(c, [le(3.2, 3, -5 + dz * 1.9), le(9, 2.5, -8 + dz), ...[V(-8, 126.6, -21), V(-7, 120, -31.6), V(-6.5, 113, -33.4), V(PORTS[2], 108.5, -33.5)].map((p) => p.add(V(dz, 0, 0)))], 0.6); }); // 커넥터 → 덮개 왼쪽 모서리 → 포트 3
+    const cam = on(bCam), xi = on(xiao), bk = on(brk), ir = on(irMod), le = on(led), rp = on(rpi);
+    tube(piWire, [rp(31.3, 3.3, -28.5), rp(31.3, 1.8, -31.5), V(-12, 126, -32.2), V(-44, 121, -29.5), V(-76, 118, -26), V(-84.5, 116.5, -21), V(-85, 106, -15), V(-84.5, 97, -10), V(-81.5, 96, -8), V(-75, 96, -8)], 0.85); // Pi 5 USB-C → 왼쪽 바깥 → 뒤판 슬롯(벽 관통 없음)
+    ledWires.forEach((c, i) => { const dx = (i - 1.5) * 1.3; tube(c, [le(dx, 3.2, -16), le(dx, 2.4, -24), V(16 + dx, 122, -31), V(2 + dx, 115, -33.2), V(PORTS[2] + dx, 108.5, -33.2)], 0.55); }); // LED 커넥터 → 왼쪽 덮개 바깥 → 포트 3
     const pts = [cam(12, -9, 32), cam(11, -30, 33.5), cam(9, -49, 25), V(40, 70, 4), V(29, 75, -24), V(25, 79, -32), V(22, 92, -33), V(PORTS[0], 106, -33.5)];
-    cables.forEach((c, i) => tube(c, pts.map((p) => p.clone().add(V((i - 1.5) * 1.5, 0, 0)))));           // 비전 모듈 → 배 아래 → 왼쪽 I2C 포트 1, 4가닥
-    tube(coax, [xi(3.2, -8.75, 4.73), xi(3.2, -11.8, 5), bk(88, 123.4, 5), bk(84.8, 124.5, 6), bk(84.9, 129, 12), bk(85.1, 133, 17)], 0.55); // U.FL → 보드 밑 → 뒷벽 구멍 → 안테나
-    power.forEach((c, i) => tube(c, [xi(1.4, 7.62 - i * 2.54, -8.9), xi(3, 7.62 - i * 2.54, -12.5), ...[V(92, 138, -16), V(89, 130, -23), V(82, 120.5, -22.5), V(50, 120, -22), V(40, 121, -26), V(28, 119, -31.6), V(14, 113, -32.6), V(PORTS[1], 108.5, -33.2)].map((p) => p.add(V(i * 1.4, 0, 0)))], 0.55)); // 5 V(빨강) · GND → 머리 위 → 왼쪽 I2C 포트 2
-    const XP = [2.54, 5.08, -5.08, -2.54]; // 온도 센서 선이 닿는 XIAO 핀 (길이 방향): 3V3 · GND (왼쪽 줄) · D5 SCL · D4 SDA (오른쪽 줄)
+    cables.forEach((c, i) => tube(c, pts.map((p) => p.clone().add(V((i - 1.5) * 1.5, 0, 0)))));           // 비전 모듈 → 배 아래 → 왼쪽 I2C 포트 1
+    tube(coax, [xi(3.2, -8.75, 4.73), xi(3.2, -11.6, 4.7), bk(72.1, 124, 4.5), bk(66, 125.5, 3.5), bk(52.5, 130.5, 2), bk(54.5, 136.5, 0.8), bk(62, 140.5, 0)], 0.55); // U.FL → 뒷벽 구멍(+4.5) → 선반 뒤턱 밖을 돌아 안테나 위로
+    power.forEach((c, i) => tube(c, [xi(1.4, 7.62 - i * 2.54, -8.9), xi(2.2, 6.2 - i * 2.2, -9.8), V(76, 134, -14 - i), V(71, 128, -22.5), V(54, 121.5, -23.5), V(39, 120.5, -25.5), V(28, 118.5, -32.6 - i * 1.1), V(16, 113, -33.2 - i * 1.1), V(PORTS[1], 108.5, -33.5)], 0.55)); // 5 V · GND: XIAO 열린 창(Y 134) → 왼쪽 바깥 → 포트 2
+    const XP = [2.54, 5.08, -5.08, -2.54]; // 온도 센서 선이 닿는 XIAO 핀: 3V3 · GND(왼쪽) · D5 SCL · D4 SDA(오른쪽)
     irWires.forEach((c, i) => {
-      const z = IR_PINS[i], u = XP[i], top = [ir(-0.3, 17, z), ir(-1.6, 19.5, z)];
+      const z = IR_PINS[i], u = XP[i], top = [ir(0.8, 18.6, z), ir(-3.2, 17.5, z)];                                   // GY-906 윗 핀에서 뒷판 뒤쪽으로 나옴
       tube(c, i < 2
-        ? [...top, V(88.5, 150, 14 - i), V(86.6, 155, 6 - i), V(86.6, 155, -8 - i), V(89.5, 150, -14 - i), xi(3.5, u + 1, -12.5), xi(1.4, u, -8.9)] // 3V3 · GND: 뒷벽 위로 넘어 왼쪽 핀
-        : [...top, V(89.4, 136.5, 12.6 + (i - 2) * 1.2), xi(2.4, u, 11.6), xi(1.4, u, 8.9)], 0.5);                                                    // SCL · SDA: 홀더 뒤로 내려와 옆벽 창으로
+        ? [...top, bk(68.2, 130, 14 - i), bk(68.0, 123.5, 13.5 - i), bk(68.0, 123.5, -13.5 - i * 0.8), bk(72, 133, -13.5), xi(1.2, u, -10.5), xi(0.9, u, -8.9)] // 3V3 · GND: 거셋 구멍 거쳐 왼쪽 창으로
+        : [...top, bk(70.5, 135, 13 + (i - 2) * 0.8), bk(74.4, 134, 11.2), xi(1.4, u, 9.8), xi(0.9, u, 8.9)], 0.5); // SCL · SDA: 오른쪽 열린 창(Y 134) 거쳐 D4 · D5 핀으로
     });
   };
-  tag("본체", [-60, 152, 0], [-60, 113, 0]);
+  tag("본체", [-68, 70, 50], [-68, 95, 29]);
 
   // 발이 바닥에 닿게 내린다
   robot.updateMatrixWorld(true);
