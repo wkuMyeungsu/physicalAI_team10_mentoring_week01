@@ -199,23 +199,26 @@ body{padding-top:44px}
 
 <h2>3. 기능 목록</h2>
 <div class="tw"><table>
-  <tr><th>ID</th><th>기능</th><th>한 줄 설명</th><th>센서 · 장비</th><th>우선</th><th>담당</th></tr>
-  <tr><td>F-01</td><td>라인 순찰</td><td>바닥 선을 따라 정해진 경로를 돈다</td><td>바닥 카메라</td><td><b>Must</b></td><td></td></tr>
-  <tr><td>F-02</td><td>위치 특정</td><td>바닥 마커로 지금 구역을 안다 (종류는 ArUco / 색 띠 실험 후 결정)</td><td>바닥 카메라</td><td><b>Must</b></td><td></td></tr>
-  <tr><td>F-03</td><td>통로 막힘 감지</td><td>통로 위 장애물을 찾아 위치 보고</td><td>초음파 + 비전</td><td><b>Must</b></td><td></td></tr>
-  <tr><td>F-04</td><td>관제 화면</td><td>지도에 위치 · 이상 표시, 사람이 체크해 해제</td><td>대시보드</td><td><b>Must</b></td><td></td></tr>
-  <tr><td>F-05</td><td>지나가는 사람 거르기</td><td>움직이는 사람은 제외, 서 있는 사람은 장애물 (연속 사진 + YOLO)</td><td>머리 카메라 + 서버</td><td></td><td></td></tr>
-  <tr><td>F-06</td><td>화재 감지</td><td>표면 온도 45℃ 초과 시 멈춰 계속 측정 → F-12로 확정 (시연은 캔들)</td><td>온도 센서 + 카메라</td><td></td><td></td></tr>
-  <tr><td>F-07</td><td>대피 안내</td><td>화재 확정 시 4대가 갈림길에 서서 LED로 비상구 방향(화살표) · 진입 금지(✕) 표시</td><td>서버 + LED</td><td></td><td></td></tr>
-  <tr><td>F-08</td><td>릴레이 교대</td><td>배터리 20% 미만 → 대기 로봇이 이어 순찰, 지친 로봇은 도크(충전 자리)로</td><td>서버</td><td></td><td></td></tr>
-  <tr><td>F-09</td><td>재점검 · 복구</td><td>치운 뒤 재통과로 통로 복구 · 순찰 자동 복귀</td><td>초음파 + 비전</td><td></td><td></td></tr>
-  <tr><td>F-10</td><td>바닥 물건 감지</td><td>낮은 물건 → "밟힘 주의" · 순찰 계속 · 사람이 치우고 체크</td><td>바닥 카메라</td><td></td><td></td></tr>
-  <tr><td>F-11</td><td>쓰러진 사람 감지</td><td>오래 누워 있거나 안 움직이면 알림</td><td>카메라</td><td></td><td></td></tr>
-  <tr><td>F-12</td><td>교차 확인</td><td>두 번째 로봇이 가서 다시 재고, 둘 다 50℃ 초과면 화재 확정 (오탐 방지)</td><td>온도 센서 · 서버</td><td></td><td></td></tr>
-  <tr><td>F-13</td><td>다중 로봇 교통 관리</td><td>로봇끼리 마주치지 않게 구간별 한 방향 · 출동 길 예약 · 양보 · 막히면 한쪽 후진</td><td>서버</td><td></td><td></td></tr>
+  <tr><th>기능</th><th>한 줄 설명</th><th>센서&nbsp;· 장비</th><th>우선</th></tr>
+  <tr class="grp"><td colspan="4">1. 순찰</td></tr>
+  <tr><td class="k">F-01 경로 순찰</td><td>바닥 선을 따라 정해진 경로를 빈틈없이 돈다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k">F-02 구간 위치 파악</td><td>바닥 마커로 로봇이 어느 구간에 있는지 안다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr class="grp"><td colspan="4">2. 이상 감지</td></tr>
+  <tr><td class="k">F-03 통로 막힘 감지</td><td>통로 위 장애물을 찾아 위치 보고</td><td>초음파&nbsp;· 머리 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k">F-04 바닥 물건 감지</td><td>낮은 물건을 찾아 "밟힘 주의" 표시</td><td>바닥 카메라</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k">F-05 과열&nbsp;· 화재 감지</td><td>표면 온도 45℃ 초과 시 멈춰 계속 측정</td><td>온도 센서&nbsp;· 머리 카메라</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k">F-06 쓰러진 사람 감지</td><td>오래 누워 움직이지 않으면 긴급 알림</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
+  <tr><td class="k">F-07 보행자 구분</td><td>움직이는 사람은 장애물에서 제외</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
+  <tr class="grp"><td colspan="4">3. 관제&nbsp;· 사람 협동</td></tr>
+  <tr><td class="k">F-08 관제 대시보드</td><td>지도에 위치&nbsp;· 이상 표시, 관리자가 확인해 해제</td><td>대시보드</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k">F-09 통로 재점검</td><td>치운 뒤 다시 지나가며 통로 차단 해제</td><td>초음파</td><td><span class="pri should">Should</span></td></tr>
+  <tr class="grp"><td colspan="4">4. 다중 로봇 협업</td></tr>
+  <tr><td class="k">F-10 과열 교차 확인</td><td>두 번째 로봇이 다시 재서 화재 확정</td><td>온도 센서</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k">F-11 충전 교대</td><td>배터리 부족 로봇의 순찰을 대기 로봇이 이어 받음</td><td>—</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k">F-12 화재 대피 안내</td><td>4대가 갈림길에서 LED로 비상구&nbsp;방향&nbsp;· 진입&nbsp;금지 표시</td><td>LED</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k">F-13 로봇 동선 조율</td><td>마주치지 않게 한 방향&nbsp;· 길 예약&nbsp;· 양보</td><td>—</td><td><span class="pri could">Could</span></td></tr>
 </table></div>
-<p>우선순위: <b>Must</b> 없으면 시연이 안 됨 · <b>Should</b> 협업 · 차별점 · <b>Could</b> 완성도<br>
-<span class="todo">빈 칸 채우기 · F-11을 이번 범위에 넣을지</span></p>
+<p class="note"><span class="pair"><span class="pri must">Must</span> 없으면 시연이 안 됨</span> <span class="pair"><span class="pri should">Should</span> 다중 로봇 협업&nbsp;· 차별점</span> <span class="pair"><span class="pri could">Could</span> 완성도</span> <span class="pair"><span class="pri wont">Won't</span> 이번 범위에서 제외 (5번)</span></p>
 
 <h2>4. 기능 상세</h2>
 <h3>F-03 통로 막힘 감지</h3>
