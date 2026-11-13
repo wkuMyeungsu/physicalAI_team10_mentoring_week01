@@ -73,6 +73,30 @@ body{padding-top:44px}
   table.cards td+td{display:flow-root}
   table.cards td+td::before{content:attr(data-l);float:left;width:7.4em;margin-left:-7.4em;color:var(--muted);font-size:12px;font-weight:400;padding-top:2px}
 }
+/* 로봇 장착 구성 3D 뷰어 (11/12 기획안에서 가져옴) */
+.v3d{--panel:#fff;--line:#b8bec4;--bg:#f7f6f3;--accent:#c2410c;--info:#1d4ed8;--bad:#b91c1c;--ok:#15803d;--gray:#6b7280;--cp-y:#eab308;--cp-b:#2563eb;display:grid;gap:8px;margin:8px 0}
+.v3d{--v3d-floor:#ebe7dd;--v3d-body:#f2b705;--v3d-dark:#2a2d33;--v3d-rubber:#3a3d42;--v3d-metal:#c9cdd2;--v3d-pcb:#3f4a5c;--v3d-white:#f1efe9;--v3d-led:#3b82f6;--v3d-print:#0d9488;--v3d-line:#16a34a;
+  border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:12px;display:grid;gap:8px;margin-top:8px}
+.v3d-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.v3d-seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.v3d-seg button{border:0;background:var(--panel);color:var(--muted);padding:6px 10px;cursor:pointer;font:inherit;font-size:.8rem;font-weight:700}
+.v3d-seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+.v3d-angle{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700}
+.v3d-angle input{width:110px;accent-color:var(--accent)}
+.v3d-stage{position:relative;height:480px;border-radius:8px;overflow:hidden;background:var(--bg)}
+@media (max-width:520px){.v3d-stage{height:400px}}
+.v3d-stage canvas{display:block}
+.v3d-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;padding:16px;text-align:center;color:var(--muted);font-size:.9rem}
+.v3d-labels{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.v3d-labels span{position:absolute;left:0;top:0;white-space:nowrap;font-size:.72rem;font-weight:700;line-height:1.5;padding:0 7px;border-radius:99px;background:var(--panel);border:1px solid var(--line)}
+.v3d-labels span.p{border-color:var(--v3d-print);color:var(--v3d-print)}
+.v3d-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted)}
+.v3d-legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.v3d-read{margin:0;font-size:.84rem;color:var(--muted)} .v3d-read b{color:var(--ink)}
+.v3d-parts{font-size:.8rem}
+details summary{cursor:pointer;font-weight:700}
+details[open] summary{margin-bottom:6px}
+details{margin:8px 0}
 </style>
 </head>
 <body>
@@ -192,11 +216,49 @@ body{padding-top:44px}
 
 <div class="tw"><table>
   <tr><th>장비</th><th>하는 일</th><th>구성</th></tr>
-  <tr><td>바닥 카메라</td><td>라인&nbsp;· 마커&nbsp;· 바닥 물건</td><td>MechDog 기본 카메라를 아래로 꺾어<br>몸 앞 약 25cm 바닥을 봄</td></tr>
+  <tr><td>바닥 카메라</td><td>라인&nbsp;· 마커&nbsp;· 바닥 물건</td><td>MechDog 기본 카메라를 머리 아래에서 35° 꺾어<br>몸 중심 앞 15~33cm 바닥을 읽음 (아래 3D)</td></tr>
   <tr><td>머리 카메라</td><td>앞쪽 시야&nbsp;· 사람 검출&nbsp;· 불꽃 확인</td><td>XIAO ESP32-S3 Sense 추가</td></tr>
   <tr><td>초음파</td><td>장애물 거리</td><td>MechDog 기본</td></tr>
   <tr><td>온도 센서</td><td>과열&nbsp;· 화재 표면 온도</td><td>비접촉 적외선 MLX90614 추가<br>XIAO에 연결</td></tr>
+  <tr><td>LED</td><td>대피 화살표&nbsp;· 진입 금지 ✕</td><td>MechDog 기본 도트 매트릭스 (8×16)<br>등뼈 덮개 위, 화면이 위를 봄</td></tr>
 </table></div>
+
+<h3>로봇 장착 구성 (3D)</h3>
+<p class="note">위 장비가 MechDog 한 대에 달리는 자리. 본체는 사양서 도면 치수, 기본 부품은 실물 사진, 추가 부품은 공식 3D 모델 · 데이터시트 · 사진 축척으로 그렸다. 끌어서 돌리고, 버튼으로 시점과 표시를 바꾸고, 슬라이더로 바닥 카메라 각도를 바꾸면 아래 줄에 보는 범위가 나온다. 3D는 인터넷에서 three.js를 불러와 그린다.</p>
+  <div class="v3d" id="v3d">
+    <div class="v3d-bar">
+      <span class="v3d-seg" id="v3dViews" role="group" aria-label="시점"><button type="button" data-v="all">전체</button><button type="button" data-v="side">옆</button><button type="button" data-v="front">정면</button><button type="button" data-v="bottom">아래</button></span>
+      <span class="v3d-seg" id="v3dToggles" role="group" aria-label="표시"><button type="button" data-k="fov" aria-pressed="true">카메라 시야</button><button type="button" data-k="beam" aria-pressed="true">초음파 빔</button><button type="button" data-k="ir" aria-pressed="true">온도 측정 범위</button><button type="button" data-k="label" aria-pressed="true">이름표</button><button type="button" data-k="print" aria-pressed="false">3D 출력물 강조</button><button type="button" data-k="explode" aria-pressed="false">분해 보기</button></span>
+      <label class="v3d-angle">바닥 카메라 각도<input type="range" id="v3dAngle" min="10" max="65" step="5" value="35"><output id="v3dAngleOut">35°</output></label>
+    </div>
+    <div class="v3d-stage" id="v3dStage"><p class="v3d-msg" id="v3dMsg">3D 뷰어를 불러오는 중…</p><div class="v3d-labels" id="v3dLabels" aria-hidden="true"></div></div>
+    <p class="v3d-read" id="v3dRead"></p>
+    <div class="v3d-legend">
+      <span><i style="background:var(--accent)"></i>바닥 카메라 시야</span><span><i style="background:var(--info)"></i>정면 카메라 시야</span><span><i style="background:var(--bad)"></i>초음파 빔</span><span><i style="background:var(--ok)"></i>온도 센서 측정 범위</span><span><i style="background:var(--v3d-print)"></i>3D 출력물</span><span><i style="background:var(--muted);opacity:.5"></i>옮기기 전 자리 (분해 보기)</span>
+      <span>끌어서 돌리기 · 누른 뒤 휠로 확대 · 오른쪽 버튼으로 이동</span>
+    </div>
+  </div>
+  <details>
+    <summary>부품 치수와 자리</summary>
+  <div class="tw"><table class="v3d-parts">
+    <thead><tr><th>부품</th><th>대략 치수 (실측 전)</th><th>자리</th><th>구분</th></tr></thead>
+    <tbody>
+      <tr><td>MechDog 본체</td><td>서 있을 때 214 × 126 × 138 mm, 꺼졌을 때 221 × 126 × 96 mm (사양서)</td><td>—</td><td>보유</td></tr>
+      <tr><td>초음파 센서</td><td>46 × 20 mm, 발신부 2개, 측정 각 15°</td><td>머리 앞면</td><td>보유</td></tr>
+      <tr><td>Hiwonder 비전 모듈 (ESP32-S3 + GC2145)</td><td>59 × 43 × 17.5 mm</td><td>머리 아랫면 (기존 브래킷째). 경첩을 35°로 꺾어 화면 위 2/3(라인 모드 처리 영역)에 몸 중심 15~33 cm 앞 바닥이 들어오게 한다. 라인 모드는 160 × 140이고 화면 아래 1/3은 처리하지 않아, 블록이 위쪽 2/3에 들어오게 각도를 2주 차에 정한다</td><td>보유 (머리 위에서 옮김)</td></tr>
+      <tr><td>삼각 트러스 브래킷</td><td>판 약 45 × 60 mm, 다리 4개</td><td>비전 모듈과 함께 머리 위 → 머리 아래</td><td>보유</td></tr>
+      <tr><td>바닥 각도 어댑터</td><td>약 42 × 30 × 74 mm</td><td>머리 아랫판, 레고 핀 4개, 15° 단위 구멍</td><td>3D 출력 (각도가 안 맞을 때만 · 모델에는 없음)</td></tr>
+      <tr><td>XIAO ESP32-S3 Sense (OV3660)</td><td>본체 21 × 17.8 mm + Sense 확장 보드, 렌즈까지 두께 14 mm (Seeed 3D 모델)</td><td>머리 브래킷에 세워 꽂음. 렌즈는 앞, USB-C는 위라 꽂은 채로 펌웨어를 올린다</td><td>보유</td></tr>
+      <tr><td>비접촉 온도 센서 GY-906 (MLX90614ESF-BCC)</td><td>보드 17 × 11 mm, 캔 Ø10.2 × 8.1 mm, 측정 시야 35° (Melexis 데이터시트 Figure 42 · Table 19)</td><td>머리 브래킷 오른쪽 홀더에 세워 꽂음. XIAO 렌즈와 같은 쪽을 보고 10° 숙인다. 캔 앞면이 XIAO 렌즈보다 뒤라 머리 카메라 화면에 들어오지 않는다. XIAO에 연결: VIN → 3V3, GND → GND, SDA → D4, SCL → D5. 헤더 없이 양쪽에 납땜하고, 온도 값은 XIAO가 사진과 함께 Wi-Fi로 보낸다</td><td>구매 (2개 · 4개 고민 중)</td></tr>
+      <tr><td>2.4 GHz 플렉스 안테나</td><td>약 40 × 20 mm</td><td>머리 브래킷 뒷벽 뒷면에 붙임, 머리 윗판에서 약 13 mm 띄움</td><td>보유</td></tr>
+      <tr><td>머리 브래킷</td><td>발판 30 × 46 mm, 높이 33 mm</td><td>머리 윗판 슬롯에 M3 볼트 2개(구멍 위치는 윗판 실측 후 맞춤). 보드는 위에서 홈에 밀어 넣고, 뒷벽에 통풍 구멍 · 안테나 선 구멍. 오른쪽에 온도 센서 홀더(10° 숙인 홈)를 붙여 함께 출력하고, 오른쪽 옆벽 가운데는 D4 · D5 납땜 창으로 비운다. 받침 없이 출력</td><td>3D 출력</td></tr>
+      <tr><td>LED 도트 매트릭스 (Hiwonder 8×16, TM1640)</td><td>보드 약 54 × 23 mm, 8×8 매트릭스 2개(각 약 20 × 20 mm, 점 간격 2.5 mm), 구멍 4개 약 46 × 16 mm. 공개 치수가 없어 사진에서 칩(SOP-28, 17.9 mm)과 커넥터(2.5 mm 간격)로 축척을 잡음</td><td>등뼈 덮개(몸통 가운데 솟은 부분) 위, 긴 쪽을 몸 길이 방향으로. 화면이 위를 본다. 뒷면 커넥터 · 칩 높이만큼 M3 스페이서 4개로 띄운다(높이 · 덮개 구멍 위치는 실측). 4핀 케이블은 왼쪽으로 내려 포트 3(IO32 · IO33)</td><td>보유</td></tr>
+      <tr><td>I2C 케이블 (4가닥)</td><td>—</td><td>비전 모듈 → I2C 인터페이스 1 (코드에서는 <code>IIC(2)</code>)</td><td>보유 · 짧으면 연장 구매</td></tr>
+      <tr><td>M3 볼트 · 너트 · XIAO 5 V 배선</td><td>M3 × 10 볼트 · 너트 각 2개</td><td>볼트는 머리 윗판 아래에서 너트로 조인다(윗판을 떼고 조립). 배선은 비어 있는 I2C 포트 2의 5 V · GND만 XIAO 5V · GND 핀으로 (SDA · SCL은 잇지 않음). 포트 1은 비전 모듈, 포트 3(IO32 · IO33)은 LED 도트 매트릭스</td><td>구매</td></tr>
+    </tbody>
+  </table></div>
+    <p class="muted">카메라 시야각(가로 60° · 세로 47°)은 가정값이고, 초음파 빔은 매뉴얼의 측정 각 15°를 반각으로 넓게 그렸고, 도면에서 얼굴이 약 11° 숙어 있어 빔도 그만큼 아래를 향한다. 온도 센서의 시야 35°는 데이터시트 값이고 30 cm까지 그렸다.</p>
+  </details>
 
 <h2>3. 기능 목록</h2>
 <div class="tw"><table>
@@ -283,6 +345,450 @@ document.querySelectorAll("table").forEach(function(t){
   t.classList.add("cards");
   [].slice.call(t.rows, 1).forEach(function(r){ [].forEach.call(r.cells, function(c, i){ c.setAttribute("data-l", h[i]); }); });
 });
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+/* 장착 구성 3D 뷰어 (5절). 단위 mm, +X 앞 · +Y 위 · +Z 로봇 오른쪽. 본체는 사양서 4절 도면(서 있을 때 214 × 126 × 138), 장착부는 장착 사진에서 읽은 대략값 */
+const stage = document.getElementById("v3dStage"), msg = document.getElementById("v3dMsg");
+try {
+  const THREE = await import("three");
+  const { OrbitControls } = await import("three/addons/controls/OrbitControls.js");
+  const { RoomEnvironment } = await import("three/addons/environments/RoomEnvironment.js");
+  const $ = (id) => document.getElementById(id);
+  const css = (n) => getComputedStyle($("v3d")).getPropertyValue(n).trim();
+  const PI = Math.PI, rad = THREE.MathUtils.degToRad, V = (x, y, z) => new THREE.Vector3(x, y, z);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- 재질: 색은 CSS 토큰에서 읽는다 (다크 모드 포함) ----
+  const TOK = { body: "--v3d-body", dark: "--v3d-dark", rubber: "--v3d-rubber", metal: "--v3d-metal", pcb: "--v3d-pcb", white: "--v3d-white", pin: "--gray",
+    print: "--v3d-print", floor: "--v3d-floor", line: "--v3d-line", cpY: "--cp-y", cpB: "--cp-b", led: "--v3d-led", red: "--bad",
+    ghost: "--muted", lead: "--muted", fovF: "--accent", fovC: "--info", beam: "--bad", ir: "--ok" };
+  const std = (o) => new THREE.MeshStandardMaterial(o);
+  const glass = () => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.14, side: THREE.DoubleSide, depthWrite: false });
+  const grillTex = (() => { // 초음파 발신부의 메쉬
+    const c = document.createElement("canvas"), g = c.getContext("2d");
+    c.width = c.height = 64;
+    g.fillStyle = "#2b2e33"; g.fillRect(0, 0, 64, 64); g.fillStyle = "#a7adb4";
+    for (let y = 1; y < 64; y += 4) for (let x = y % 8 === 1 ? 1 : 3; x < 64; x += 4) g.fillRect(x, y, 2, 2);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  })();
+  const M = {
+    body: std({ metalness: 0.25, roughness: 0.3 }), dark: std({ roughness: 0.75 }), rubber: std({ roughness: 0.95 }),
+    metal: std({ metalness: 1, roughness: 0.25 }), pcb: std({ roughness: 0.55 }), white: std({ roughness: 0.6 }), pin: std({ roughness: 0.6 }),
+    grill: std({ map: grillTex, metalness: 0.4, roughness: 0.5 }), print: std({ roughness: 0.6, transparent: true, opacity: 0.75 }),
+    floor: std({ roughness: 1 }), line: std({ roughness: 1 }), cpY: std({ roughness: 1 }), cpB: std({ roughness: 1 }),
+    led: new THREE.MeshBasicMaterial(), red: new THREE.MeshBasicMaterial(),
+    ghost: new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), lead: new THREE.LineBasicMaterial(),
+    w1: std({ color: 0xd97706, roughness: 0.7 }), w2: std({ color: 0xb91c1c, roughness: 0.7 }), w3: std({ color: 0x6b3f1d, roughness: 0.7 }), // 서보 배선 (주황 · 빨강 · 갈색)
+    gold: std({ color: 0xc9a227, metalness: 1, roughness: 0.35 }),
+    fovF: glass(), fovC: glass(), beam: glass(), ir: glass(),
+  };
+  const SOLID = ["body", "dark", "rubber", "metal", "pcb", "white", "pin", "grill", "w1", "w2", "w3", "gold"];
+  const theme = () => { for (const k in TOK) M[k].color.set(css(TOK[k])); };
+
+  // ---- 도형 도우미 ----
+  const scene = new THREE.Scene(), robot = new THREE.Group();
+  scene.add(robot);
+  let P = robot; // 지금 만드는 도형이 들어갈 곳
+  const add = (o, x = 0, y = 0, z = 0) => { o.position.set(x, y, z); P.add(o); return o; };
+  const grp = (x, y, z, build) => { const g = add(new THREE.Group(), x, y, z), up = P; P = g; build(g); P = up; return g; };
+  const mesh = (geo, m) => { const o = new THREE.Mesh(geo, typeof m === "string" ? M[m] : m); o.castShadow = o.receiveShadow = true; return o; };
+  const box = (w, h, d, m, x, y, z) => add(mesh(new THREE.BoxGeometry(w, h, d), m), x, y, z);
+  const turn = (o, axis) => { if (axis === "x") o.rotation.z = PI / 2; if (axis === "z") o.rotation.x = PI / 2; return o; };
+  const cyl = (r, len, m, x, y, z, axis = "y") => turn(add(mesh(new THREE.CylinderGeometry(r, r, len, 28), m), x, y, z), axis);
+  const ball = (r, m, x, y, z) => add(mesh(new THREE.SphereGeometry(r, 16, 12), m), x, y, z);
+  const ring = (r, tube, m, x, y, z, axis = "z") => { const o = add(mesh(new THREE.TorusGeometry(r, tube, 8, 32), m), x, y, z); if (axis === "x") o.rotation.y = PI / 2; return o; };
+  const rod = (a, b, r, m, z) => { const dx = b[0] - a[0], dy = b[1] - a[1], o = cyl(r, Math.hypot(dx, dy), m, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, z); o.rotation.z = Math.atan2(dy, dx) - PI / 2; return o; };
+  const screw = (x, y, z) => cyl(1.8, 1.4, "dark", x, y, z, "z");
+
+  // ---- 판금: 윤곽 + 구멍(holes)을 두께 2 mm로 뽑는다 ----
+  const poly = (pts, p = new THREE.Shape()) => { pts.forEach(([x, y], i) => (i ? p.lineTo(x, y) : p.moveTo(x, y))); p.closePath(); return p; };
+  const rr = (x, y, w, h, r = Math.min(w, h) / 2 - 0.01, p = new THREE.Shape()) => { // 둥근 사각형
+    const a = x - w / 2, b = y - h / 2;
+    p.moveTo(a + r, b); p.lineTo(a + w - r, b); p.absarc(a + w - r, b + r, r, -PI / 2, 0);
+    p.lineTo(a + w, b + h - r); p.absarc(a + w - r, b + h - r, r, 0, PI / 2);
+    p.lineTo(a + r, b + h); p.absarc(a + r, b + h - r, r, PI / 2, PI);
+    p.lineTo(a, b + r); p.absarc(a + r, b + r, r, PI, PI * 1.5);
+    return p;
+  };
+  const H = { c: (x, y, r) => new THREE.Path().absarc(x, y, r, 0, PI * 2, true), r: (x, y, w, h, r) => rr(x, y, w, h, r, new THREE.Path()), p: (pts) => poly(pts, new THREE.Path()) };
+  const sheet = (shape, holes, t, m) => {
+    shape.holes.push(...holes);
+    const g = new THREE.ExtrudeGeometry(shape, { depth: t, bevelEnabled: true, bevelThickness: 0.4, bevelSize: 0.4, bevelSegments: 1, curveSegments: 10 });
+    g.translate(0, 0, -t / 2);
+    return mesh(g, m);
+  };
+  const side = (shape, holes, z, m = "body", t = 2) => add(sheet(shape, holes, t, m), 0, 0, z);                                                  // 옆판: 윤곽 (x, y)
+  const flat = (shape, holes, y, m = "body", t = 2) => { const o = add(sheet(shape, holes, t, m), 0, y, 0); o.rotation.x = PI / 2; return o; };  // 윗판: 윤곽 (x, z)
+  const face = (shape, holes, x, m = "body", t = 2) => { const o = add(sheet(shape, holes, t, m), x, 0, 0); o.rotation.y = -PI / 2; return o; }; // 앞판: 윤곽 (z, y)
+
+  const parts = [], tags = [], leads = [];
+  const part = (g, ex) => { g.userData = { at: g.position.clone(), ex: V(...ex) }; parts.push(g); return g; }; // 분해 보기에서 움직일 묶음
+  const tag = (text, at, from, printed = false, show = null) => { // 이름표는 at에 두고 부품(from)까지 선으로 잇는다
+    const el = document.createElement("span");
+    el.textContent = text;
+    if (printed) el.className = "p";
+    $("v3dLabels").append(el);
+    tags.push([el, add(new THREE.Object3D(), ...at), show]);
+    leads.push(add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([V(...at), V(...from)]), M.lead)));
+  };
+
+  // ===== 몸통 (X -81.5 ~ 42, 바닥에서 80.5 ~ 124): 옆판 삼각 트러스, 뒤 윗판, 등뼈 덮개, 전원 패널, I2C 포트 =====
+  const truss = (x0, n, y0, y1) => [...Array(n)].map((_, i) => { const x = x0 + i * 8; return H.p(i % 2 ? [[x - 5.5, y0], [x + 5.5, y0], [x, y1]] : [[x - 5.5, y1], [x + 5.5, y1], [x, y0]]); });
+  box(120, 27, 54, "dark", -20, 95.5, 0); box(64, 16, 42, "dark", 6, 113, 0);                                        // 속 (배터리 · 보드)
+  const PORTS = [22, 8, -6];
+  for (const s of [1, -1]) {
+    side(poly([[-81.5, 80.5], [42, 80.5], [42, 111.4], [-81.5, 111.4]]), truss(-12, 5, 87, 95.5), s * 29);
+    [[-76, 86], [-76, 106], [-24, 86], [-24, 95], [33, 86], [33, 95]].forEach(([x, y]) => screw(x, y, s * 30.2));
+    side(poly([[-34, 100], [41, 100], [41, 117], [-27, 117], [-34, 112]]), [H.r(8, 108.5, 44, 9, 1.5)], s * 30.6, "body", 1.2); // 등뼈 덮개 날개 (오른쪽 전원 창, 왼쪽 포트 창)
+    [[-30, 104], [37, 104], [37, 113.5]].forEach(([x, y]) => screw(x, y, s * 31.4));
+    box(43, 8.4, 0.8, "dark", 8, 108.5, s * 30.4);
+    box(40, 2.2, 0.3, "white", 8, 101.8, s * 31.3);                                                                   // ON · OFF · CHARGE / 1 · 2 · 3 글자 띠
+  }
+  box(11, 4.4, 1.4, "metal", -3, 108.5, 31); box(4, 3.6, 2.4, "dark", -6, 108.5, 31.6);                              // ON / OFF 스위치
+  cyl(1.1, 1.2, "red", 7, 109, 31, "z");                                                                             // 빨간 LED
+  box(9, 8, 3, "dark", 19, 108.5, 31.4); cyl(2.6, 3.4, "metal", 19, 108.5, 31.5, "z");                               // DC 잭 (CHARGE)
+  PORTS.forEach((x) => box(10, 5, 3, "white", x, 108.5, -31.5));                                                     // 왼쪽 I2C 포트 1 · 2 · 3
+  const cham = (x0, x1, y0, y1, z0, z1) => [1, -1].forEach((s) => (box(x1 - x0, 2, Math.hypot(y1 - y0, z1 - z0) + 1, "body", (x0 + x1) / 2, (y0 + y1) / 2, s * (z0 + z1) / 2).rotation.x = s * Math.atan2(y0 - y1, z1 - z0))); // 윗판에서 옆판으로 꺾이는 모서리
+  flat(rr(1.5, 0, 57, 46, 2), [...[-2, -1, 0, 1, 2].map((i) => H.r(-2 + i * 4.5, 0, 2.2, 28 - Math.abs(i) * 5)),
+    ...[[24, -17], [24, 17], [-21, -17], [-21, 17]].map(([x, z]) => H.c(x, z, 1.6))], 124);                          // 등뼈 덮개 (환기 슬릿), 앞쪽은 열려 배선이 보인다
+  cham(-27, 30, 124, 117, 22, 29.6);
+  face(poly([[-22, 124], [22, 124], [29.6, 117], [29.6, 111.4], [-29.6, 111.4], [-29.6, 117]]), [], -27);
+  [M.w1, M.w2, M.w3, M.w1, M.w2, M.w3].forEach((m, i) => rod([28, 120 - (i % 2)], [47, 113], 1, m, -10 + i * 4));    // 서보 배선
+  const rearHoles = [];
+  [-74, -62, -50].forEach((x, i) => [-18, -6, 6, 18].forEach((z, j) => rearHoles.push((i + j) % 2 ? H.c(x, z, 2) : H.r(x, z, 4, 8))));
+  flat(rr(-58, 0, 47.5, 60, 2), rearHoles, 111.4);                                                                   // 뒤 윗판
+  flat(rr(-19.75, 0, 123.5, 58, 2), [], 80.5);                                                                       // 아랫판
+  flat(rr(-1, 0, 78, 46, 3), [-28, -20, 12, 20, 28].map((x) => H.r(x, 0, 2.6, 30)), 78.3);                           // 배터리 덮개
+  box(14, 0.3, 24, "white", -4, 77.2, 0);
+  face(rr(0, 96, 58, 31, 3), [H.r(0, 96, 26, 5)], -81.5);                                                            // 뒤판
+
+  // ===== 머리 (X 42 ~ 107, 80.5 ~ 117.5): 윗판 슬롯, 위쪽이 앞으로 11° 숙은 얼굴에 초음파 모듈 =====
+  box(52, 28, 50, "dark", 72, 97.5, 0);
+  for (const s of [1, -1]) {
+    side(poly([[42, 80.5], [99.7, 80.5], [105.7, 111], [42, 111]]), [H.p([[96, 108.5], [101.5, 108.5], [99, 101.5]])], s * 29);
+    [[46, 86], [46, 95]].forEach(([x, y]) => screw(x, y, s * 30.2));
+  }
+  flat(rr(74.5, 0, 65, 46, 2), [...[50, 62, 74, 86].flatMap((x) => [-9, 9].map((z) => H.r(x, z, 4.5, 10))),
+    ...[[46, -17], [46, 17], [100, -17], [100, 17]].map(([x, z]) => H.c(x, z, 1.6))], 117.5);                        // 머리 윗판
+  cham(42, 106, 117.5, 111, 22, 29.6);
+  flat(rr(71, 0, 58, 58, 2), [], 80.5);                                                                              // 머리 아랫판
+  let uEye;
+  grp(103.35, 99, 0, (g) => { // 원점 = 얼굴 가운데, +x = 얼굴이 보는 쪽
+    g.rotation.z = -Math.atan2(7.3, 37);
+    face(poly([[-29, -13], [-24, -18.5], [24, -18.5], [29, -13], [29, 13], [24, 18.5], [-24, 18.5], [-29, 13]]), [H.r(0, -3.5, 49, 23)], 1); // 노랑 틀
+    [[-25, -14], [25, -14], [-25, 14], [25, 14]].forEach(([z, y]) => cyl(1.6, 1.2, "dark", 2.4, y, z, "x"));
+    face(rr(0, -3.5, 54, 28, 5), [], -1.5, "dark", 3);                                                               // 초음파 모듈 판
+    box(4, 12, 20, "dark", 1.5, -3.5, 0);
+    for (const z of [-13.3, 13.3]) {                                                                                 // 발신부: 은색 테두리 + 메쉬 + 파란 LED 링
+      cyl(9.2, 5, "dark", 2.5, -3.5, z, "x");
+      cyl(8.4, 5, "metal", 3.6, -3.5, z, "x");
+      add(mesh(new THREE.CircleGeometry(7.2, 32), "grill"), 6.2, -3.5, z).rotation.y = PI / 2;
+      ring(7.7, 0.6, "led", 6.1, -3.5, z, "x");
+    }
+    uEye = add(new THREE.Object3D(), 6.2, -3.5, 0);
+  });
+  tag("초음파", [128, 124, 36], [110, 96, 16]);
+
+  // ===== 다리 4개: 좌표는 엉덩이 축 기준. ㄷ자 윗다리(어깨 덮개 · 무릎 서보) · 푸시로드 · 검은 아랫다리, 무릎은 뒤로 =====
+  const HIPS = [[74.2, 90.1], [-50.8, 90.1]], KNEE = [-42.2, -42.5], SH = Math.atan2(39.9, 42.2); // 아랫다리는 앞으로 43° 내려간다
+  const CR = [KNEE[0] - 13 * Math.cos(SH), KNEE[1] + 13 * Math.sin(SH)], HORN = [-9, 9.2];       // 무릎 뒤 크랭크, 무릎 서보 혼
+  const LEG = [[17, 19], [9, 24.5], [-47, -34], [-50, -40], [-49, -47], [-43, -51], [-37, -49], [-8, -26], [9, -9]];
+  const slab = (a, b, w, m, z = 0) => { const o = box(Math.hypot(b[0] - a[0], b[1] - a[1]), 2, w, m, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, z); o.rotation.z = Math.atan2(b[1] - a[1], b[0] - a[0]); return o; }; // 옆에서 본 선분 a → b를 따라 놓는 판
+  const feet = [];
+  for (const [hx, hy] of HIPS) for (const s of [1, -1]) grp(hx, hy, 0, () => {
+    cyl(6, 4, "metal", 0, 0, s * 30.5, "z");                                                                       // 엉덩이 서보 축
+    side(poly(LEG), [], s * 59); side(poly(LEG), [], s * 33);                                                      // 윗다리 바깥판 · 안판
+    slab([17.6, 18.3], [8.4, 25.3], 28, "body", s * 46); slab([9.7, 25.2], [-6, 9], 28, "body", s * 46);           // 어깨 덮개
+    cyl(6.5, 2.4, "dark", 0, 0, s * 61, "z"); ring(5.6, 0.8, "metal", 0, 0, s * 62);                               // 베어링 캡
+    screw(KNEE[0], KNEE[1], s * 60.4); screw(-21, -22, s * 60.4); screw(10, 13, s * 60.4);
+    box(27, 21, 12.5, "dark", -3, -14, s * 46).rotation.z = PI / 4;                                                // 무릎 서보
+    grp(KNEE[0], KNEE[1], 0, (g) => {                                                                              // 아랫다리: 크랭크 ~ 고무 발
+      g.rotation.z = -SH;
+      side(poly([[-17, 4], [-13, 6.5], [0, 7], [44, 5], [50, 5], [50, -5], [44, -5], [0, -7], [-13, -6.5], [-17, -4]]), [], s * 45, "dark", 9);
+      const foot = add(mesh(new THREE.CapsuleGeometry(7, 10, 6, 16), "rubber"), 55, 0, s * 45);
+      foot.rotation.z = PI / 2;
+      feet.push(foot);
+    });
+    rod(HORN, CR, 1.1, "metal", s * 53);                                                                           // 푸시로드
+    for (const p of [HORN, CR]) { ball(2.8, "dark", ...p, s * 53); cyl(1.3, 12, "metal", ...p, s * 51, "z"); }
+  });
+
+  // shortcut: 온도 센서 10° 숙임은 가정값, 캔들 · 랙 아래 높이를 재 보고 IR_TILT만 바꾼다
+  const IR_TILT = rad(10), IR_FOV = rad(35), IR_PINS = [3.81, 1.27, -1.27, -3.81]; // 시야 35°는 BCC형 (데이터시트 Table 19)
+  // ===== 머리 위: XIAO ESP32S3 Sense를 3D 출력 브래킷에 세워 꽂는다. XIAO 치수는 Seeed 공식 3D 모델 (01_docs/xiao_esp32s3) =====
+  // 브래킷: 발판을 머리 윗판 슬롯에 M3 볼트 2개로 고정하고, 보드는 위에서 홈에 밀어 넣는다. 받침(서포트) 없이 출력되는 모양
+  part(grp(74, 0, 0, () => [-9, 9].forEach((z) => { cyl(2.75, 3, "dark", 0, 123.5, z); cyl(1.5, 10, "metal", 0, 117, z); })), [0, 44, 0]); // M3 × 10 볼트 2개
+  part(grp(74, 0, 0, () => [-9, 9].forEach((z) => add(mesh(new THREE.CylinderGeometry(3.2, 3.2, 2.4, 6), "metal"), 0, 114.9, z))), [0, -12, 0]); // 너트 (머리 윗판 아래)
+  let ant;
+  const brk = part(grp(0, 0, 0, () => {
+    flat(rr(85, 2, 30, 46, 2), [-9, 9].map((z) => H.c(74, z, 1.7)), 120.5, "print", 3);                          // 발판 30 × 46 × 3, M3 구멍. 오른쪽 4 mm는 온도 센서 홀더 자리
+    face(rr(0, 137, 42, 30, 2), [...[-6, 0, 6].map((z) => H.r(z, 128.75, 2.5, 5.5)), H.r(5, 124, 6, 2.6)], 86.8, "print"); // 뒷벽: 통풍 구멍 3개, 아래는 안테나 선 구멍
+    for (const s of [1, -1]) {
+      box(7.2, 2.5, 2.3, "print", 91.4, 123.25, s * 8.15);                                                       // 받침턱: 보드 밑으로 안테나 선이 지나간다
+      side(poly([[85.8, 122], [85.8, 131], [74, 122]]), [], s * 19, "print");                                     // 뒷벽 지지대
+    }
+    box(11.2, 5.5, 1.7, "print", 91.4, 124.75, 10.15); box(11.2, 11, 1.7, "print", 91.4, 140.5, 10.15);          // 오른쪽 옆벽: 가운데 창으로 D4 · D5 핀에 온도 센서 선을 납땜
+    box(1.55, 10.8, 1.1, "print", 90.2, 140.4, 8.75);                                                             // 보드 앞을 잡는 턱 (창 위쪽)
+    box(11.2, 14, 1.7, "print", 91.4, 129, -10.15); box(1.55, 11.2, 1.1, "print", 90.2, 130.4, -8.75);          // 왼쪽은 아래만: 위쪽 5 V · GND 핀에 선을 납땜
+    ant = box(0.6, 20, 40, "dark", 85.5, 142, 0);                                                                // 2.4 GHz FPC 안테나, 뒷벽 뒷면에 붙임
+    grp(91, 122, 17, (g) => {                                                                                    // 온도 센서 홀더: 원점 = 홈 바닥 · 보드 뒷면, 앞으로 IR_TILT 숙임
+      g.rotation.z = -IR_TILT;
+      box(2, 13, 9.5, "print", -1, 6.5, 1.75);                                                                   // 뒷판: 위쪽은 납땜 자리, 안쪽은 D4 · D5 선이 지나가게 비운다
+      box(4, 1.5, 13, "print", 0.5, 0.75, 0);                                                                    // 받침턱
+      box(5, 19, 1.2, "print", 1.5, 9.5, 6.1);                                                                   // 바깥 옆벽 (안쪽은 브래킷 오른쪽 벽이 막는다)
+      box(1, 6, 1, "print", 2.1, 15.5, 5); box(1, 6, 2.5, "print", 2.1, 15.5, -5.75);                            // 보드 앞을 잡는 턱 (캔 위쪽)
+    });
+    tag("머리 브래킷 · M3 볼트 2개", [82, 176, -40], [91, 140, -11], true);
+    tag("안테나 · 금속에서 13 mm 띄움", [28, 162, -24], [85.5, 148, -12]);
+  }), [-12, 24, 0]);
+  let xBoard, xCam, xLens, fEye, irBoard, irEye;
+  const xiao = part(grp(88, 135.28, 0, () => { // 원점 = 본체 PCB 뒷면 가운데. x = 보드 법선(렌즈 쪽), y = 길이(USB-C가 위), z = 폭
+    const pb = (n0, n1, u0, u1, v0, v1, m) => box(n1 - n0, u1 - u0, v1 - v0, m, (n0 + n1) / 2, (u0 + u1) / 2, -(v0 + v1) / 2); // 공식 모델 좌표 (법선 n, 길이 u, 폭 v)
+    xBoard = pb(0, 1.25, -10.48, 10.48, -8.89, 8.89, "dark");                                                    // XIAO ESP32S3 본체 21 × 17.8
+    for (let i = -3; i <= 3; i++) for (const v of [-8.6, 8.6]) pb(-0.05, 1.3, i * 2.54 - 0.7, i * 2.54 + 0.7, v - 0.35, v + 0.35, "gold"); // 핀 패드 7개씩
+    pb(1.25, 3.25, -6.84, 3.77, -6.3, 6.3, "metal");                                                             // ESP32-S3 실드 캔
+    pb(1.25, 4.45, 4.1, 12, -4.47, 4.47, "metal");                                                               // USB-C
+    pb(1.25, 2.5, -10.25, -7.25, -6.28, -3.18, "gold");                                                          // 안테나 단자 U.FL
+    pb(1.25, 4.18, -10.2, -6.8, -2.1, 6.4, "dark");                                                              // 보드 사이 커넥터
+    xCam = pb(4.18, 5.43, -10.78, 3.9, -8.39, 8.39, "dark");                                                     // Sense 확장 보드
+    pb(5.43, 7.43, -10.6, -4.6, -8.07, 8.13, "white");                                                           // 카메라 FPC 커넥터
+    pb(5.43, 8.03, -1.7, 3.8, -5.97, 5.43, "metal");                                                             // microSD 슬롯
+    pb(8.03, 8.33, -4.6, 2.95, -3.64, 2.36, "w3");                                                               // 카메라 FPC
+    xLens = pb(8.03, 10.5, 2.95, 10.95, -4.64, 3.36, "dark");                                                    // OV3660 카메라 모듈
+    cyl(3.4, 1.8, "dark", 11.4, 6.95, 0.64, "x"); cyl(2.8, 1.66, "dark", 13.13, 6.95, 0.64, "x"); cyl(0.9, 0.2, "metal", 13.9, 6.95, 0.64, "x"); // 렌즈
+    fEye = add(new THREE.Object3D(), 14, 6.95, 0.64);
+    tag("머리 카메라 (XIAO)", [42, 30, 10], [14, 7, 0]);
+  }), [26, 40, 0]);
+
+  // ===== XIAO 오른쪽: 비접촉 온도 센서 GY-906 (MLX90614ESF-BCC). 캔은 Melexis 데이터시트 Figure 42, 보드 17 × 11 mm (01_docs/mlx90614) =====
+  const irMod = part(grp(91, 122, 17, (g) => { // 홀더와 같은 원점. x = 센서가 보는 쪽, y = 보드 길이(헤더가 위), z = 폭
+    g.rotation.z = -IR_TILT;
+    irBoard = box(1.6, 17, 11, "pcb", 0.8, 10, 0);                                                               // GY-906 보드
+    cyl(4.56, 1.03, "metal", 2.12, 7, 0, "x"); cyl(5.1, 7.07, "metal", 6.17, 7, 0, "x");                          // TO-39 캔: 아랫단 Ø9.12 + 몸통 Ø10.2, 높이 8.1
+    cyl(1.75, 0.2, "dark", 9.8, 7, 0, "x");                                                                      // 창 Ø3.5
+    box(1, 1.6, 2.9, "dark", 2.1, 13.4, 2.6);                                                                    // 3.3 V 레귤레이터 (662K)
+    IR_PINS.forEach((z) => cyl(0.8, 1.7, "gold", 0.8, 17, z, "x"));                                             // 헤더 구멍 VIN · GND · SCL · SDA
+    irEye = add(new THREE.Object3D(), 9.9, 7, 0);
+    tag("온도 센서 (GY-906)", [34, 26, 46], [8, 9, 5]);
+  }), [26, 40, 30]);
+
+  // ===== 등뼈 덮개 위: LED 도트 매트릭스 (Hiwonder 8×16, TM1640). 긴 쪽이 몸 길이 방향, 화면이 위를 봐 화살표가 실제 바닥 방향과 같다 (11/13 기능 정의서 F-12, 실물 사진) =====
+  // shortcut: 보드 54 × 23 · 구멍 46 × 16 · 매트릭스 20 mm는 사진에서 칩(SOP-28 17.9 mm)과 커넥터(2.5 mm 간격)로 축척을 잡은 값, 스페이서 6 mm는 가정. 실측하면 이 값만 바꾼다
+  const ARROW = ["        ", "   ##   ", "  ####  ", " ###### ", "########", ...Array(10).fill("   ##   "), "        "]; // 앞쪽 줄부터 16줄, 앞을 가리키는 화살표
+  const led = part(grp(1.5, 125, 0, (g) => { // 원점 = 등뼈 덮개 윗면 가운데. 아래 좌표의 z(긴 쪽, + 가 앞)를 몸 길이 방향 x로 돌린다
+    g.rotation.y = PI / 2;
+    for (const x of [-8, 8]) for (const z of [-23, 23]) { cyl(2.5, 6, "metal", x, 3, z); cyl(2.75, 1.4, "metal", x, 8.3, z); } // M3 스페이서 + 볼트 머리
+    box(23, 1.6, 54, "white", 0, 6.8, 0);                                                                        // 보드
+    box(6, 5.5, 12.4, "white", 0, 3.25, -5); box(7.5, 1.6, 17.9, "dark", 0, 5.2, 11);                             // 뒷면: 4핀 커넥터 (5V · GND · DIN · CLK) · TM1640
+    for (const z of [-10.2, 10.2]) box(20, 6, 20, "dark", 0, 10.6, z);                                           // 8×8 매트릭스 2개
+    ARROW.forEach((row, r) => [...row].forEach((ch, c) => cyl(0.95, 0.3, ch === "#" ? "red" : "pin", -8.75 + c * 2.5, 13.7, 19.95 - r * 2.5 - (r > 7 ? 0.4 : 0))));
+    tag("LED 도트 매트릭스 (포트 3)", [-48, 42, 26], [0, 14, 12]);
+  }), [0, 30, 0]);
+
+  // ===== 머리 아래: 비전 모듈을 기존 트러스 브래킷째 뒤집어 달았다. 3D 출력물 없음 (장착 사진 ③ ~ ⑥) =====
+  const SLOPE = rad(25), FOLD = 65, DOWN = 35; // 브래킷 판 기울기, 판에 접어 붙였을 때 렌즈가 내려다보는 각 (90 - 25), 기본 각: 라인 처리 영역(화면 위 2/3)이 몸 중심 15~33 cm
+  const bracket = (m) => { // 원점 = 판 앞 모서리(경첩 축). 판은 뒤로 25° 내려가고, 다리 넷이 머리 옆판으로 올라가 나사로 고정된다
+    const k = (name) => m ?? name;
+    slab([0, 0], [-45 * Math.cos(SLOPE), -45 * Math.sin(SLOPE)], 60, k("body"));
+    for (const s of [1, -1]) {
+      side(poly([[1, -1], [0.5, 28], [-5.5, 28], [-14, -2], [-30, -10], [-33, 28], [-39.5, 28], [-42, -21]]),
+        [H.p([[-2, 18], [-9.5, 2], [-2, 2]]), H.p([[-35, 14], [-38, 14], [-38.6, -9], [-35.6, -5]])], s * 30.8, k("body"), 1.5);
+      for (const x of [-2.5, -36.3]) cyl(1.5, 1.2, k("dark"), x, 24, s * 31.9, "z");
+    }
+    cyl(2.4, 46, k("dark"), 1.6, -1.6, 0, "z");                                                                    // 모듈 경첩
+  };
+  const camModule = (m) => { // 원점 = 경첩 축, +x = 렌즈가 보는 쪽, 몸체는 -y로 뻗는다
+    const k = (name) => m ?? name;
+    const mod = box(17.5, 43, 59, k("dark"), 11.75, -24, 0);                                                       // 59 × 43 × 17.5
+    cyl(5.2, 5, k("dark"), 22.5, -24, 0, "x"); cyl(3, 0.6, k("metal"), 25.2, -24, 0, "x");                         // 렌즈
+    for (const y of [-6, -42]) for (const z of [-26, 26]) cyl(1.3, 0.8, k("metal"), 20.7, y, z, "x");
+    box(6, 5, 2.4, k("white"), 12, -9, 30.4);                                                                      // I2C 커넥터 (오른쪽)
+    return mod;
+  };
+  const PV = [100, 77.5]; // 경첩 축: 얼굴 바로 아래
+  part(grp(...PV, 0, () => { bracket(); tag("트러스 브래킷 (머리에서 옮김)", [-74, -34, -56], [-37, -6, -32]); }), [-6, -14, 0]);
+  let bBox, bEye;
+  const bCam = part(grp(...PV, 0, () => {
+    bBox = camModule();
+    bEye = add(new THREE.Object3D(), 25.5, -24, 0);
+    tag("바닥 카메라 (비전 모듈)", [34, 22, -58], [12, -20, -30]);
+  }), [34, -22, 0]);
+  const ghost = grp(105, 118.5, 0, () => { // 옮기기 전: 같은 브래킷이 머리 위에 바로 서 있었다
+    bracket(M.ghost);
+    grp(0, 0, 0, (g) => { g.rotation.z = -rad(FOLD); camModule(M.ghost); });
+    tag("옮기기 전 자리", [-34, -44, -44], [-22, -14, -31], false, () => ghost.visible);
+  });
+  ghost.scale.y = -1;
+  ghost.traverse((o) => (o.castShadow = o.receiveShadow = false));
+  const tubeMesh = (m) => add(mesh(new THREE.BufferGeometry(), m));
+  const cables = [0, 1, 2, 3].map(() => tubeMesh("dark")), coax = tubeMesh("dark"), power = [tubeMesh("w2"), tubeMesh("dark")];
+  const irWires = ["w2", "dark", "w1", "w3"].map((m) => tubeMesh(m)); // 온도 센서 VIN · GND · SCL · SDA
+  const ledWires = [0, 1, 2, 3].map(() => tubeMesh("dark")); // LED 매트릭스 → 포트 3
+  const tube = (o, pts, r = 0.7) => { o.geometry.dispose(); o.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, r, 6); };
+  tag("I2C 포트 1 (비전) · 2 (XIAO 전원) · 3 (LED)", [-30, 60, -84], [8, 106, -33], false, () => camera.position.z < 40); // 왼쪽에서 볼 때만
+  const wire = () => {
+    robot.updateMatrixWorld(true);
+    const on = (g) => (x, y, z) => robot.worldToLocal(g.localToWorld(V(x, y, z)));
+    const cam = on(bCam), xi = on(xiao), bk = on(brk), ir = on(irMod), le = on(led);
+    ledWires.forEach((c, i) => { const dz = (i - 1.5) * 1.3; tube(c, [le(3.2, 3, -5 + dz * 1.9), le(9, 2.5, -8 + dz), ...[V(-8, 126.6, -21), V(-7, 120, -31.6), V(-6.5, 113, -33.4), V(PORTS[2], 108.5, -33.5)].map((p) => p.add(V(dz, 0, 0)))], 0.6); }); // 커넥터 → 덮개 왼쪽 모서리 → 포트 3
+    const pts = [cam(12, -9, 32), cam(11, -30, 33.5), cam(9, -49, 25), V(40, 70, 4), V(29, 75, -24), V(25, 79, -32), V(22, 92, -33), V(PORTS[0], 106, -33.5)];
+    cables.forEach((c, i) => tube(c, pts.map((p) => p.clone().add(V((i - 1.5) * 1.5, 0, 0)))));           // 비전 모듈 → 배 아래 → 왼쪽 I2C 포트 1, 4가닥
+    tube(coax, [xi(3.2, -8.75, 4.73), xi(3.2, -11.8, 5), bk(88, 123.4, 5), bk(84.8, 124.5, 6), bk(84.9, 129, 12), bk(85.1, 133, 17)], 0.55); // U.FL → 보드 밑 → 뒷벽 구멍 → 안테나
+    power.forEach((c, i) => tube(c, [xi(1.4, 7.62 - i * 2.54, -8.9), xi(3, 7.62 - i * 2.54, -12.5), ...[V(92, 138, -16), V(89, 130, -23), V(82, 120.5, -22.5), V(50, 120, -22), V(40, 121, -26), V(28, 119, -31.6), V(14, 113, -32.6), V(PORTS[1], 108.5, -33.2)].map((p) => p.add(V(i * 1.4, 0, 0)))], 0.55)); // 5 V(빨강) · GND → 머리 위 → 왼쪽 I2C 포트 2
+    const XP = [2.54, 5.08, -5.08, -2.54]; // 온도 센서 선이 닿는 XIAO 핀 (길이 방향): 3V3 · GND (왼쪽 줄) · D5 SCL · D4 SDA (오른쪽 줄)
+    irWires.forEach((c, i) => {
+      const z = IR_PINS[i], u = XP[i], top = [ir(-0.3, 17, z), ir(-1.6, 19.5, z)];
+      tube(c, i < 2
+        ? [...top, V(88.5, 150, 14 - i), V(86.6, 155, 6 - i), V(86.6, 155, -8 - i), V(89.5, 150, -14 - i), xi(3.5, u + 1, -12.5), xi(1.4, u, -8.9)] // 3V3 · GND: 뒷벽 위로 넘어 왼쪽 핀
+        : [...top, V(89.4, 136.5, 12.6 + (i - 2) * 1.2), xi(2.4, u, 11.6), xi(1.4, u, 8.9)], 0.5);                                                    // SCL · SDA: 홀더 뒤로 내려와 옆벽 창으로
+    });
+  };
+  tag("본체", [-60, 152, 0], [-60, 113, 0]);
+
+  // 발이 바닥에 닿게 내린다
+  robot.updateMatrixWorld(true);
+  robot.position.y = -Math.min(...feet.map((f) => new THREE.Box3().setFromObject(f).min.y));
+  robot.updateMatrixWorld(true);
+  const FRONT_FEET = feet.filter((f) => f.getWorldPosition(V()).x > 0);
+
+  // ---- 바닥: 초록 라인 5 cm, 체크포인트 블록 5 × 20 cm ----
+  P = scene;
+  const plane = (w, d, m, x, y) => { const o = add(new THREE.Mesh(new THREE.PlaneGeometry(w, d), M[m]), x, y, 0); o.rotation.x = -PI / 2; o.receiveShadow = true; return o; };
+  plane(820, 460, "floor", 110, 0); plane(820, 50, "line", 110, 0.3); plane(50, 200, "cpY", 180, 0.6); plane(50, 200, "cpB", 420, 0.6);
+
+  // ---- 카메라 시야 뿔 ----
+  // shortcut: 시야각 가로 60° · 세로 47°는 가정값, 렌즈 사양을 확인하면 이 두 값만 바꾼다
+  const HF = Math.tan(rad(30)), VF = Math.tan(rad(23.5));
+  const fov = (k, eye, reach) => {
+    const pos = new THREE.BufferAttribute(new Float32Array(15), 3), g = new THREE.BufferGeometry(), e = new THREE.BufferGeometry();
+    g.setAttribute("position", pos); g.setIndex([0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1]);
+    e.setAttribute("position", pos); e.setIndex([0, 1, 0, 2, 0, 3, 0, 4, 1, 2, 2, 3, 3, 4, 4, 1]);
+    const lm = new THREE.LineBasicMaterial(); lm.color = M[k].color;
+    const o = grp(0, 0, 0, (q) => q.add(new THREE.Mesh(g, M[k]), new THREE.LineSegments(e, lm)));
+    o.children.forEach((c) => (c.frustumCulled = false));
+    return { o, pos, eye, reach };
+  };
+  const aim = (f) => { // 렌즈(+X가 광축)에서 모서리 광선 4개를 바닥(y = 0)이나 reach까지
+    const o = f.eye.getWorldPosition(V());
+    f.pos.setXYZ(0, o.x, o.y, o.z);
+    [[1, 1], [1, -1], [-1, -1], [-1, 1]].forEach(([v, h], i) => {
+      const d = V(1, v * VF, h * HF).transformDirection(f.eye.matrixWorld);
+      const t = d.y < 0 ? Math.min(-o.y / d.y, f.reach) : f.reach;
+      f.pos.setXYZ(i + 1, o.x + d.x * t, o.y + d.y * t, o.z + d.z * t);
+    });
+    f.pos.needsUpdate = true;
+  };
+  const fovF = fov("fovF", bEye, 700), fovC = fov("fovC", fEye, 240);
+
+  // ---- 초음파 빔: 발신부 두 개를 덮는 반지름에서 반각 15°로 퍼진다. 얼굴이 숙은 만큼 아래를 향한다 ----
+  const BEAM = { r0: 22, tan: Math.tan(rad(15)), len: 200 };
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(BEAM.r0 + BEAM.len * BEAM.tan, BEAM.r0, BEAM.len, 40, 1, true), M.beam);
+  beam.position.x = BEAM.len / 2; beam.rotation.z = -PI / 2;
+  uEye.add(beam);
+  const irCone = new THREE.Mesh(new THREE.CylinderGeometry(1.75 + 300 * Math.tan(IR_FOV / 2), 1.75, 300, 32, 1, true), M.ir); // 온도 센서 시야 35°, 30 cm까지
+  irCone.position.x = 150; irCone.rotation.z = -PI / 2;
+  irEye.add(irCone);
+  const inBeam = (p) => { const q = uEye.worldToLocal(p.clone()); return q.x > 0 && Math.hypot(q.y, q.z) < BEAM.r0 + q.x * BEAM.tan; };
+  const corners = (b) => { const { width: w, height: h, depth: d } = b.geometry.parameters; return [...Array(8)].map((_, i) => b.localToWorld(V(i & 1 ? w / 2 : -w / 2, i & 2 ? h / 2 : -h / 2, i & 4 ? d / 2 : -d / 2))); };
+  const sees = (eye, p) => { const q = eye.worldToLocal(p.clone()); return q.x > 0 && Math.abs(q.y) < q.x * VF && Math.abs(q.z) < q.x * HF; };
+
+  // ---- 분해 보기 · 각도 · 판정 ----
+  let k = 0, kTo = 0;
+  const place = (t) => {
+    parts.forEach((g) => g.position.copy(g.userData.at).addScaledVector(g.userData.ex, t));
+    ghost.visible = t > 0.02; M.ghost.opacity = 0.45 * t;
+    wire();
+  };
+  const BODY_X = (HIPS[0][0] + HIPS[1][0]) / 2; // 몸 중심 = 앞뒤 엉덩이 축 가운데
+  function measure() { // 조립된 상태에서 바닥 시야 범위, 앞발, 초음파 간섭을 잰다
+    place(0); scene.updateMatrixWorld(true); aim(fovF);
+    const p = fovF.pos, cm = (x) => Math.round((x - BODY_X) / 10), xs = [1, 2, 3, 4].map((i) => p.getX(i));
+    const floorAll = [1, 2, 3, 4].every((i) => p.getY(i) < 1), bo = bEye.getWorldPosition(V()), bd = V(1, 0, 0).transformDirection(bEye.matrixWorld);
+    const ray = (v) => { const d = V(1, v * VF, 0).transformDirection(bEye.matrixWorld); return d.y < 0 ? cm(bo.x - d.x * bo.y / d.y) : "수평 위"; }; // v: 화면 세로 위치 (-1 아래 ~ 1 위)
+    const span = `${cm(Math.min(...xs))}~${floorAll ? cm(Math.max(...xs)) : "수평 위"}`, low = new THREE.Box3().setFromObject(bBox).min.y / 10;
+    const hit = [bBox, xBoard, xCam, xLens, ant, irBoard].some((b) => corners(b).some(inBeam)), legs = FRONT_FEET.some((f) => sees(bEye, f.getWorldPosition(V())));
+    const io = irEye.getWorldPosition(V()), pitch = Math.asin(V(1, 0, 0).transformDirection(irEye.matrixWorld).y);
+    const irAt = (a) => Math.max(0, Math.round((io.y + 250 * Math.tan(pitch + a)) / 10)), irSeen = [...corners(irBoard), io].some((q) => sees(fEye, q));
+    $("v3dRead").innerHTML = `바닥 카메라(몸 중심에서): 보임 <b>${span} cm</b>, 라인 처리(화면 위 2/3) <b>${ray(-1 / 3)}~${ray(1)} cm</b>, 가운데 <b>${ray(0)} cm</b> · 모듈 아래 끝 바닥에서 <b>${low.toFixed(1)} cm</b> · 앞발 <b>${legs ? "화면 안" : "화면 밖"}</b> · 초음파 빔과 <b>${hit ? "겹침" : "겹치지 않음"}</b> · 온도 센서: 25 cm 앞 높이 <b>${irAt(-IR_FOV / 2)}~${irAt(IR_FOV / 2)} cm</b>, 머리 카메라 화면에 <b>${irSeen ? "보임" : "안 보임"}</b>`;
+    place(k);
+    return !hit;
+  }
+  const setAngle = (a) => { bCam.rotation.z = -rad(a); $("v3dAngleOut").textContent = a + "°"; return measure(); };
+
+  // ---- 화면 ----
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  const cv = renderer.domElement;
+  cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "MechDog 장착 구성 3D 모델");
+  stage.prepend(cv);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8577, 0.45));
+  const sun = new THREE.DirectionalLight(0xffffff, 3);
+  sun.position.set(200, 380, -420); sun.castShadow = true;
+  Object.assign(sun.shadow.camera, { left: -300, right: 300, top: 300, bottom: -300, near: 50, far: 1500 });
+  sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.6;
+  scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.6);
+  fill.position.set(-200, 260, 400);
+  scene.add(fill);
+  const camera = new THREE.PerspectiveCamera(30, 1, 10, 6000), controls = new OrbitControls(camera, cv);
+  const TARGET = V(8, 66, 0), VIEW = { all: [270, 165, -310], side: [0, 25, -520], front: [520, 55, 0], bottom: [120, -400, -180] };
+  controls.enableDamping = true; controls.minDistance = 150; controls.maxDistance = 2500;
+  controls.autoRotate = !reduce; controls.autoRotateSpeed = 0.8;
+  controls.enableZoom = false; // 문서를 스크롤할 때 휠을 가로채지 않게, 누른 뒤에만 확대
+  cv.addEventListener("pointerdown", () => { controls.enableZoom = true; controls.autoRotate = false; });
+  cv.addEventListener("pointerleave", () => (controls.enableZoom = false));
+  const fit = () => { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+  const setView = (name) => { camera.position.copy(TARGET).addScaledVector(V(...VIEW[name]), Math.max(1, 1.5 / camera.aspect)); controls.target.copy(TARGET); controls.update(); };
+  const v = V();
+  const drawTags = () => {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    for (const [el, o, show] of tags) {
+      o.getWorldPosition(v).project(camera);
+      el.style.transform = `translate(${((v.x + 1) / 2 * w).toFixed(1)}px,${((1 - v.y) / 2 * h).toFixed(1)}px) translate(-50%,-50%)`;
+      el.hidden = v.z > 1 || (show && !show());
+    }
+  };
+
+  // ---- 조작 ----
+  const state = { fov: true, beam: true, ir: true, label: stage.clientWidth > 560, print: false, explode: false }; // 좁은 화면은 이름표를 끈 채 시작
+  const apply = () => {
+    fovF.o.visible = fovC.o.visible = state.fov; beam.visible = state.beam; irCone.visible = state.ir;
+    $("v3dLabels").hidden = !state.label; leads.forEach((l) => (l.visible = state.label));
+    M.print.opacity = state.print ? 1 : 0.75;
+    for (const m of SOLID) Object.assign(M[m], { transparent: state.print, opacity: state.print ? 0.18 : 1, depthWrite: !state.print, needsUpdate: true });
+    kTo = +state.explode;
+    $("v3dToggles").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(state[b.dataset.k])));
+  };
+  $("v3dToggles").addEventListener("click", (e) => { const b = e.target.closest("button[data-k]"); if (b) { state[b.dataset.k] = !state[b.dataset.k]; apply(); } });
+  $("v3dViews").addEventListener("click", (e) => { const b = e.target.closest("button[data-v]"); if (b) { controls.autoRotate = false; setView(b.dataset.v); } });
+  $("v3dAngle").addEventListener("input", (e) => setAngle(+e.target.value));
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", theme);
+
+  theme(); fit(); setView("all"); apply();
+  console.assert(setAngle(DOWN), "기본 각도에서 바닥 카메라가 초음파 빔 안에 있음");
+  new ResizeObserver(fit).observe(stage);
+
+  let raf = 0, seen = false;
+  const tick = () => { // 화면에 보일 때만 그린다
+    raf = 0;
+    if (k !== kTo) { k = reduce || Math.abs(kTo - k) < 0.01 ? kTo : k + (kTo - k) * 0.18; place(k); }
+    controls.update(); aim(fovF); aim(fovC);
+    renderer.render(scene, camera);
+    if (state.label) drawTags();
+    if (seen) raf = requestAnimationFrame(tick);
+  };
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf) raf = requestAnimationFrame(tick); }).observe(stage);
+  msg.remove();
+} catch (e) {
+  msg.textContent = "3D 뷰어를 불러오지 못했다. 인터넷 연결과 WebGL 지원을 확인한다.";
+  console.error(e);
+}
 </script>
 </body>
 </html>
