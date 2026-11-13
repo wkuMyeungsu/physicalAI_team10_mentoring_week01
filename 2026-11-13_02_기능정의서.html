@@ -7,29 +7,46 @@
 <style>
 :root{--bg:#eceff1;--paper:#fff;--ink:#111;--muted:#555;--rule:#111;--thin:#b8bec4;--code:#f3f4f5;--net:#e8f0f8;--todo:#b26a00}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 system-ui,"Malgun Gothic",sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,"Malgun Gothic",sans-serif;word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
 .doc{max-width:1200px;margin:24px auto;background:var(--paper);border:2px solid var(--rule);padding:0 22px 28px}
 @media (max-width:640px){.doc{margin:0;border-width:0 0 2px;padding:0 16px 20px}}
 h1{margin:0;padding:18px 0 4px;font-size:26px}
 .sub{color:var(--muted);margin:0 0 8px}
-h2{margin:26px 0 10px;padding:6px 10px;background:var(--ink);color:var(--paper);font-size:16px}
-h3{margin:20px 0 6px;font-size:15px}
-.tw{overflow-x:auto;margin:8px 0}
+h2{margin:20px 0 8px;padding:5px 10px;background:var(--ink);color:var(--paper);font-size:16px}
+h3{margin:14px 0 4px;font-size:15px}
+.tw{overflow-x:auto;margin:6px 0}
+td.k{white-space:nowrap}
+.pair{white-space:nowrap;margin-right:10px}
+@media (max-width:640px){br.w{display:none}}
+.split{margin:10px 0}
+.split th{width:13em}
+.split th+th{width:auto}
+@media (max-width:640px){.split th{width:8.5em}}
+tr.grp td{background:var(--code);font-weight:700;padding:3px 8px}
+@media (max-width:640px){table.cards tr.grp{border:0;margin:14px 0 4px;padding:0}table.cards tr.grp td{background:none;padding:0;font-size:15px}}
+.note{margin:4px 0 0;font-size:13px;color:var(--muted)}
 table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{border:1px solid var(--rule);padding:5px 9px;text-align:left;vertical-align:top}
+th,td{border:1px solid var(--rule);padding:4px 8px;text-align:left;vertical-align:top}
 th{background:var(--code);font-weight:600;white-space:nowrap}
 ul{padding-left:22px;margin:6px 0}
 li{margin:3px 0}
 .todo{color:var(--todo);font-weight:700}
+/* 우선순위 배지 */
+.pri{display:inline-block;min-width:4.4em;padding:0 8px;border-radius:10px;font-size:12px;font-weight:700;line-height:20px;text-align:center;white-space:nowrap;border:1px solid transparent}
+.pri.must{background:#c92a2a;color:#fff}
+.pri.should{background:#1864ab;color:#fff}
+.pri.could{background:#e7f5ff;color:#1864ab;border-color:#74c0fc}
+.pri.wont{background:#fff;color:var(--muted);border:1px dashed var(--muted)}
 .graph{overflow-x:auto;border:1px solid var(--rule);background:var(--code);padding:6px}
 .graph svg{display:block;width:100%;min-width:600px;height:auto}
 /* 모바일은 세로 구성도 (가로판은 옆으로 밀어야 보임) */
 .graph .m{display:none}
 .graph .m .ln{marker-end:url(#arr2)}
+.graph .m .bi{marker-start:url(#arr2)}
 @media (max-width:640px){.graph .w{display:none}.graph .m{display:block;min-width:0;max-width:380px;margin:0 auto}}
 .graph text{font-family:system-ui,"Malgun Gothic",sans-serif;fill:var(--ink)}
 .graph .box{fill:var(--paper);stroke:var(--ink);stroke-width:2}
-.graph .ext{fill:var(--paper);stroke:var(--ink);stroke-width:2;stroke-dasharray:2 3}
+.graph .bi{marker-start:url(#arr)}
 .graph .net{fill:var(--net);stroke:var(--thin);stroke-width:1.5}
 .graph .ln{fill:none;stroke:var(--ink);stroke-width:2;marker-end:url(#arr)}
 .graph .n{font-weight:700;font-size:13px}
@@ -58,7 +75,7 @@ body{padding-top:44px}
 </style>
 </head>
 <body>
-<nav class="topnav" aria-label="문서 이동"><a href="index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html">01<span class="lbl"> 주제 · 배경</span></a><a href="2026-11-13_02_기능정의서.html" aria-current="page">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵 · 시연</span></a></span></nav>
+<nav class="topnav" aria-label="문서 이동"><a href="index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html">01<span class="lbl"> 주제&nbsp;· 배경</span></a><a href="2026-11-13_02_기능정의서.html" aria-current="page">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵&nbsp;· 시연</span></a></span></nav>
 <div class="doc">
 
 <h1>기능 정의서</h1>
