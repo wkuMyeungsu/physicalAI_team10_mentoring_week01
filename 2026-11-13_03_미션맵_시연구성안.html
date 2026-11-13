@@ -157,17 +157,17 @@ body{padding-top:44px}
 
 <h2>3. 시연 흐름</h2>
 <div class="tw"><table>
-  <tr><th>시간</th><th>장면</th><th>로봇</th><th>사람 · 관제</th><th>시뮬레이션</th></tr>
-  <tr><td>0:00 ~ 0:40</td><td>문제 제기</td><td></td><td>적치물 · 바닥 물건 · 불 위치를 모르는 고정 유도등</td><td></td></tr>
-  <tr><td>0:40 ~ 1:10</td><td>평상시 순찰</td><td>A 외곽 · B 간선 · 통로 · 3 · 4호 도크 대기</td><td>구간 통과 확인</td><td>장면 1</td></tr>
-  <tr><td>1:10 ~ 1:30</td><td>바닥 물건</td><td>A 바닥 카메라가 공구 발견 (초음파 무반응 = 낮은 물체) · 순찰 계속</td><td>"밟힘 주의" → 관리자가 치우고 체크</td><td>장면 2</td></tr>
-  <tr><td>1:30 ~ 2:00</td><td>막힘 발견</td><td>B가 박스 앞에서 멈춤 · ✕</td><td>경보 → 관리자가 치우고 체크 → B 재통과</td><td>장면 3</td></tr>
-  <tr><td>2:00 ~ 2:40</td><td>릴레이 교대</td><td>A 배터리 부족 → 3호가 이어 돎 · A는 도크로</td><td>서버가 구간 · 진행 위치 인계</td><td>장면 4</td></tr>
-  <tr><td>2:40 ~ 3:20</td><td>과열 감지 · 교차 확인</td><td>순찰 로봇이 과열 감지 · 정지 → 4호가 가서 다시 잼</td><td>둘 다 50℃ 초과 → 화재 확정</td><td>장면 5</td></tr>
-  <tr><td>3:20 ~ 4:10</td><td>화재 · 갈림길 안내</td><td>4대가 갈림길 ①~④ · 화살표 / ✕</td><td>작업자가 화살표 따라 대피</td><td>장면 6</td></tr>
-  <tr><td>(선택)</td><td>반전</td><td>동쪽 화재면 화살표 · ✕ 반대로</td><td></td><td></td></tr>
+  <tr><th>장면</th><th>로봇</th><th>사람&nbsp;· 관제</th><th>기능</th></tr>
+  <tr><td class="k">문제 제기</td><td>—</td><td>적치물&nbsp;· 바닥 물건&nbsp;· 불 위치를 모르는 고정 유도등</td><td>—</td></tr>
+  <tr><td class="k">1 평상시 순찰</td><td>A 외곽&nbsp;· B 간선&nbsp;· 통로<br>3&nbsp;· 4호 도크 대기</td><td>구간 통과 확인</td><td>F-01&nbsp;· F-02</td></tr>
+  <tr><td class="k">2 바닥 물건</td><td>A 바닥 카메라가 공구 발견 (초음파 무반응 = 낮은 물체)<br>순찰 계속</td><td>"밟힘 주의"&nbsp;→ 관리자가 치우고 체크</td><td>F-04&nbsp;· F-08</td></tr>
+  <tr><td class="k">3 막힘 발견</td><td>B가 박스 앞에서 멈춤&nbsp;· ✕</td><td>경보&nbsp;→ 관리자가 치우고 체크&nbsp;→ B 재통과</td><td>F-03&nbsp;· F-08&nbsp;· F-09</td></tr>
+  <tr><td class="k">4 충전 교대</td><td>A 배터리 부족&nbsp;→ 3호가 이어 돎<br>A는 도크로</td><td>서버가 구간&nbsp;· 진행 위치 인계</td><td>F-11</td></tr>
+  <tr><td class="k">5 과열 교차 확인</td><td>순찰 로봇이 과열 감지&nbsp;· 정지<br>4호가 가서 다시 잼</td><td>둘 다 50℃ 초과&nbsp;→ 화재 확정</td><td>F-05&nbsp;· F-10</td></tr>
+  <tr><td class="k">6 화재 대피 안내</td><td>4대가 갈림길 ①~④&nbsp;· 화살표 / ✕</td><td>작업자가 화살표 따라 대피</td><td>F-12&nbsp;· F-13</td></tr>
 </table></div>
-<p class="todo">시간 조정 · 반전을 넣을지</p>
+<p class="note">장면 번호는 아래 시뮬레이션의 장면 버튼과 같다. F-06 쓰러진 사람 감지&nbsp;· F-07 보행자 구분(Could)은 시연 흐름에 넣지 않는다.</p>
+
 
 <h2>4. 시뮬레이션</h2>
 <div class="player">
