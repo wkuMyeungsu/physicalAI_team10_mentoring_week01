@@ -245,7 +245,7 @@ details{margin:8px 0}
     <p class="v3d-read" id="v3dRead"></p>
     <div class="v3d-legend">
       <span><i style="background:var(--accent)"></i>바닥 카메라 시야</span><span><i style="background:var(--info)"></i>정면 카메라 시야</span><span><i style="background:var(--bad)"></i>초음파 빔</span><span><i style="background:var(--ok)"></i>온도 센서 측정 범위</span><span><i style="background:var(--v3d-print)"></i>3D 출력물</span><span><i style="background:var(--muted);opacity:.5"></i>옮기기 전 자리 (분해 보기)</span>
-      <span>끌어서 돌리기 · 누른 뒤 휠로 확대 · 오른쪽 버튼으로 이동</span>
+      <span>끌어서 돌리기 · 누른 뒤 휠로 확대 · 가운데(휠)·오른쪽 버튼으로 이동</span>
     </div>
   </div>
   <details>
@@ -885,8 +885,10 @@ try {
   const camera = new THREE.PerspectiveCamera(30, 1, 10, 6000), controls = new OrbitControls(camera, cv);
   const TARGET = V(8, 66, 0), VIEW = { all: [270, 165, -310], side: [0, 25, -520], front: [520, 55, 0], bottom: [120, -400, -180] };
   controls.enableDamping = true; controls.minDistance = 150; controls.maxDistance = 2500;
+  controls.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.PAN };
   controls.autoRotate = !reduce; controls.autoRotateSpeed = 0.8;
   controls.enableZoom = false; // 문서를 스크롤할 때 휠을 가로채지 않게, 누른 뒤에만 확대
+  cv.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); }); // 가운데 버튼 클릭 시 브라우저 자동 스크롤 방지
   cv.addEventListener("pointerdown", () => { controls.enableZoom = true; controls.autoRotate = false; });
   cv.addEventListener("pointerleave", () => (controls.enableZoom = false));
   const fit = () => { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); };
