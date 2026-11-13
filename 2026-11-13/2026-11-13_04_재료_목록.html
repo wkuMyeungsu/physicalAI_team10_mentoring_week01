@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미션맵 재료 목록</title>
+<style>
+:root{
+  --bg:#eceff1;--paper:#fff;--ink:#111;--muted:#555;--rule:#111;--thin:#cfd4da;--code:#f3f4f5;
+  --buy-bg:#e7f5ff;--buy-fg:#1864ab;
+  --chk-bg:#fef7e0;--chk-fg:#b06000;
+  --mk-bg:#e6fcf5;--mk-fg:#087f5b;
+  --hold-bg:#f1f3f4;--hold-fg:#444
+}
+*{box-sizing:border-box}
+body{margin:0;padding-top:44px;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,"Malgun Gothic",sans-serif;word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
+.doc{max-width:1100px;margin:24px auto;background:var(--paper);border:2px solid var(--rule);padding:0 24px 28px}
+@media (max-width:640px){.doc{margin:0;border-width:0 0 2px;padding:0 14px 22px}}
+h1{margin:0;padding:20px 0 4px;font-size:26px;letter-spacing:-.02em}
+.sub{color:var(--muted);margin:0 0 12px;font-size:14px}
+h2{margin:26px 0 10px;padding:7px 12px;background:var(--ink);color:var(--paper);font-size:16px;letter-spacing:-.01em;display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+h2 .h2-meta{font-size:12.5px;font-weight:400;color:#cfd4da}
+h3{margin:16px 0 6px;font-size:15px;display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+h3 .meta{font-size:12.5px;font-weight:400;color:var(--muted)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--code);padding:1px 5px;border-radius:3px}
+.doc a{color:var(--buy-fg);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.doc a:hover{color:var(--ink)}
+
+/* 상단 고정 문서 이동 바 */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 18px;background:var(--ink);font-size:15px;font-weight:600;line-height:1.5;white-space:nowrap}
+.topnav a{color:#b8bec4;text-decoration:none}
+.topnav a:hover,.topnav a:focus-visible,.topnav a[aria-current]{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.topnav>span{display:flex;gap:18px}
+@media (max-width:640px){.topnav .lbl{display:none}}
+
+/* 요약 · 원칙 박스 */
+.def{border:2px solid var(--ink);padding:10px 14px;margin:10px 0 12px;font-size:14px;font-weight:700;text-wrap:balance;background:#fafafa}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 12px}
+@media (max-width:780px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.kpis{grid-template-columns:1fr}}
+.kpi{border:1px solid var(--rule);padding:8px 11px;background:var(--paper)}
+.kpi .kl{font-size:12px;color:var(--muted);font-weight:600}
+.kpi .kv{font-size:17px;font-weight:800;line-height:1.3;margin:2px 0}
+.kpi .kd{font-size:12.5px;color:var(--muted)}
+
+.summary{background:var(--code);border:1px solid var(--rule);padding:9px 13px;margin:8px 0 10px;font-size:13.5px}
+.summary ul{padding-left:20px;margin:5px 0 2px}
+.summary li{margin:2px 0}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 4px;padding:7px 10px;border:1px dashed var(--thin);font-size:12.5px;color:var(--muted);align-items:center}
+.badge,.tag{display:inline-block;padding:1px 7px;font-size:12px;font-weight:700;border-radius:3px;white-space:nowrap;vertical-align:1px}
+.buy{background:var(--buy-bg);color:var(--buy-fg)}
+.chk{background:var(--chk-bg);color:var(--chk-fg)}
+.mk{background:var(--mk-bg);color:var(--mk-fg)}
+.hold{background:var(--hold-bg);color:var(--hold-fg)}
+.tag.sub{background:var(--code);color:var(--ink);border:1px solid var(--thin);font-size:11px;margin-left:4px;font-weight:700}
+
+/* 표 */
+.tw{overflow-x:auto;margin:6px 0 10px}
+table{border-collapse:collapse;width:100%;font-size:14px;border:1.5px solid var(--rule)}
+th,td{border:1px solid var(--thin);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--code);border-bottom:1.5px solid var(--rule);font-weight:700;white-space:nowrap;font-size:13.5px}
+tbody tr:hover{background:#fafbfc}
+th.col-item{width:19%}
+th.col-qty{width:12%}
+th.col-price{width:20%}
+th.col-st{width:11%}
+td.k{font-weight:700;white-space:nowrap}
+td.qty{white-space:nowrap;font-variant-numeric:tabular-nums}
+td.price{font-variant-numeric:tabular-nums}
+td.price.muted{color:var(--muted)}
+.subnote{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+
+/* 모바일 카드 표 */
+@media (max-width:640px){
+  table.cards{border:0}
+  table.cards,table.cards tbody,table.cards tr,table.cards td{display:block}
+  table.cards tr:first-child{display:none}
+  table.cards tr{border:1.5px solid var(--rule);margin:0 0 8px;padding:7px 11px;background:#fff}
+  table.cards td{border:0;padding:2px 0 2px 7.6em;white-space:normal}
+  table.cards td:first-child{padding:0 0 4px;margin-bottom:3px;border-bottom:1px solid var(--code);font-weight:700;font-size:15px}
+  table.cards td:empty{display:none}
+  table.cards td+td{display:flow-root}
+  table.cards td+td::before{content:attr(data-l);float:left;width:7.2em;margin-left:-7.6em;color:var(--muted);font-size:12px;font-weight:600;padding-top:2px}
+}
+@media print{
+  body{padding-top:0;background:#fff}
+  .topnav{display:none}
+  .doc{margin:0;border:0;padding:0;max-width:none}
+}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="문서 이동"><a href="index.html">← 목차</a><span><a href="2026-11-13_01_주제선택_배경.html">01<span class="lbl"> 주제 · 배경</span></a><a href="2026-11-13_02_기능정의서.html">02<span class="lbl"> 기능 정의서</span></a><a href="2026-11-13_03_미션맵_시연구성안.html">03<span class="lbl"> 미션맵 · 시연</span></a><a href="2026-11-13_04_재료_목록.html" aria-current="page">04<span class="lbl"> 재료 목록</span></a></span></nav>
+<div class="doc">
+
+<h1>미션맵 재료 목록</h1>
+<p class="sub">포텐 (10팀) · 11/16(월) 재료 주문 신청 및 미션맵 제작 기준</p>
+
+<div class="def">예산: 택배비 포함 30만 원 이내 · 구매처: 국내 비회원 구매 가능 URL(해외배송·구매대행 불가) · 가격: 정가 기준(쿠폰·포인트 제외) · 배송: 대표자 1인 일괄 배송</div>
+
+<div class="kpis" aria-label="현황 요약">
+  <div class="kpi"><div class="kl">신청 예산 한도</div><div class="kv">300,000원</div><div class="kd">1절 외부 구매 · 택배비 포함</div></div>
+  <div class="kpi"><div class="kl">1. 외부 구매 (신청서)</div><div class="kv">16건</div><div class="kd">신청 확정 13 · 부족분 3</div></div>
+  <div class="kpi"><div class="kl">2. 자체 제작 (제외)</div><div class="kv">4건</div><div class="kd">3D 거치물 3 · 맵 구조물 1</div></div>
+  <div class="kpi"><div class="kl">3. 선택 검토</div><div class="kv">2건</div><div class="kd">잔여 예산 여유 시 추가</div></div>
+</div>
+
+<div class="legend">
+  <span>분류:</span>
+  <span><span class="badge buy">신청 확정</span> 주문 신청서 반영</span>
+  <span><span class="badge chk">부족분 · 확인</span> 보유 수량 확인 후 반영</span>
+  <span><span class="badge mk">자체 제작</span> 3D 출력·보유 자재 제작 (신청 제외)</span>
+  <span><span class="badge hold">선택 검토</span> 예산·시연 방식 확정 시 추가</span>
+</div>
+
+<h2>1. 외부 구매 <span class="h2-meta">11/16 주문 신청서 반영 · 국내 비회원 구매 · 30만 원 이내</span></h2>
+
+<h3>1-1. 미션맵 바닥 · 테이프 <span class="meta">4.1m × 4.35m (약 17.8㎡) · 조립식</span></h3>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>규격 · 용도</th><th class="col-qty">수량</th><th class="col-price">단가 · 확인 사항</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">폼보드</td><td data-l="규격 · 용도">비접착 양면 종이 합지 폼보드 (<code>5T</code> 우선 검토) — 분할 조립식 바닥</td><td class="qty" data-l="수량">36장 <span class="subnote">600×900</span></td><td class="price muted" data-l="단가 · 확인 사항">단가·택배비 산출<span class="subnote">900×1200 기준 20장</span></td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">주행선 테이프</td><td data-l="규격 · 용도">검정 바닥 테이프 — 전체 순찰 경로 (약 27.5m)</td><td class="qty" data-l="수량">2롤</td><td class="price muted" data-l="단가 · 확인 사항">총 30m 이상 구성</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">마커 테이프</td><td data-l="규격 · 용도">노랑 · 초록(구간) · 빨강(갈림길) 바닥 마커 및 도크 표시</td><td class="qty" data-l="수량">색별 1롤</td><td class="price muted" data-l="단가 · 확인 사항">총 3롤 · 정가 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">마스킹 테이프</td><td data-l="규격 · 용도">분할 폼보드 이음 고정 · 해체 후 재조립용</td><td class="qty" data-l="수량">1묶음</td><td class="price muted" data-l="단가 · 확인 사항">정가 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+</table></div>
+
+<div class="summary">
+  <strong>폼보드 선택 기준:</strong>
+  <ul>
+    <li>테이프 탈부착과 주행 안정성을 위해 우드락 대신 <strong>비접착 폼보드(양면 종이 합지)</strong>를 사용합니다.</li>
+    <li><code>10T</code> 대형(<code>900×1200mm</code> 20장 박스)은 정가 28~30만 원대로 예산 초과 위험이 커, <code>5T</code> 또는 <code>600×900mm</code> 묶음 기준 화물 택배비 포함 단가로 맞춥니다.</li>
+  </ul>
+</div>
+
+<h3>1-2. 로봇 추가 센서 · 배선 · 체결 <span class="meta">MechDog 4대분</span></h3>
+<div class="summary">
+  <strong>추가 배경 (<a href="2026-11-13_02_기능정의서.html#v3d">로봇 장착 구성 3D 모델링</a> 기준):</strong>
+  <ul>
+    <li><strong>머리 위·아래 분리:</strong> 기존 비전 모듈을 <strong>머리 아래</strong>로 내려 바닥을 보고(<code>I2C 연장선</code>), 빈 <strong>머리 위</strong>에 정면 카메라(XIAO)·온도 센서(<code>GY-906</code>)를 올려 납땜·전원 연결(<code>센서·전원 배선</code>, <code>납땜 도구</code>)합니다.</li>
+    <li><strong>등딱지 LED 직결:</strong> LED 도트 매트릭스를 등뼈 덮개 위에 스탠드오프로 띄워 고정하고(<code>M3 12mm 스탠드오프·나사·평와셔</code>) 아래로 커넥터 선(<code>I2C 연장선</code>)을 연결합니다.</li>
+    <li><strong>브래킷·캐리어 고정:</strong> 머리 브래킷과 뒤 윗판 Pi 5 캐리어를 본체 M3 구멍에 볼트 체결(<code>M3×8</code>)합니다.</li>
+  </ul>
+</div>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>규격 · 용도</th><th class="col-qty">수량</th><th class="col-price">단가 · 확인 사항</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">온도 센서</td><td data-l="규격 · 용도"><code>GY-906</code> (<code>MLX90614ESF-BCC</code>, 시야각 35°) — XIAO 직결</td><td class="qty" data-l="수량">4개</td><td class="price" data-l="단가 · 확인 사항">약 44,000~68,000원<span class="subnote">-BCC 국내 재고 확인</span></td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">I2C 연장 케이블</td><td data-l="규격 · 용도">비전 모듈 · LED 매트릭스 연결용 4가닥 연장선</td><td class="qty" data-l="수량">8개</td><td class="price muted" data-l="단가 · 확인 사항">대당 2개 · 길이 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">센서 · 전원 배선</td><td data-l="규격 · 용도">GY-906 납땜선(4가닥×4대) + XIAO 전원용 4핀 커넥터·선</td><td class="qty" data-l="수량">4대분</td><td class="price muted" data-l="단가 · 확인 사항">정가·규격 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">체결 볼트 · 스탠드오프</td><td data-l="규격 · 용도"><code>M3 12mm</code> 스탠드오프·나사·평와셔 16세트 + <code>M3×8</code> 볼트 20개</td><td class="qty" data-l="수량">4대분</td><td class="price muted" data-l="단가 · 확인 사항">대당 각 4세트 · 여분 포함</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">납땜 도구</td><td data-l="규격 · 용도">인두 · 납 · 플럭스 — 센서·배선 납땜용</td><td class="qty" data-l="수량">1세트</td><td class="price muted" data-l="단가 · 확인 사항">팀 보유 시 제외</td><td data-l="구분"><span class="badge chk">부족분 · 확인</span></td></tr>
+</table></div>
+
+<h3>1-3. Pi 5 탑재 부속 <span class="meta">보유 Pi 5 4대 기준</span></h3>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>규격 · 용도</th><th class="col-qty">수량</th><th class="col-price">단가 · 확인 사항</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">보조배터리</td><td data-l="규격 · 용도">약 <code>62×42×18mm</code> 소형 (<code>5V 3~5A</code> · USB-C 출력)</td><td class="qty" data-l="수량">4개</td><td class="price muted" data-l="단가 · 확인 사항">모델·치수 확정</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">USB-C to C 케이블</td><td data-l="규격 · 용도">보조배터리 ↔ Pi 5 짧은 전원 직결 케이블</td><td class="qty" data-l="수량">4개</td><td class="price muted" data-l="단가 · 확인 사항">단자 각도·길이 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">M2.5 나사</td><td data-l="규격 · 용도"><code>M2.5</code> 관통 볼트 — Pi 5 일체형 캐리어 고정 (대당 4개)</td><td class="qty" data-l="수량">16개</td><td class="price muted" data-l="단가 · 확인 사항">4대분 · 여분 포함</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">액티브 쿨러</td><td data-l="규격 · 용도">Pi 5 공식 액티브 쿨러 (방열판+팬)</td><td class="qty" data-l="수량">4개</td><td class="price muted" data-l="단가 · 확인 사항">보유분 제외 부족분 신청</td><td data-l="구분"><span class="badge chk">부족분 · 확인</span></td></tr>
+  <tr><td class="k">microSD</td><td data-l="규격 · 용도"><code>32GB</code> 이상 — OS 및 추론 환경 저장</td><td class="qty" data-l="수량">4개</td><td class="price muted" data-l="단가 · 확인 사항">보유분 제외 부족분 신청</td><td data-l="구분"><span class="badge chk">부족분 · 확인</span></td></tr>
+</table></div>
+
+<h3>1-4. 화재 시험 소품 <span class="meta">실외 가스버너 시험용</span></h3>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>규격 · 용도</th><th class="col-qty">수량</th><th class="col-price">단가 · 확인 사항</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">부탄가스</td><td data-l="규격 · 용도">실외 화재 시험 연료 (팀 보유 가스버너용)</td><td class="qty" data-l="수량">2캔</td><td class="price muted" data-l="단가 · 확인 사항">정가 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+  <tr><td class="k">소화기</td><td data-l="규격 · 용도">실외 화재 시험 안전 대비용</td><td class="qty" data-l="수량">1개</td><td class="price muted" data-l="단가 · 확인 사항">규격·신청 가능 여부 확인</td><td data-l="구분"><span class="badge buy">신청 확정</span></td></tr>
+</table></div>
+
+<h2>2. 자체 제작 <span class="h2-meta">신청서 제외 · 3D 출력 및 보유 자재 제작</span></h2>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>규격 · 용도</th><th class="col-qty">수량</th><th class="col-price">진행 기준</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">머리 브래킷 <span class="tag sub">3D</span></td><td data-l="규격 · 용도">XIAO · GY-906 · 2.4GHz 안테나 선반 일체형 (머리 윗판 장착)</td><td class="qty" data-l="수량">4대분</td><td class="price muted" data-l="진행 기준">출력 경로 확정</td><td data-l="구분"><span class="badge mk">자체 제작</span></td></tr>
+  <tr><td class="k">Pi 5 일체형 캐리어 <span class="tag sub">3D</span></td><td data-l="규격 · 용도">뒤 윗판 장착 · 상단 <code>M2.5</code> 스탠드오프로 Pi 5 고정</td><td class="qty" data-l="수량">4대분</td><td class="price muted" data-l="진행 기준">출력 경로 확정</td><td data-l="구분"><span class="badge mk">자체 제작</span></td></tr>
+  <tr><td class="k">보조배터리 거치대 <span class="tag sub">3D</span></td><td data-l="규격 · 용도">배 아래 슬라이드 착탈식 거치대 (벽 두께 <code>3.0mm</code>)</td><td class="qty" data-l="수량">4대분</td><td class="price muted" data-l="진행 기준">배터리 실물 치수 후 출력</td><td data-l="구분"><span class="badge mk">자체 제작</span></td></tr>
+  <tr><td class="k">구조물 · 표지 · 소품 <span class="tag sub">제작</span></td><td data-l="규격 · 용도">랙 A1~A3 (<code>80×60cm</code>) 3 · 작업 공간 B1·B2·C1·C2 (<code>140×60cm</code>) 4 · 막힘 박스 · 바닥 공구 · 비상구 1·2 표지</td><td class="qty" data-l="수량">1세트</td><td class="price" data-l="진행 기준">0원 · 보유 자재 활용</td><td data-l="구분"><span class="badge mk">자체 제작</span></td></tr>
+</table></div>
+
+<div class="summary">
+  <strong>미션맵 내부 구조물 제작 원칙 (바닥 구획 + 경량 입체 혼용):</strong>
+  <ul>
+    <li><strong>바닥 구획:</strong> <code>80×60cm</code> 랙 3곳과 <code>140×60cm</code> 작업 공간 4곳은 테이프·색지로 바닥 경계를 표시해 보관 부피와 촬영 사각지대를 줄입니다.</li>
+    <li><strong>경량 입체 · 표지:</strong> 구획 안쪽 모서리에만 접이식 골판지 박스·자투리 폼보드 낮은 가벽(높이 15~25cm)과 이름표(<code>A1~A3</code>, <code>B1~B2</code>, <code>C1~C2</code>, <code>비상구 1·2</code>)를 세워 해체 보관합니다.</li>
+    <li><strong>센서 간섭 방지:</strong> 주행 선과 경계 간격이 <code>20cm</code>이므로 입체 박스·가벽은 경계선 안쪽으로 들여놓고 초음파 오인식 여부를 실측합니다.</li>
+  </ul>
+</div>
+
+<h2>3. 선택 검토 <span class="h2-meta">1절 합산 후 30만 원 예산 여유 시 추가</span></h2>
+<div class="tw"><table class="cards">
+  <tr><th class="col-item">품목</th><th>용도 · 판단 기준</th><th class="col-qty">수량</th><th class="col-price">참고 단가</th><th class="col-st">구분</th></tr>
+  <tr><td class="k">Hailo-8L</td><td data-l="용도 · 판단 기준">Pi 5 AI 추론 HAT — 1절 합산 후 예산 여유 시 추가</td><td class="qty" data-l="수량">1개</td><td class="price" data-l="참고 단가">약 106,000원</td><td data-l="구분"><span class="badge hold">선택 검토</span></td></tr>
+  <tr><td class="k">안전모 · 형광 조끼</td><td data-l="용도 · 판단 기준">사람 인식 시연 소품 — 시연 방식 확정 시 추가</td><td class="qty" data-l="수량">1세트</td><td class="price muted" data-l="참고 단가">약 1~2만 원대</td><td data-l="구분"><span class="badge hold">선택 검토</span></td></tr>
+</table></div>
+
+<div class="summary">
+  <strong>11/16(월) 제출 전 확정 사항:</strong>
+  <ul>
+    <li><strong>규격 확정:</strong> 폼보드 규격(<code>5T</code> / <code>600×900</code> vs <code>900×1200</code>)과 화물 택배비, Pi 5 보조배터리 모델(<code>62×42×18mm</code>)을 확정합니다.</li>
+    <li><strong>부족분 · 선택 정리:</strong> <code>부족분 · 확인</code> 3건(쿨러·microSD·납땜 도구) 보유분 확인 후 신청 수량을 정하고, 3절 선택 품목 포함 여부를 결정합니다.</li>
+    <li><strong>신청서 기입:</strong> 1절 확정 품목의 국내 비회원 구매 URL·옵션·정가·재고를 확인해 택배비 포함 30만 원 이내로 제출합니다.</li>
+  </ul>
+</div>
+
+</div>
+<script>
+document.querySelectorAll("table.cards").forEach(function(t){
+  var h = [].map.call(t.rows[0].cells, function(c){ return c.textContent; });
+  [].slice.call(t.rows, 1).forEach(function(r){
+    [].forEach.call(r.cells, function(c, i){ if (!c.hasAttribute("data-l") && h[i]) c.setAttribute("data-l", h[i]); });
+  });
+});
+</script>
+</body>
+</html>
