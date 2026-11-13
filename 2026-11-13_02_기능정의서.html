@@ -16,6 +16,7 @@ h2{margin:20px 0 8px;padding:5px 10px;background:var(--ink);color:var(--paper);f
 h3{margin:14px 0 4px;font-size:15px}
 .tw{overflow-x:auto;margin:6px 0}
 td.k{white-space:nowrap}
+.nw{white-space:nowrap}
 .pair{white-space:nowrap;margin-right:10px}
 @media (max-width:640px){br.w{display:none}}
 .split{margin:10px 0}
@@ -201,22 +202,22 @@ body{padding-top:44px}
 <div class="tw"><table>
   <tr><th>기능</th><th>한 줄 설명</th><th>센서&nbsp;· 장비</th><th>우선</th></tr>
   <tr class="grp"><td colspan="4">1. 순찰</td></tr>
-  <tr><td class="k">F-01 경로 순찰</td><td>바닥 선을 따라 정해진 경로를 빈틈없이 돈다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
-  <tr><td class="k">F-02 구간 위치 파악</td><td>바닥 마커로 로봇이 어느 구간에 있는지 안다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k"><span class="nw">F-01</span> 경로 순찰</td><td>바닥 선을 따라 정해진 경로를 빈틈없이 돈다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k"><span class="nw">F-02</span> 구간 위치 파악</td><td>바닥 마커로 로봇이 어느 구간에 있는지 안다</td><td>바닥 카메라</td><td><span class="pri must">Must</span></td></tr>
   <tr class="grp"><td colspan="4">2. 이상 감지</td></tr>
-  <tr><td class="k">F-03 통로 막힘 감지</td><td>통로 위 장애물을 찾아 위치 보고</td><td>초음파&nbsp;· 머리 카메라</td><td><span class="pri must">Must</span></td></tr>
-  <tr><td class="k">F-04 바닥 물건 감지</td><td>낮은 물건을 찾아 "밟힘 주의" 표시</td><td>바닥 카메라</td><td><span class="pri should">Should</span></td></tr>
-  <tr><td class="k">F-05 과열&nbsp;· 화재 감지</td><td>표면 온도 45℃ 초과 시 멈춰 계속 측정</td><td>온도 센서&nbsp;· 머리 카메라</td><td><span class="pri should">Should</span></td></tr>
-  <tr><td class="k">F-06 쓰러진 사람 감지</td><td>오래 누워 움직이지 않으면 긴급 알림</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
-  <tr><td class="k">F-07 보행자 구분</td><td>움직이는 사람은 장애물에서 제외</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
+  <tr><td class="k"><span class="nw">F-03</span> 통로 막힘 감지</td><td>통로 위 장애물을 찾아 위치 보고</td><td>초음파&nbsp;· 머리 카메라</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k"><span class="nw">F-04</span> 바닥 물건 감지</td><td>낮은 물건을 찾아 "밟힘 주의" 표시</td><td>바닥 카메라</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-05</span> 과열&nbsp;· 화재 감지</td><td>표면 온도 45℃ 초과 시 멈춰 계속 측정</td><td>온도 센서&nbsp;· 머리 카메라</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-06</span> 쓰러진 사람 감지</td><td>오래 누워 움직이지 않으면 긴급 알림</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
+  <tr><td class="k"><span class="nw">F-07</span> 보행자 구분</td><td>움직이는 사람은 장애물에서 제외</td><td>머리 카메라</td><td><span class="pri could">Could</span></td></tr>
   <tr class="grp"><td colspan="4">3. 관제&nbsp;· 사람 협동</td></tr>
-  <tr><td class="k">F-08 관제 대시보드</td><td>지도에 위치&nbsp;· 이상 표시, 관리자가 확인해 해제</td><td>대시보드</td><td><span class="pri must">Must</span></td></tr>
-  <tr><td class="k">F-09 통로 재점검</td><td>치운 뒤 다시 지나가며 통로 차단 해제</td><td>초음파</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-08</span> 관제 대시보드</td><td>지도에 위치&nbsp;· 이상 표시, 관리자가 확인해 해제</td><td>대시보드</td><td><span class="pri must">Must</span></td></tr>
+  <tr><td class="k"><span class="nw">F-09</span> 통로 재점검</td><td>치운 뒤 다시 지나가며 통로 차단 해제</td><td>초음파</td><td><span class="pri should">Should</span></td></tr>
   <tr class="grp"><td colspan="4">4. 다중 로봇 협업</td></tr>
-  <tr><td class="k">F-10 과열 교차 확인</td><td>두 번째 로봇이 다시 재서 화재 확정</td><td>온도 센서</td><td><span class="pri should">Should</span></td></tr>
-  <tr><td class="k">F-11 충전 교대</td><td>배터리 부족 로봇의 순찰을 대기 로봇이 이어 받음</td><td>—</td><td><span class="pri should">Should</span></td></tr>
-  <tr><td class="k">F-12 화재 대피 안내</td><td>4대가 갈림길에서 LED로 비상구&nbsp;방향&nbsp;· 진입&nbsp;금지 표시</td><td>LED</td><td><span class="pri should">Should</span></td></tr>
-  <tr><td class="k">F-13 로봇 동선 조율</td><td>마주치지 않게 한 방향&nbsp;· 길 예약&nbsp;· 양보</td><td>—</td><td><span class="pri could">Could</span></td></tr>
+  <tr><td class="k"><span class="nw">F-10</span> 과열 교차 확인</td><td>두 번째 로봇이 다시 재서 화재 확정</td><td>온도 센서</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-11</span> 충전 교대</td><td>배터리 부족 로봇의 순찰을 대기 로봇이 이어 받음</td><td>—</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-12</span> 화재 대피 안내</td><td>4대가 갈림길에서 LED로 비상구&nbsp;방향&nbsp;· 진입&nbsp;금지 표시</td><td>LED</td><td><span class="pri should">Should</span></td></tr>
+  <tr><td class="k"><span class="nw">F-13</span> 로봇 동선 조율</td><td>마주치지 않게 한 방향&nbsp;· 길 예약&nbsp;· 양보</td><td>—</td><td><span class="pri could">Could</span></td></tr>
 </table></div>
 <p class="note"><span class="pair"><span class="pri must">Must</span> 없으면 시연이 안 됨</span> <span class="pair"><span class="pri should">Should</span> 다중 로봇 협업&nbsp;· 차별점</span> <span class="pair"><span class="pri could">Could</span> 완성도</span> <span class="pair"><span class="pri wont">Won't</span> 이번 범위에서 제외 (5번)</span></p>
 
@@ -224,22 +225,22 @@ body{padding-top:44px}
 <div class="tw"><table>
   <tr><th>ID</th><th>기능</th><th>방식</th><th>처리&nbsp;· 결과</th><th>기준&nbsp;· 비고</th></tr>
   <tr class="grp"><td colspan="5">1. 순찰</td></tr>
-  <tr><td class="k">F-01</td><td class="k">경로 순찰</td><td>A: 외곽 전체, 갈림길에서 직진만<br>B: 간선과 막다른 통로 3곳, 끝에서 확인 후 후진<br>둘 다 시계 방향</td><td>두 경로로 랙&nbsp;· 작업대 네 면을 모두 지남<br>지난 마커를 서버에 보고</td><td>선 이탈 없이 3바퀴 연속</td></tr>
-  <tr><td class="k">F-02</td><td class="k">구간 위치 파악</td><td>ArUco 또는 두 종류 색 띠를 번갈아 배치<br>검정 라인과 마커를 카메라 하나로 인식</td><td>서버가 지난 마커 수로 구간 번호를 셈<br>카메라가 보는 거리만큼 위치 보정<br>매 바퀴 도크에서 다시 맞춤</td><td>마커 20개 중 19개 인식<br>놓쳐도 다음 마커에서 복구</td></tr>
+  <tr><td class="k"><span class="nw">F-01</span></td><td class="k">경로 순찰</td><td>A: 외곽 전체, 갈림길에서 직진만<br>B: 간선과 막다른 통로 3곳, 끝에서 확인 후 후진<br>둘 다 시계 방향</td><td>두 경로로 랙&nbsp;· 작업대 네 면을 모두 지남<br>지난 마커를 서버에 보고</td><td>선 이탈 없이 3바퀴 연속</td></tr>
+  <tr><td class="k"><span class="nw">F-02</span></td><td class="k">구간 위치 파악</td><td>ArUco 또는 두 종류 색 띠를 번갈아 배치<br>검정 라인과 마커를 카메라 하나로 인식</td><td>서버가 지난 마커 수로 구간 번호를 셈<br>카메라가 보는 거리만큼 위치 보정<br>매 바퀴 도크에서 다시 맞춤</td><td>마커 20개 중 19개 인식<br>놓쳐도 다음 마커에서 복구</td></tr>
   <tr class="grp"><td colspan="5">2. 이상 감지</td></tr>
-  <tr><td class="k">F-03</td><td class="k">통로 막힘 감지</td><td>초음파 14cm 안 3번 연속&nbsp;→ 정지<br>18cm 밖&nbsp;→ 재개 (잠정값)</td><td>다른 로봇도 보행자(F-07)도 아니면 장애물<br>대시보드 지도에 통로 차단 표시</td><td>10번 중 9번 정지&nbsp;· 보고<br>빈 통로 오탐 없음</td></tr>
-  <tr><td class="k">F-04</td><td class="k">바닥 물건 감지</td><td>바닥 카메라에 보이는데<br>초음파는 무반응 (낮은 물체)</td><td>"밟힘 주의" 표시</td><td>로봇은 멈추지 않고 순찰 계속</td></tr>
-  <tr><td class="k">F-05</td><td class="k">과열&nbsp;· 화재 감지</td><td>표면 온도 45℃ 초과&nbsp;→ 멈춰 2초마다 측정<br>머리 카메라로 불꽃 확인</td><td>과열 의심 보고&nbsp;→ F-10</td><td>시연은 캔들</td></tr>
-  <tr><td class="k">F-06</td><td class="k">쓰러진 사람 감지</td><td>누운 자세로 오래 움직이지 않음</td><td>긴급 알림&nbsp;· 발견한 로봇은 곁을 지킴<br>대기 로봇이 그 구간 순찰을 이어 받음</td><td>재확인 없이 바로 알림</td></tr>
-  <tr><td class="k">F-07</td><td class="k">보행자 구분</td><td>0.5초마다 머리 카메라 사진<br>YOLO가 사람을 찾으면 장애물이 아님</td><td>잠시 멈췄다 순찰 계속</td><td>가만히 서 있는 사람은<br>장애물로 봄</td></tr>
+  <tr><td class="k"><span class="nw">F-03</span></td><td class="k">통로 막힘 감지</td><td>초음파 14cm 안 3번 연속&nbsp;→ 정지<br>18cm 밖&nbsp;→ 재개 (잠정값)</td><td>다른 로봇도 보행자(<span class="nw">F-07</span>)도 아니면 장애물<br>대시보드 지도에 통로 차단 표시</td><td>10번 중 9번 정지&nbsp;· 보고<br>빈 통로 오탐 없음</td></tr>
+  <tr><td class="k"><span class="nw">F-04</span></td><td class="k">바닥 물건 감지</td><td>바닥 카메라에 보이는데<br>초음파는 무반응 (낮은 물체)</td><td>"밟힘 주의" 표시</td><td>로봇은 멈추지 않고 순찰 계속</td></tr>
+  <tr><td class="k"><span class="nw">F-05</span></td><td class="k">과열&nbsp;· 화재 감지</td><td>표면 온도 45℃ 초과&nbsp;→ 멈춰 2초마다 측정<br>머리 카메라로 불꽃 확인</td><td>과열 의심 보고&nbsp;→ <span class="nw">F-10</span></td><td>시연은 캔들</td></tr>
+  <tr><td class="k"><span class="nw">F-06</span></td><td class="k">쓰러진 사람 감지</td><td>누운 자세로 오래 움직이지 않음</td><td>긴급 알림&nbsp;· 발견한 로봇은 곁을 지킴<br>대기 로봇이 그 구간 순찰을 이어 받음</td><td>재확인 없이 바로 알림</td></tr>
+  <tr><td class="k"><span class="nw">F-07</span></td><td class="k">보행자 구분</td><td>0.5초마다 머리 카메라 사진<br>YOLO가 사람을 찾으면 장애물이 아님</td><td>잠시 멈췄다 순찰 계속</td><td>가만히 서 있는 사람은<br>장애물로 봄</td></tr>
   <tr class="grp"><td colspan="5">3. 관제&nbsp;· 사람 협동</td></tr>
-  <tr><td class="k">F-08</td><td class="k">관제 대시보드</td><td>지도에 로봇 4대 위치&nbsp;· 상태와<br>이상 위치 표시</td><td>"의심"&nbsp;→ 관리자 확인&nbsp;· 조치<br>→ 체크로 해제&nbsp;→ F-09</td><td>이벤트 2초 안 표시</td></tr>
-  <tr><td class="k">F-09</td><td class="k">통로 재점검</td><td>관리자가 해제하면 로봇이 다시 지나감</td><td>초음파에 아무것도 없으면<br>통로 차단 해제&nbsp;· 순찰 복귀</td><td>사람이 따로 명령하지 않음</td></tr>
+  <tr><td class="k"><span class="nw">F-08</span></td><td class="k">관제 대시보드</td><td>지도에 로봇 4대 위치&nbsp;· 상태와<br>이상 위치 표시</td><td>"의심"&nbsp;→ 관리자 확인&nbsp;· 조치<br>→ 체크로 해제&nbsp;→ <span class="nw">F-09</span></td><td>이벤트 2초 안 표시</td></tr>
+  <tr><td class="k"><span class="nw">F-09</span></td><td class="k">통로 재점검</td><td>관리자가 해제하면 로봇이 다시 지나감</td><td>초음파에 아무것도 없으면<br>통로 차단 해제&nbsp;· 순찰 복귀</td><td>사람이 따로 명령하지 않음</td></tr>
   <tr class="grp"><td colspan="5">4. 다중 로봇 협업</td></tr>
-  <tr><td class="k">F-10</td><td class="k">과열 교차 확인</td><td>대기 로봇이 F-05에서 멈춘 자리로 가서 다시 잼</td><td>둘 다 50℃ 초과&nbsp;→ 화재 확정<br>→ F-12</td><td>센서 하나의 오탐 방지</td></tr>
-  <tr><td class="k">F-11</td><td class="k">충전 교대</td><td>배터리 20% 미만 보고</td><td>서버가 구간&nbsp;· 진행 위치를 대기 로봇에 인계<br>지친 로봇은 도크에서 충전</td><td>도크 충전은 가정</td></tr>
-  <tr><td class="k">F-12</td><td class="k">화재 대피 안내</td><td>화재 확정 시 4대 모두 갈림길로<br>마지막 로봇이 가장 빨리 닿게 배정</td><td>LED 화살표로 불 반대쪽 비상구<br>✕로 진입&nbsp;금지<br>막힌 통로(F-03)는 경로에서 뺌</td><td>고정 유도등과 달리<br>불 위치 반영</td></tr>
-  <tr><td class="k">F-13</td><td class="k">로봇 동선 조율</td><td>구간마다 한 방향&nbsp;· 출동 길 예약</td><td>대피 안내 &gt; 교차 확인 &gt; 순찰<br>순으로 양보</td><td>3초 넘게 막히면<br>순찰 쪽 후진</td></tr>
+  <tr><td class="k"><span class="nw">F-10</span></td><td class="k">과열 교차 확인</td><td>대기 로봇이 <span class="nw">F-05</span>에서 멈춘 자리로 가서 다시 잼</td><td>둘 다 50℃ 초과&nbsp;→ 화재 확정<br>→ <span class="nw">F-12</span></td><td>센서 하나의 오탐 방지</td></tr>
+  <tr><td class="k"><span class="nw">F-11</span></td><td class="k">충전 교대</td><td>배터리 20% 미만 보고</td><td>서버가 구간&nbsp;· 진행 위치를 대기 로봇에 인계<br>지친 로봇은 도크에서 충전</td><td>도크 충전은 가정</td></tr>
+  <tr><td class="k"><span class="nw">F-12</span></td><td class="k">화재 대피 안내</td><td>화재 확정 시 4대 모두 갈림길로<br>마지막 로봇이 가장 빨리 닿게 배정</td><td>LED 화살표로 불 반대쪽 비상구<br>✕로 진입&nbsp;금지<br>막힌 통로(<span class="nw">F-03</span>)는 경로에서 뺌</td><td>고정 유도등과 달리<br>불 위치 반영</td></tr>
+  <tr><td class="k"><span class="nw">F-13</span></td><td class="k">로봇 동선 조율</td><td>구간마다 한 방향&nbsp;· 출동 길 예약</td><td>대피 안내 &gt; 교차 확인 &gt; 순찰<br>순으로 양보</td><td>3초 넘게 막히면<br>순찰 쪽 후진</td></tr>
 </table></div>
 
 <h2>5. 제외&nbsp;· 가정&nbsp;· 미정</h2>
@@ -264,12 +265,12 @@ body{padding-top:44px}
 <h2>6. 기술 검증 항목</h2>
 <div class="tw"><table>
   <tr><th>항목</th><th>검증 내용</th><th>쓰이는 곳</th></tr>
-  <tr><td>마커 인식</td><td>걸으며 ArUco&nbsp;· 색 띠 읽기&nbsp;· 후진 때 재인식</td><td>F-02</td></tr>
-  <tr><td>바닥 카메라</td><td>꺾는 각도&nbsp;· 몸 앞 몇 cm를 보는지</td><td>F-02 위치 보정</td></tr>
+  <tr><td>마커 인식</td><td>걸으며 ArUco&nbsp;· 색 띠 읽기&nbsp;· 후진 때 재인식</td><td><span class="nw">F-02</span></td></tr>
+  <tr><td>바닥 카메라</td><td>꺾는 각도&nbsp;· 몸 앞 몇 cm를 보는지</td><td><span class="nw">F-02</span> 위치 보정</td></tr>
   <tr><td>주행</td><td>직선 흔들림&nbsp;· 곡선 반지름</td><td>미션맵 크기&nbsp;· 통로 폭</td></tr>
-  <tr><td>초음파</td><td>걸으며 측정되는지&nbsp;· 코너에서 옆 랙 오인식</td><td>F-03</td></tr>
-  <tr><td>온도 센서</td><td>캔들 거리별 측정값</td><td>F-05&nbsp;· F-10</td></tr>
-  <tr><td>머리 카메라</td><td>누운 방향별 사람 인식</td><td>F-06&nbsp;· F-07</td></tr>
+  <tr><td>초음파</td><td>걸으며 측정되는지&nbsp;· 코너에서 옆 랙 오인식</td><td><span class="nw">F-03</span></td></tr>
+  <tr><td>온도 센서</td><td>캔들 거리별 측정값</td><td><span class="nw">F-05</span>&nbsp;· <span class="nw">F-10</span></td></tr>
+  <tr><td>머리 카메라</td><td>누운 방향별 사람 인식</td><td><span class="nw">F-06</span>&nbsp;· <span class="nw">F-07</span></td></tr>
   <tr><td>서버</td><td>로봇 4대&nbsp;· 카메라 4대 동시 수신</td><td>연결 ①&nbsp;· ②</td></tr>
 </table></div>
 
