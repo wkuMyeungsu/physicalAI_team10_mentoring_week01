@@ -261,15 +261,17 @@ body{padding-top:44px}
   <tr><td>서버 장비</td><td>PC (성능 여유)<br>라즈베리 파이 (현장에 두는 소형 서버)</td></tr>
 </table></div>
 
-<h2>6. 확인할 것</h2>
-<ul>
-  <li><b>마커 종류</b>: ArUco · 색 띠를 걸으며 읽어 보고 결정</li>
-  <li><b>초음파</b>: 걸으며 재지는지 (안 되면 마커 간격 25 / 50cm 중 결정) · 코너에서 랙 오인식</li>
-  <li><b>누운 사람</b>: 방향별로 서 있는 사람과 구분</li>
-  <li><b>바닥 카메라</b>: 꺾는 각도 · 몸에서 몇 cm 앞 바닥을 보는지 (서버가 그만큼 빼서 위치 추정) · 마커 여러 개 동시 인식 · 후진 때 꺾기 마커 재인식</li>
-  <li><b>머리 카메라</b>: 화면 위아래 나눠 쓰기</li>
-</ul>
-<p class="todo">담당과 날짜 붙이기</p>
+<h2>6. 기술 검증 항목</h2>
+<div class="tw"><table>
+  <tr><th>항목</th><th>검증 내용</th><th>쓰이는 곳</th></tr>
+  <tr><td>마커 인식</td><td>걸으며 ArUco&nbsp;· 색 띠 읽기&nbsp;· 후진 때 재인식</td><td>F-02</td></tr>
+  <tr><td>바닥 카메라</td><td>꺾는 각도&nbsp;· 몸 앞 몇 cm를 보는지</td><td>F-02 위치 보정</td></tr>
+  <tr><td>주행</td><td>직선 흔들림&nbsp;· 곡선 반지름</td><td>미션맵 크기&nbsp;· 통로 폭</td></tr>
+  <tr><td>초음파</td><td>걸으며 측정되는지&nbsp;· 코너에서 옆 랙 오인식</td><td>F-03</td></tr>
+  <tr><td>온도 센서</td><td>캔들 거리별 측정값</td><td>F-05&nbsp;· F-10</td></tr>
+  <tr><td>머리 카메라</td><td>누운 방향별 사람 인식</td><td>F-06&nbsp;· F-07</td></tr>
+  <tr><td>서버</td><td>로봇 4대&nbsp;· 카메라 4대 동시 수신</td><td>연결 ①&nbsp;· ②</td></tr>
+</table></div>
 
 </div>
 <script>
