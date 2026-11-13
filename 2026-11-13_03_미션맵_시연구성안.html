@@ -114,48 +114,46 @@ body{padding-top:44px}
   <tr><td class="k">통로 끝 여유</td><td>25cm</td><td>정지 명령 뒤 밀리는 거리</td></tr>
 </table></div>
 
-<h2>2. 순찰 경로</h2>
-<p><b>2대 순찰 · 2대 도크 충전 대기.</b> 둘 다 시계 방향이라 마주치지 않고, 랙 · 작업대 네 면을 모두 지난다.</p>
+<h2>2. 순찰 경로 (F-01)</h2>
+<p><b>2대 순찰&nbsp;· 2대 도크 충전 대기.</b> 둘 다 시계 방향이라 마주치지 않고, 랙&nbsp;· 작업대 네 면을 모두 지난다.</p>
 <div class="tw"><table>
   <tr><th>로봇</th><th>맡은 곳</th><th>움직임</th></tr>
-  <tr><td><i class="dot" style="background:var(--blue)"></i>A</td><td>외곽 전체</td><td>갈림길에서 직진 · 꺾기 · 통로 끝 마커 무시 · 후진 없음</td></tr>
-  <tr><td><i class="dot" style="background:var(--green)"></i>B</td><td>간선 + 막다른 통로 세 곳</td><td>꺾기 마커에서 통로로 → 통로 끝 마커가 카메라에 보이면 멈춰 확인 → 후진 → 간선 끝에서 아래 외곽 합류</td></tr>
-  <tr><td><i class="dot" style="background:var(--gray)"></i>3 · 4</td><td>도크 옆 대기</td><td>충전 대기 → 교대 · 이상이 생기면 모두 출동</td></tr>
+  <tr><td class="k"><i class="dot" style="background:var(--blue)"></i>A</td><td>외곽 전체</td><td>갈림길에서 직진만 (꺾기&nbsp;· 통로 끝 마커 무시)<br>후진 없음</td></tr>
+  <tr><td class="k"><i class="dot" style="background:var(--green)"></i>B</td><td>간선 + 막다른 통로 세 곳</td><td>꺾기 마커에서 통로로&nbsp;→ 통로 끝 마커에서 멈춰 확인&nbsp;→ 후진<br>간선 끝에서 아래 외곽 합류</td></tr>
+  <tr><td class="k"><i class="dot" style="background:var(--gray)"></i>3&nbsp;· 4</td><td>도크 옆 대기</td><td>충전 대기&nbsp;→ 충전 교대<br>이상이 생기면 모두 출동</td></tr>
 </table></div>
 
-<h3 style="margin:16px 0 6px;font-size:15px">바닥 마커</h3>
-<p><b>바닥 마커로 위치를 특정한다.</b> 바닥 카메라(머리의 카메라를 아래로 꺾어 비스듬히 조금 앞 바닥을 봄)에 마커가 들어올 때마다 서버에 알리고, 서버는 보는 거리만큼 뒤를 로봇 위치로 잡는다 (시뮬레이션은 몸 중심에서 25cm로 가정, 실측 후 조정). 종류(ArUco / 색 띠)는 실험 후 결정 · 시뮬레이션은 역할별 색으로 표시. (CP = 갈림길, S = 막다른 통로 끝)</p>
+<h3>바닥 마커 (F-02 구간 위치 파악)</h3>
+<p>바닥 카메라에 마커가 들어올 때마다 서버에 알리고, <br class="w">서버는 카메라가 보는 거리(몸 앞 약 25cm)만큼 뒤를 로봇 위치로 잡는다. <br class="w">마커는 ArUco 또는 색 띠이며, 시뮬레이션은 역할별 색으로 표시한다. (CP = 갈림길, S = 막다른 통로 끝)</p>
 <div class="tw"><table>
-  <tr><th>자리</th><th>마커</th><th>B가 하는 일</th></tr>
-  <tr><td>CP5 ~ CP8</td><td><i class="dot" style="background:var(--red)"></i>꺾기</td><td>꺾어 들어감 (CP5 외곽 → 간선, CP6~8 간선 → 랙 · 작업대 사이 통로)</td></tr>
-  <tr><td>S1 · S2 · S3</td><td><i class="dot" style="background:var(--blue)"></i>통로 끝</td><td>멈춤 → 확인 → 후진</td></tr>
-  <tr><td>직선 구간</td><td>구간 (두 종류 번갈아)</td><td>지난 마커 수 = 구역 번호 · 같은 종류 연속 = 하나 놓침 · 매 바퀴 도크에서 다시 맞춤</td></tr>
+  <tr><th>자리</th><th>마커</th><th>하는 일</th></tr>
+  <tr><td class="k">CP5 ~ CP8</td><td class="k"><i class="dot" style="background:var(--red)"></i>꺾기</td><td>B가 꺾어 들어감<br>CP5는 외곽&nbsp;→ 간선, CP6~8은 간선&nbsp;→ 랙&nbsp;· 작업대 사이 통로</td></tr>
+  <tr><td class="k">S1&nbsp;· S2&nbsp;· S3</td><td class="k"><i class="dot" style="background:var(--blue)"></i>통로 끝</td><td>B가 멈춤&nbsp;→ 확인&nbsp;→ 후진</td></tr>
+  <tr><td class="k">직선 구간</td><td class="k">구간 (두 종류 번갈아)</td><td>지난 마커 수 = 구간 번호&nbsp;· 같은 종류 연속 = 하나 놓침<br>매 바퀴 도크에서 다시 맞춤</td></tr>
 </table></div>
-<p class="todo">구간 마커 간격: 걸으며 초음파가 되면 자유, 안 되면 마커에서 멈춰 재므로 25 / 50cm 중 실험으로</p>
 
-<h3 style="margin:16px 0 6px;font-size:15px">운영 규칙</h3>
+<h3>운영 규칙</h3>
 <div class="tw"><table>
   <tr><th>곳</th><th>규칙</th></tr>
-  <tr><td>누가 판단하나</td><td>서버. 로봇은 지난 마커 · 상태(움직임 · 멈춘 이유 · 배터리)만 보고하고, 위치 추정과 모든 명령(허가 · 양보 · 교대 · 출동)은 서버</td></tr>
-  <tr><td>출발 · 합류</td><td>같은 도크에서 A 다음 B · 간선 동쪽 끝 합류점에선 A 먼저</td></tr>
-  <tr><td>앞 로봇</td><td>같은 방향 · 초음파에 잡히면 정지</td></tr>
-  <tr><td>도크</td><td>매 바퀴 지나는 U자 길 · 충전할 로봇만 멈춤 (스스로 도킹이 어려워 도킹 · 충전은 가정)</td></tr>
-  <tr><td>교대 (릴레이)</td><td>배터리 20% 미만 → 대기 로봇이 그 자리부터 이어 순찰 · 지친 로봇은 도크로</td></tr>
-  <tr><td>교통 관리</td><td>구간마다 한 방향 · 출동 길 예약 · 마주칠 순찰 로봇은 갈림길 · 막다른 통로에서 대기 (대피 안내 > 교차 확인 > 순찰) · 3초 넘게 막히면 순찰 쪽 후진</td></tr>
-  <tr><td>교차 확인</td><td>과열 감지 로봇은 멈춰 측정 · 대기 로봇이 가서 다시 잼 → 둘 다 50℃ 초과면 화재 확정 (오탐 방지)</td></tr>
+  <tr><td class="k">누가 판단하나</td><td>서버. 로봇은 지난 마커&nbsp;· 상태(움직임&nbsp;· 멈춘 이유&nbsp;· 배터리)만 보고<br>위치 추정과 모든 명령(허가&nbsp;· 양보&nbsp;· 교대&nbsp;· 출동)은 서버</td></tr>
+  <tr><td class="k">출발&nbsp;· 합류</td><td>같은 도크에서 A 다음 B&nbsp;· 간선 동쪽 끝 합류점에선 A 먼저</td></tr>
+  <tr><td class="k">앞 로봇</td><td>같은 방향&nbsp;· 초음파에 잡히면 정지</td></tr>
+  <tr><td class="k">도크</td><td>매 바퀴 지나는 U자 길&nbsp;· 충전할 로봇만 멈춤 (도킹&nbsp;· 충전은 가정)</td></tr>
+  <tr><td class="k">충전 교대<br>(F-11)</td><td>배터리 20% 미만&nbsp;→ 대기 로봇이 그 자리부터 이어 순찰<br>지친 로봇은 도크로</td></tr>
+  <tr><td class="k">로봇 동선 조율<br>(F-13)</td><td>구간마다 한 방향&nbsp;· 출동 길 예약&nbsp;· 마주칠 순찰 로봇은 갈림길&nbsp;· 막다른 통로에서 대기<br>양보 순서: 대피 안내 &gt; 교차 확인 &gt; 순찰&nbsp;· 3초&nbsp;넘게 막히면 순찰 쪽 후진</td></tr>
+  <tr><td class="k">과열 교차 확인<br>(F-10)</td><td>과열 감지 로봇은 멈춰 측정&nbsp;· 대기 로봇이 가서 다시 잼<br>둘 다 50℃ 초과면 화재 확정 (오탐 방지)</td></tr>
 </table></div>
 
-<h3 style="margin:16px 0 6px;font-size:15px">화재 때 갈림길 안내</h3>
-<p>고정 유도등 대신 <b>로봇이 갈림길에 서서 불 반대쪽 비상구를 가리킨다.</b> 화재 확정 → 4대 모두 갈림길 ①~④로 (마지막 로봇이 가장 빨리 닿게 배정). 가는 길부터 LED로 지금 위치 기준 화살표, 길이 꺾이면 꺾인 화살표(⮧) · ✕는 ① 자리에서만.</p>
+<h3>화재 대피 안내 (F-12)</h3>
+<p>고정 유도등 대신 <b>로봇이 갈림길에 서서 불 반대쪽 비상구를 가리킨다.</b> <br class="w">화재 확정&nbsp;→ 4대 모두 갈림길 ①~④로 (마지막 로봇이 가장 빨리 닿게 배정). <br class="w">가는 길부터 LED로 지금 위치 기준 화살표, 길이 꺾이면 꺾인 화살표(⮧)&nbsp;· ✕는 ① 자리에서만.</p>
 <div class="tw"><table>
   <tr><th>자리</th><th>왜 여기</th><th>서쪽 화재</th><th>동쪽 화재</th></tr>
-  <tr><td>① 간선 서쪽 끝 (비상구 1 앞)</td><td>비상구 1로 가는 마지막 갈림</td><td>✕ 진입 금지</td><td>← 비상구 1</td></tr>
-  <tr><td>② 간선 동쪽 끝 (비상구 2 앞)</td><td>비상구 2로 가는 마지막 갈림</td><td>→ 비상구 2</td><td>✕ 진입 금지</td></tr>
+  <tr><td>① 간선 서쪽 끝 (비상구 1 앞)</td><td>비상구 1로 가는 마지막 갈림</td><td>✕ 진입&nbsp;금지</td><td>← 비상구 1</td></tr>
+  <tr><td>② 간선 동쪽 끝 (비상구 2 앞)</td><td>비상구 2로 가는 마지막 갈림</td><td>→ 비상구 2</td><td>✕ 진입&nbsp;금지</td></tr>
   <tr><td>③ 간선 가운데 (CP7)</td><td>세 통로가 간선으로 나오는 곳</td><td>→</td><td>←</td></tr>
   <tr><td>④ 위쪽 외곽 가운데</td><td>랙 위쪽에 있는 사람은 간선을 안 지남</td><td>→↓</td><td>←↓</td></tr>
 </table></div>
-<p><b>막힌 길 피하기</b>: 간선의 박스를 못 치운 채 서쪽에서 불이 나면 ③은 → 대신 ↓ (작업대 사이 통로 → 아래 외곽)</p>
-
+<p><b>막힌 길 피하기</b>: 간선의 박스를 못 치운 채 서쪽에서 불이 나면 <br class="w">③은&nbsp;→ 대신 ↓ (작업대 사이 통로&nbsp;→ 아래 외곽)</p>
 
 <h2>3. 시연 흐름</h2>
 <div class="tw"><table>
